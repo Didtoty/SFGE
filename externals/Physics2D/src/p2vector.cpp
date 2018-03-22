@@ -23,92 +23,83 @@ SOFTWARE.
 */
 
 #include <p2vector.h>
-#include <cmath>
 
 p2Vec2::p2Vec2()
 {
 }
 
-p2Vec2::p2Vec2(float x, float y) : x(x), y(y)
+p2Vec2::p2Vec2(float x, float y)
 {
 }
 
 p2Vec2 p2Vec2::operator+(p2Vec2 v)
 {
-	return p2Vec2(this->x + v.x, this->y + v.y);
+	return p2Vec2();
 }
 
 p2Vec2 p2Vec2::operator+=(p2Vec2 v)
 {
-	this->x += v.x;
-	this->y += v.y;
-	return p2Vec2(this->x, this->y);
+	return p2Vec2();
 }
 
 p2Vec2 p2Vec2::operator-(p2Vec2 v)
 {
-	return p2Vec2(this->x - v.x, this->y - v.y);
+	return p2Vec2();
 }
 
 p2Vec2 p2Vec2::operator-=(p2Vec2 v)
 {
-	this->x -= v.x;
-	this->y -= v.y;
-	return p2Vec2(this->x, this->y);
+	return p2Vec2();
 }
 
 p2Vec2 p2Vec2::operator/(float f)
 {
-	return p2Vec2(this->x / f, this->y / f);
+	return p2Vec2();
 }
 
 p2Vec2 p2Vec2::operator*(float f)
 {
-	return p2Vec2(this->x * f, this->y * f);
+	return p2Vec2();
 }
 
 float p2Vec2::Dot(p2Vec2 v1, p2Vec2 v2)
 {
-	return (v1.x * v2.x) + (v1.y * v2.y);
+	return 0.0f;
 }
 
 float p2Vec2::GetMagnitude()
 {
-	return sqrt(pow(this->x, 2) + pow(this->y, 2));
+	return 0.0f;
 }
 
 p2Vec2 p2Vec2::Normalized()
 {
-	return p2Vec2(this->x, this->y) / this->GetMagnitude();
+	return p2Vec2();
 }
 
 void p2Vec2::Normalize()
 {
-	this->x /= this->GetMagnitude();
-	this->y /= this->GetMagnitude();
 }
 
 p2Vec3 p2Vec2::to3()
 {
-	return p2Vec3(this->x, this->y, 0.0f);
+	return p2Vec3();
 }
 
 p2Vec3::p2Vec3()
 {
 }
 
-p2Vec3::p2Vec3(float x, float y, float z) : x(x), y(y), z(z)
+p2Vec3::p2Vec3(float x, float y, float z)
 {
 }
 
 float p2Vec3::Dot(p2Vec3 v1, p2Vec3 v2)
 {
-	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+	return 0.0f;
 }
 
 p2Vec3 p2Vec3::Cross(p2Vec3 v1, p2Vec3 v2)
 {
-	return p2Vec3(v1.y * v2.z - v1.z * v2.y, 
-			v1.x * v2.z - v1.z * v2.x, 
-			v1.x * v2.y - v1.y * v2.x);
+	return p2Vec3();
 }
