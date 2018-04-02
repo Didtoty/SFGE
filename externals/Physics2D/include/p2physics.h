@@ -29,6 +29,7 @@ SOFTWARE.
 #include <p2body.h>
 #include <p2collider.h>
 #include <p2contact.h>
+#include <p2matrix.h>
 #include <p2quadtree.h>
 #include <p2shape.h>
 #include <p2vector.h>

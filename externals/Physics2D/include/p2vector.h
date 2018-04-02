@@ -51,6 +51,23 @@ struct p2Vec2
 	*/
 	static p2Vec3 Cross(p2Vec2 v1, p2Vec2 v2);
 	/**
+	* \brief Lerp of two vectors
+	*/
+	static p2Vec2 Lerp(p2Vec2 v1, p2Vec2 v2, float t);
+	/**
+	* \brief Cross product of two vectors
+	*/
+	static p2Vec2 Proj(p2Vec2 v1, p2Vec2 v2);
+	/**
+	* \brief  of two vectors
+	*/
+	static p2Vec2 Refl(p2Vec2 v1, p2Vec2 v2);
+	/**
+	* \brief Angle between two vectors
+	* \return Angle in degree
+	*/
+	static float AngleBetween(p2Vec2 v1, p2Vec2 v2);
+	/**
 	* \brief Calculate the magnitude of the p2Vec2
 	*/
 	float GetMagnitude();
@@ -77,6 +94,14 @@ struct p2Vec3
 {
 	p2Vec3();
 	p2Vec3(float x, float y, float z);
+
+	p2Vec3 operator+(p2Vec3 v);
+	p2Vec3 operator+=(p2Vec3 v);
+	p2Vec3 operator-(p2Vec3 v);
+	p2Vec3 operator-=(p2Vec3 v);
+	p2Vec3 operator /(float f);
+	p2Vec3 operator *(float f);
+
 	/**
 	* \brief Dot product of two vectors
 	*/
@@ -85,6 +110,37 @@ struct p2Vec3
 	* \brief Cross product of two vectors
 	*/
 	static p2Vec3 Cross(p2Vec3 v1, p2Vec3 v2);
+	/**
+	* \brief Lerp of two vectors
+	*/
+	static p2Vec3 Lerp(p2Vec3 v1, p2Vec3 v2, float t);
+	/**
+	* \brief Cross product of two vectors
+	*/
+	static p2Vec3 Proj(p2Vec3 v1, p2Vec3 v2);
+	/**
+	* \brief  of two vectors
+	*/
+	static p2Vec3 Refl(p2Vec3 v1, p2Vec3 v2);
+	/**
+	* \brief Angle between two vectors
+	* \return Angle in degree
+	*/
+	static float AngleBetween(p2Vec3 v1, p2Vec3 v2);
+	/**
+	* \brief Calculate the magnitude of the p2Vec3
+	*/
+	float GetMagnitude();
+	/**
+	* \brief Calculate a normalized version of the p2Vec3
+	* \return The normalized version
+	*/
+	p2Vec3 Normalized();
+	/**
+	* \brief Normalize the p2Vec3
+	*/
+	void Normalize();
+
 	float x = 0.0f;
 	float y = 0.0f;
 	float z = 0.0f;
