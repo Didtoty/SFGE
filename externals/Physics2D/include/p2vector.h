@@ -25,6 +25,8 @@ SOFTWARE.
 #ifndef SFGE_P2VECTOR_H
 #define SFGE_P2VECTOR_H
 
+#include <math.h>
+
 struct p2Vec3;
 
 /**
@@ -42,6 +44,7 @@ struct p2Vec2
 	p2Vec2 operator-=(p2Vec2 v);
 	p2Vec2 operator /(float f);
 	p2Vec2 operator *(float f);
+	bool operator==(p2Vec2 v);
 	/**
 	* \brief Dot product of two vectors
 	*/
@@ -61,7 +64,7 @@ struct p2Vec2
 	/**
 	* \brief  of two vectors
 	*/
-	static p2Vec2 Refl(p2Vec2 v1, p2Vec2 v2);
+	static p2Vec2 Refl(p2Vec2 v1, p2Vec2 n);
 	/**
 	* \brief Angle between two vectors
 	* \return Angle in degree
@@ -101,6 +104,7 @@ struct p2Vec3
 	p2Vec3 operator-=(p2Vec3 v);
 	p2Vec3 operator /(float f);
 	p2Vec3 operator *(float f);
+	bool operator==(p2Vec3 v);
 
 	/**
 	* \brief Dot product of two vectors
@@ -115,13 +119,13 @@ struct p2Vec3
 	*/
 	static p2Vec3 Lerp(p2Vec3 v1, p2Vec3 v2, float t);
 	/**
-	* \brief Cross product of two vectors
+	* \brief Projection of two vectors
 	*/
 	static p2Vec3 Proj(p2Vec3 v1, p2Vec3 v2);
 	/**
-	* \brief  of two vectors
+	* \brief Reflexion of two vectors
 	*/
-	static p2Vec3 Refl(p2Vec3 v1, p2Vec3 v2);
+	static p2Vec3 Refl(p2Vec3 v1, p2Vec3 n);
 	/**
 	* \brief Angle between two vectors
 	* \return Angle in degree

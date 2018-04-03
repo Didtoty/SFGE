@@ -25,6 +25,9 @@ SOFTWARE.
 #include <p2vector.h>
 #include <cmath>
 
+// -----------------------------------------
+// ----------- CLASS : p2Vec2 --------------
+// -----------------------------------------
 p2Vec2::p2Vec2()
 {
 }
@@ -67,6 +70,11 @@ p2Vec2 p2Vec2::operator*(float f)
 	return p2Vec2(this->x * f, this->y * f);
 }
 
+bool p2Vec2::operator==(p2Vec2 v)
+{
+	return (this->x == v.x && this->y == v.y);
+}
+
 float p2Vec2::Dot(p2Vec2 v1, p2Vec2 v2)
 {
 	return (v1.x * v2.x) + (v1.y * v2.y);
@@ -79,22 +87,22 @@ p2Vec3 p2Vec2::Cross(p2Vec2 v1, p2Vec2 v2)
 
 p2Vec2 p2Vec2::Lerp(p2Vec2 v1, p2Vec2 v2, float t)
 {
-	return p2Vec2();
+	return v1 + ((v2-v1) * t);
 }
 
 p2Vec2 p2Vec2::Proj(p2Vec2 v1, p2Vec2 v2)
 {
-	return p2Vec2();
+	return v2 * (Dot(v1, v2) / v2.GetMagnitude());
 }
 
-p2Vec2 p2Vec2::Refl(p2Vec2 v1, p2Vec2 v2)
+p2Vec2 p2Vec2::Refl(p2Vec2 v1, p2Vec2 n)
 {
-	return p2Vec2();
+	return v1 - n.Normalized() * 2 * Dot(v1, n.Normalized());
 }
 
 float p2Vec2::AngleBetween(p2Vec2 v1, p2Vec2 v2)
 {
-	return 0.0f;
+	return acos(Dot(v1, v2) / v1.GetMagnitude() / v2.GetMagnitude());
 }
 
 float p2Vec2::GetMagnitude()
@@ -119,6 +127,9 @@ p2Vec3 p2Vec2::to3()
 	return p2Vec3(this->x, this->y, 0.0f);
 }
 
+// -----------------------------------------
+// ----------- CLASS : p2Vec3 --------------
+// -----------------------------------------
 p2Vec3::p2Vec3()
 {
 }
@@ -163,7 +174,12 @@ p2Vec3 p2Vec3::operator*(float f)
 	return p2Vec3(this->x * f, this->y * f, this->z * f);
 }
 
-float p2Vec3::(p2Vec3 v1, p2Vec3 v2)
+bool p2Vec3::operator==(p2Vec3 v)
+{
+	return (this->x == v.x && this->y == v.y && this->z == v.z);
+}
+
+float p2Vec3::Dot(p2Vec3 v1, p2Vec3 v2)
 {
 	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 }
@@ -173,6 +189,26 @@ p2Vec3 p2Vec3::Cross(p2Vec3 v1, p2Vec3 v2)
 	return p2Vec3(v1.y * v2.z - v1.z * v2.y, 
 			v1.x * v2.z - v1.z * v2.x, 
 			v1.x * v2.y - v1.y * v2.x);
+}
+
+p2Vec3 p2Vec3::Lerp(p2Vec3 v1, p2Vec3 v2, float t)
+{
+	return v1 + ((v2 - v1) * t);
+}
+
+p2Vec3 p2Vec3::Proj(p2Vec3 v1, p2Vec3 v2)
+{
+	return v2 * (Dot(v1, v2) / v2.GetMagnitude());
+}
+
+p2Vec3 p2Vec3::Refl(p2Vec3 v1, p2Vec3 n)
+{
+	return v1 - n.Normalized() * 2 * Dot(v1, n.Normalized());
+}
+
+float p2Vec3::AngleBetween(p2Vec3 v1, p2Vec3 v2)
+{
+	return acos(Dot(v1, v2) / v1.GetMagnitude() / v2.GetMagnitude());
 }
 
 float p2Vec3::GetMagnitude()
