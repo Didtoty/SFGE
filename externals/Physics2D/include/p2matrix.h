@@ -37,9 +37,12 @@ struct p2Mat22
 	p2Mat22 operator-(p2Mat22 m1);
 	p2Mat22 operator-=(p2Mat22 m1);
 	p2Mat22 operator*(p2Mat22 m1);
+	p2Mat22 operator*=(p2Mat22 m1);
 	p2Vec2 operator*(p2Vec2 v);
 	p2Mat22 operator*(float f);
+	p2Mat22 operator*=(float f);
 	p2Mat22 operator/(float f);
+	p2Mat22 operator/=(float f);
 	/**
 	* \brief Calculate the invert of the 2x2 matrix
 	*/
@@ -59,9 +62,12 @@ struct p2Mat33
 	p2Mat33 operator-(p2Mat33 m1);
 	p2Mat33 operator-=(p2Mat33 m1);
 	p2Mat33 operator*(p2Mat33 m1);
+	p2Mat33 operator*=(p2Mat33 m1);
 	p2Vec3 operator*(p2Vec3 v);
 	p2Mat33 operator*(float f);
+	p2Mat33 operator*=(float f);
 	p2Mat33 operator/(float f);
+	p2Mat33 operator/=(float f);
 	/**
 	* \brief Calculate the invert of the 3x3 matrix
 	*/
