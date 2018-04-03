@@ -30,46 +30,88 @@ p2Mat22::p2Mat22()
 
 p2Mat22::p2Mat22(p2Vec2 r1, p2Vec2 r2)
 {
+	this->rows[0] = r1;
+	this->rows[1] = r2;
 }
 
 p2Mat22 p2Mat22::operator+(p2Mat22 m1)
 {
-	return p2Mat22();
+	return p2Mat22(this->rows[0] + m1.rows[0], this->rows[1] + m1.rows[1]);
+}
+
+p2Mat22 p2Mat22::operator+=(p2Mat22 m1)
+{
+	this->rows[0] + m1.rows[0]; 
+	this->rows[1] + m1.rows[1];
+	return p2Mat22(this->rows[0], this->rows[1]);
 }
 
 p2Mat22 p2Mat22::operator-(p2Mat22 m1)
 {
-	return p2Mat22();
+	return p2Mat22(this->rows[0] - m1.rows[0], this->rows[1] - m1.rows[1]);
+}
+
+p2Mat22 p2Mat22::operator-=(p2Mat22 m1)
+{
+	this->rows[0] - m1.rows[0];
+	this->rows[1] - m1.rows[1];
+	return p2Mat22(this->rows[0], this->rows[1]);
 }
 
 p2Mat22 p2Mat22::operator*(p2Mat22 m1)
 {
-	return p2Mat22();
+	return p2Mat22(
+		p2Vec2(this->rows[0].x * m1.rows[0].x + this->rows[1].x * m1.rows[0].y, 
+			   this->rows[0].x * m1.rows[1].x + this->rows[1].x * m1.rows[1].y
+			),
+		p2Vec2(this->rows[0].y * m1.rows[0].x + this->rows[1].y * m1.rows[0].y,
+			   this->rows[0].y * m1.rows[1].x + this->rows[1].y * m1.rows[1].y
+			)
+	);
 }
 
 p2Vec2 p2Mat22::operator*(p2Vec2 v)
 {
-	return p2Vec2();
+	return p2Vec2(
+		this->rows[0].x * v.x + this->rows[1].x * v.y,
+		this->rows[0].y * v.x + this->rows[1].y * v.y
+	);
 }
 
 p2Mat22 p2Mat22::operator*(float f)
 {
-	return p2Mat22();
+	return p2Mat22(
+		p2Vec2(this->rows[0].x * f, this->rows[0].y * f),
+		p2Vec2(this->rows[1].x * f, this->rows[1].y * f)
+	);
 }
 
 p2Mat22 p2Mat22::operator/(float f)
 {
-	return p2Mat22();
+	return p2Mat22(
+		p2Vec2(this->rows[0].x / f, this->rows[0].y / f),
+		p2Vec2(this->rows[1].x / f, this->rows[1].y / f)
+	);
 }
 
 p2Mat22 p2Mat22::Invert()
 {
-	return p2Mat22();
+	float det = this->GetDeterminant();
+	if(det == 0)
+		return p2Mat22(this->rows[0], this->rows[1]);
+	else
+	{
+		return p2Mat22(
+			p2Vec2(this->rows[1].y, -this->rows[0].y),
+			p2Vec2(-this->rows[1].x, this->rows[0].x)
+		) / det;
+	}
+
 }
 
 float p2Mat22::GetDeterminant()
 {
-	return 0.0f;
+	return this->rows[0].x  * this->rows[1].y - this->rows[1].x  * this->rows[0].y;
 }
 
 p2Mat33::p2Mat33()
@@ -78,16 +120,35 @@ p2Mat33::p2Mat33()
 
 p2Mat33::p2Mat33(p2Vec3 r1, p2Vec3 r2, p2Vec3 r3)
 {
+	this->rows[0] = r1;
+	this->rows[1] = r2;
+	this->rows[2] = r3;
 }
 
 p2Mat33 p2Mat33::operator+(p2Mat33 m1)
 {
-	return p2Mat33();
+	return p2Mat33(this->rows[0] + m1.rows[0], this->rows[1] + m1.rows[1], this->rows[2] + m1.rows[2]);
+}
+
+p2Mat33 p2Mat33::operator+=(p2Mat33 m1)
+{
+	this->rows[0] + m1.rows[0];
+	this->rows[1] + m1.rows[1];
+	this->rows[2] + m1.rows[2];
+	return p2Mat33(this->rows[0], this->rows[1], this->rows[2]);
 }
 
 p2Mat33 p2Mat33::operator-(p2Mat33 m1)
 {
-	return p2Mat33();
+	return p2Mat33(this->rows[0] - m1.rows[0], this->rows[1] - m1.rows[1], this->rows[2] - m1.rows[2]);
+}
+
+p2Mat33 p2Mat33::operator-=(p2Mat33 m1)
+{
+	this->rows[0] - m1.rows[0];
+	this->rows[1] - m1.rows[1];
+	this->rows[2] - m1.rows[2];
+	return p2Mat33(this->rows[0], this->rows[1], this->rows[2]);
 }
 
 p2Mat33 p2Mat33::operator*(p2Mat33 m1)
