@@ -59,13 +59,18 @@ struct p2Mat33
 	p2Mat33 operator-(p2Mat33 m1);
 	p2Mat33 operator-=(p2Mat33 m1);
 	p2Mat33 operator*(p2Mat33 m1);
-	p2Vec3 operator*(p2Vec3);
+	p2Vec3 operator*(p2Vec3 v);
 	p2Mat33 operator*(float f);
 	p2Mat33 operator/(float f);
 	/**
 	* \brief Calculate the invert of the 3x3 matrix
 	*/
 	p2Mat33 Invert();
+
+	/**
+	* \brief Transpose the 3x3 matrix and return it
+	*/
+	p2Mat33 Transpose();
 	/**
 	* \brief Calculate the determinant
 	*/
