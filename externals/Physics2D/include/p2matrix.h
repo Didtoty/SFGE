@@ -25,6 +25,8 @@ SOFTWARE.
 #ifndef SFGE_P2MATRIX_H
 #define SFGE_P2MATRIX_H
 
+#include <iostream>
+
 #include <p2vector.h>
 
 struct p2Mat22
@@ -43,13 +45,23 @@ struct p2Mat22
 	p2Mat22 operator*=(float f);
 	p2Mat22 operator/(float f);
 	p2Mat22 operator/=(float f);
+	bool operator==(p2Mat22 m1);
+
 	/**
 	* \brief Calculate the invert of the 2x2 matrix
 	*/
 	p2Mat22 Invert();
+	/**
+	* \brief Calculate the determinant of the matrix and return it
+	*/
 	float GetDeterminant();
 
-	p2Vec2 rows[2] = {};
+	/**
+	* \brief Print in the console the Matrix
+	*/
+	void printDebug();
+
+	p2Vec2 columns[2] = {};
 };
 
 struct p2Mat33
@@ -68,21 +80,26 @@ struct p2Mat33
 	p2Mat33 operator*=(float f);
 	p2Mat33 operator/(float f);
 	p2Mat33 operator/=(float f);
+	bool operator==(p2Mat33 m1);
+
 	/**
 	* \brief Calculate the invert of the 3x3 matrix
 	*/
 	p2Mat33 Invert();
-
 	/**
-	* \brief Transpose the 3x3 matrix and return it
+	* \brief Transpose the 3x3 matrix
 	*/
 	p2Mat33 Transpose();
 	/**
 	* \brief Calculate the determinant
 	*/
 	float GetDeterminant();
+	/**
+	* \brief Print the Matrix in the console 
+	*/
+	void printDebug();
 
-	p2Vec3 rows[3] = {};
+	p2Vec3 columns[3] = {};
 };
 
 #endif

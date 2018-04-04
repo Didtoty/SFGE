@@ -42,8 +42,10 @@ struct p2Vec2
 	p2Vec2 operator+=(p2Vec2 v);
 	p2Vec2 operator-(p2Vec2 v);
 	p2Vec2 operator-=(p2Vec2 v);
-	p2Vec2 operator /(float f);
-	p2Vec2 operator *(float f);
+	p2Vec2 operator*(float f);
+	p2Vec2 operator*=(float f);
+	p2Vec2 operator/(float f);
+	p2Vec2 operator/=(float f);
 	bool operator==(p2Vec2 v);
 	/**
 	* \brief Dot product of two vectors
@@ -102,8 +104,10 @@ struct p2Vec3
 	p2Vec3 operator+=(p2Vec3 v);
 	p2Vec3 operator-(p2Vec3 v);
 	p2Vec3 operator-=(p2Vec3 v);
-	p2Vec3 operator /(float f);
-	p2Vec3 operator *(float f);
+	p2Vec3 operator*(float f);
+	p2Vec3 operator*=(float f);
+	p2Vec3 operator/(float f);
+	p2Vec3 operator/=(float f);
 	bool operator==(p2Vec3 v);
 
 	/**

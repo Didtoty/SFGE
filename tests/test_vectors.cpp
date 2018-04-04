@@ -30,8 +30,7 @@ SOFTWARE.
 
 #include <iostream>
 
-#include <engine/engine.h>
-#include <engine/log.h>
+#include <p2vector.h>
 
 void printResult(bool isOk)
 {
@@ -55,40 +54,28 @@ int main()
 	std::cout << "--------------- TEST DES VECTEURS 2 --------------------\n";
 	std::cout << "--------------------------------------------------------\n\n";
 
-	// p2Vec2 : +=	
-	{
-		//Operation
-		v1 += v2;
-		std::cout << "addition += : " << v1.x << ", " << v1.y << ";\n";
-
-		//Check
-		result = p2Vec2(3.0f, 6.0f);
-		printResult(v1 == result);
-	}
-
-	// p2Vec2 : -=
-	{
-		//
-		v1 -= v2;
-		std::cout << "backtoNormal -= : " << v1.x << ", " << v1.y << ";\n";
-
-		//Operation
-		result = p2Vec2(1.0f, 2.0f);
-		printResult(v1 == result);
-	}
-
-	std::cout << "\n\n";
-
 	// p2Vec2 : +
 	{
 		//Operation
 		v3 = v1 + v2;
 		std::cout << "addition + : " << v3.x << ", " << v3.y << ";\n";
 		//Check
-		result = p2Vec2(3.0f, 6.0f);
+		result = p2Vec2(4.0f, 6.0f);
 		printResult(v3 == result);
 	}
 	
+	// p2Vec2 : +=	
+	{
+		//Operation
+		v3 = v1;
+		v3 += v2;
+		std::cout << "addition += : " << v3.x << ", " << v3.y << ";\n";
+
+		//Check
+		result = p2Vec2(4.0f, 6.0f);
+		printResult(v3 == result);
+	}
+
 	// p2Vec2 : -
 	{
 		//Operation
@@ -99,12 +86,35 @@ int main()
 		printResult(v3 == result);
 	}
 
+	// p2Vec2 : -=
+	{
+		//
+		v3 = v1;
+		v3 -= v2;
+		std::cout << "backtoNormal -= : " << v3.x << ", " << v3.y << ";\n";
+
+		//Operation
+		result = p2Vec2(-2.0f, -2.0f);
+		printResult(v3 == result);
+	}
+
 	std::cout << "\n\n";
 
 	// p2Vec2 : *
 	{
 		//Operation
 		v3 = v1 * multiplier;
+		std::cout << "multiplier *= : " << v3.x << ", " << v3.y << ";\n";
+		//Check
+		result = p2Vec2(2.0f, 4.0f);
+		printResult(v3 == result);
+	}
+
+	// p2Vec2 : *=
+	{
+		//Operation
+		v3 = v1;
+		v3 *= multiplier;
 		std::cout << "multiplier * : " << v3.x << ", " << v3.y << ";\n";
 		//Check
 		result = p2Vec2(2.0f, 4.0f);
@@ -116,6 +126,17 @@ int main()
 		//Operation
 		v3 = v1 / multiplier;
 		std::cout << "division / : " << v3.x << ", " << v3.y << ";\n";
+		//Check
+		result = p2Vec2(0.5f, 1.0f);
+		printResult(v3 == result);
+	}
+
+	// p2Vec2 : /=
+	{
+		//Operation
+		v3 = v1;
+		v3 /= multiplier;
+		std::cout << "division /= : " << v3.x << ", " << v3.y << ";\n";
 		//Check
 		result = p2Vec2(0.5f, 1.0f);
 		printResult(v3 == result);
@@ -195,24 +216,6 @@ int main()
 	p2Vec3 v3_2 = p2Vec3(4.0f, 5.0f, 6.0f);
 	p2Vec3 v3_3, v3_result;
 
-	// p2Vec3 : +=
-	{
-		v3_1 += v3_2;
-		std::cout << "addition += : " << v3_1.x << ", " << v3_1.y << ", " << v3_1.z << ";\n";
-		v3_result = p2Vec3(5.0f, 7.0f, 9.0f);
-		printResult(v3_1 == v3_result);
-	}
-
-	// p2Vec3 : -=
-	{
-		v3_1 -= v3_2;
-		std::cout << "backtoNormal -= : " << v3_1.x << ", " << v3_1.y << ", " << v3_1.z << ";\n";
-		v3_result = p2Vec3(1.0f, 2.0f, 3.0f);
-		printResult(v3_1 == v3_result);
-	}
-
-	std::cout << "\n\n";
-
 	// p2Vec3 : +
 	{
 		v3_3 = v3_1 + v3_2;
@@ -221,10 +224,28 @@ int main()
 		printResult(v3_3 == v3_result);
 	}
 
+	// p2Vec3 : +=
+	{
+		v3_3 = v3_1;
+		v3_3 += v3_2;
+		std::cout << "addition += : " << v3_3.x << ", " << v3_3.y << ", " << v3_3.z << ";\n";
+		v3_result = p2Vec3(5.0f, 7.0f, 9.0f);
+		printResult(v3_3 == v3_result);
+	}
+
 	// p2Vec3 : -
 	{
 		v3_3 = v3_1 - v3_2;
 		std::cout << "soustraction - : " << v3_3.x << ", " << v3_3.y << ", " << v3_3.z << ";\n";
+		v3_result = p2Vec3(-3.0f, -3.0f, -3.0f);
+		printResult(v3_3 == v3_result);
+	}
+
+	// p2Vec3 : -=
+	{
+		v3_3 = v3_1;
+		v3_3 -= v3_2;
+		std::cout << "soustraction -= : " << v3_3.x << ", " << v3_3.y << ", " << v3_3.z << ";\n";
 		v3_result = p2Vec3(-3.0f, -3.0f, -3.0f);
 		printResult(v3_3 == v3_result);
 	}
@@ -239,6 +260,17 @@ int main()
 		printResult(v3_3 == v3_result);
 
 	}
+
+	// p2Vec3 : *=
+	{
+		v3_3 = v3_1;
+		v3_3 *= multiplier;
+		std::cout << "multiplier *= : " << v3_3.x << ", " << v3_3.y << ", " << v3_3.z << ";\n";
+		v3_result = p2Vec3(2.0f, 4.0f, 6.0f);
+		printResult(v3_3 == v3_result);
+
+	}
+
 	// p2Vec3 : /
 	{
 		v3_3 = v3_1 / multiplier;
@@ -247,6 +279,15 @@ int main()
 		printResult(v3_3 == v3_result);
 	}
 
+	// p2Vec3 : /=
+	{
+		v3_3 = v3_1;
+		v3_3 /= multiplier;
+		std::cout << "division /= : " << v3_3.x << ", " << v3_3.y << ", " << v3_3.z << ";\n";
+		v3_result = p2Vec3(0.5f, 1.0f, 1.5f);
+		printResult(v3_3 == v3_result);
+	}
+	
 	std::cout << "\n\n";
 
 	// p2Vec3 : Dot

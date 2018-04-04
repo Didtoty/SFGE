@@ -43,9 +43,7 @@ p2Vec2 p2Vec2::operator+(p2Vec2 v)
 
 p2Vec2 p2Vec2::operator+=(p2Vec2 v)
 {
-	this->x += v.x;
-	this->y += v.y;
-	return p2Vec2(this->x, this->y);
+	return *this = *this + v;
 }
 
 p2Vec2 p2Vec2::operator-(p2Vec2 v)
@@ -55,9 +53,17 @@ p2Vec2 p2Vec2::operator-(p2Vec2 v)
 
 p2Vec2 p2Vec2::operator-=(p2Vec2 v)
 {
-	this->x -= v.x;
-	this->y -= v.y;
-	return p2Vec2(this->x, this->y);
+	return *this = *this - v;
+}
+
+p2Vec2 p2Vec2::operator*(float f)
+{
+	return p2Vec2(this->x * f, this->y * f);
+}
+
+p2Vec2 p2Vec2::operator*=(float f)
+{
+	return *this = *this * f;
 }
 
 p2Vec2 p2Vec2::operator/(float f)
@@ -65,9 +71,9 @@ p2Vec2 p2Vec2::operator/(float f)
 	return p2Vec2(this->x / f, this->y / f);
 }
 
-p2Vec2 p2Vec2::operator*(float f)
+p2Vec2 p2Vec2::operator/=(float f)
 {
-	return p2Vec2(this->x * f, this->y * f);
+	return *this = *this / f;
 }
 
 bool p2Vec2::operator==(p2Vec2 v)
@@ -117,9 +123,7 @@ p2Vec2 p2Vec2::Normalized()
 
 void p2Vec2::Normalize()
 {
-	float magnitude = this->GetMagnitude();
-	this->x /= magnitude;
-	this->y /= magnitude;
+	*this /= this->GetMagnitude();
 }
 
 p2Vec3 p2Vec2::to3()
@@ -145,10 +149,7 @@ p2Vec3 p2Vec3::operator+(p2Vec3 v)
 
 p2Vec3 p2Vec3::operator+=(p2Vec3 v)
 {
-	this->x += v.x;
-	this->y += v.y;
-	this->z += v.z;
-	return p2Vec3(this->x, this->y, this->z);
+	return *this = *this + v;
 }
 
 p2Vec3 p2Vec3::operator-(p2Vec3 v)
@@ -158,10 +159,17 @@ p2Vec3 p2Vec3::operator-(p2Vec3 v)
 
 p2Vec3 p2Vec3::operator-=(p2Vec3 v)
 {
-	this->x -= v.x;
-	this->y -= v.y;
-	this->z -= v.z;
-	return p2Vec3(this->x, this->y, this->z);
+	return *this = *this - v;
+}
+
+p2Vec3 p2Vec3::operator*(float f)
+{
+	return p2Vec3(this->x * f, this->y * f, this->z * f);
+}
+
+p2Vec3 p2Vec3::operator*=(float f)
+{
+	return *this = *this * f;
 }
 
 p2Vec3 p2Vec3::operator/(float f)
@@ -169,9 +177,9 @@ p2Vec3 p2Vec3::operator/(float f)
 	return p2Vec3(this->x / f, this->y / f, this->z / f);
 }
 
-p2Vec3 p2Vec3::operator*(float f)
+p2Vec3 p2Vec3::operator/=(float f)
 {
-	return p2Vec3(this->x * f, this->y * f, this->z * f);
+	return *this = *this / f;
 }
 
 bool p2Vec3::operator==(p2Vec3 v)
@@ -218,13 +226,10 @@ float p2Vec3::GetMagnitude()
 
 p2Vec3 p2Vec3::Normalized()
 {
-	return p2Vec3(this->x, this->y, this->z) / this->GetMagnitude();
+	return *this / this->GetMagnitude();
 }
 
 void p2Vec3::Normalize()
 {
-	float magnitude = this->GetMagnitude();
-	this->x /= magnitude;
-	this->y /= magnitude;
-	this->z /= magnitude;
+	*this /= this->GetMagnitude();
 }
