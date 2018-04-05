@@ -28,6 +28,8 @@ SOFTWARE.
 * Author : Duncan Bourquard
 */
 
+#define _USE_MATH_DEFINES
+
 #include <iostream>
 
 #include <p2matrix.h>
@@ -179,6 +181,19 @@ int main()
 			std::cout << "Det : " << det << "\n";
 			float result = 2.0f;
 			printResult(det == result);
+		}
+
+		// p2Mat22 : Rotation
+		{
+			p2Vec2 v = p2Vec2(3.0f, 2.0f);
+			float angle = 30.0f * M_PI / 180.0f;
+
+			v = p2Mat22::RotateVector2(v, angle);
+
+			std::cout << "p2Mat22 : Rotation\n";
+			std::cout << "Angle : " << angle / M_PI * 180.0f << "\n";
+			std::cout << "| " << v.x << " | " << v.y << " |\n";
+			std::cout << "Should be : 1.5980762; 3.232050807\n";
 		}
 	}
 

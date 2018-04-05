@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 #include <p2vector.h>
+#include <p2matrix.h>
 #include <cmath>
 
 // -----------------------------------------
@@ -109,6 +110,11 @@ p2Vec2 p2Vec2::Refl(p2Vec2 v1, p2Vec2 n)
 float p2Vec2::AngleBetween(p2Vec2 v1, p2Vec2 v2)
 {
 	return acos(Dot(v1, v2) / v1.GetMagnitude() / v2.GetMagnitude());
+}
+
+p2Vec2 p2Vec2::ApplyRotation(float angle) 
+{
+	return *this = p2Mat22::RotateVector2(*this, angle);
 }
 
 float p2Vec2::GetMagnitude()

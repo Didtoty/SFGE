@@ -73,6 +73,10 @@ struct p2Vec2
 	*/
 	static float AngleBetween(p2Vec2 v1, p2Vec2 v2);
 	/**
+	* \brief Apply rotation to the vector
+	*/
+	p2Vec2 ApplyRotation(float angle);
+	/**
 	* \brief Calculate the magnitude of the p2Vec2
 	*/
 	float GetMagnitude();
@@ -132,7 +136,7 @@ struct p2Vec3
 	static p2Vec3 Refl(p2Vec3 v1, p2Vec3 n);
 	/**
 	* \brief Angle between two vectors
-	* \return Angle in degree
+	* \return Angle in radian
 	*/
 	static float AngleBetween(p2Vec3 v1, p2Vec3 v2);
 	/**

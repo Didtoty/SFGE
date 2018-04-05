@@ -259,7 +259,7 @@ p2Mat33 p2Mat33::Invert()
 {
 	float det = this->GetDeterminant();
 	if(det == 0)
-		return p2Mat33(this->columns[0], this->columns[1], this->columns[2]);
+		return *this;
 	else
 	{
 		p2Mat33 res = this->Transpose();

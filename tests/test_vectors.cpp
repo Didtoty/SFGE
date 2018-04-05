@@ -28,6 +28,8 @@ SOFTWARE.
 * Author : Duncan Bourquard
 */
 
+#define _USE_MATH_DEFINES
+
 #include <iostream>
 
 #include <p2vector.h>
@@ -184,10 +186,23 @@ int main()
 		std::cout << "AngleBetween : " << angle << "\n";
 		std::cout << "Should be around : 0.179853 \n\n";
 	}
+	
 	// p2Vec2 : Magnitude
 	{
 		std::cout << "magnitude : " << v1.GetMagnitude() << ";\n";
 		std::cout << "Should be around : 2.2360\n\n";
+	}
+
+	// p2Vec2 : ApplyRotation
+	{
+		p2Vec2 v = p2Vec2(3.0f, 2.0f);
+		float angle = 30.0f * M_PI / 180.0f;
+
+		std::cout << "p2Vec2 : ApplyRotation\n";
+		std::cout << "Angle : " << angle / M_PI * 180.0f << "\n";
+		v.ApplyRotation(angle);
+		std::cout << "| " << v.x << " | " << v.y << " |\n";
+		std::cout << "Should be : 1.5980762; 3.232050807\n\n";
 	}
 
 	// p2Vec2 : Normalize

@@ -29,8 +29,6 @@ SOFTWARE.
 
 #include <p2vector.h>
 
-
-
 struct p2Mat22
 {
 	p2Mat22();
@@ -62,7 +60,7 @@ struct p2Mat22
 	* \param v Vector2 to rotate
 	* \param angle Angle to apply to the Vector2 in radian
 	*/
-	p2Vec2 RotateVector2(p2Vec2 v, float angle);
+	static p2Vec2 RotateVector2(p2Vec2 v, float angle);
 	/**
 	* \brief Print in the console the Matrix
 	*/
