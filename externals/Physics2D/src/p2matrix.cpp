@@ -133,6 +133,15 @@ float p2Mat22::GetDeterminant()
 	return this->columns[0].x  * this->columns[1].y - this->columns[1].x  * this->columns[0].y;
 }
 
+p2Vec2 p2Mat22::RotateVector2(p2Vec2 v, float angle)
+{
+	p2Mat22 rotationMatrix(
+		p2Vec2(cos(angle), sin(angle)),
+		p2Vec2(-sin(angle), cos(angle))
+	);
+	return rotationMatrix * v;
+}
+
 void p2Mat22::printDebug()
 {
 	std::cout << "| " << columns[0].x << " | " << columns[1].x << " |\n";
