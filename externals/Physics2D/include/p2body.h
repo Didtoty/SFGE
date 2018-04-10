@@ -49,6 +49,8 @@ struct p2BodyDef
 	
 };
 
+// ADD LIST OF COLLIDERS
+
 /**
 * \brief Rigidbody representation
 */

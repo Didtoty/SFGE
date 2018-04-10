@@ -31,6 +31,8 @@ SOFTWARE.
 #include <p2aabb.h>
 #include <p2body.h>
 
+#include <p2contact.h>
+
 /**
 * \brief Representation of a tree with 4 branches containing p2Body defined by their p2AABB
 */
@@ -60,7 +62,7 @@ public:
 	/**
 	* Return a list of all the p2Body that might collide
 	*/
-	void Retrieve();
+	std::list<p2Contact> Retrieve();
 	
 private:
 
