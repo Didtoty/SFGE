@@ -28,6 +28,7 @@ SOFTWARE.
 #include <p2vector.h>
 #include <p2body.h>
 #include <p2contact.h>
+#include <list>
 
 /**
 * \brief Representation of the physical world in meter
@@ -49,7 +50,10 @@ public:
 	*/
 	void SetContactListener(p2ContactListener* contactListener);
 private:
-	
+	p2Vec2 m_gravity;
+	std::list<p2Body*> m_bodyList;
+
+	p2ContactListener * m_contactListener;
 };
 
 #endif

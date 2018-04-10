@@ -33,8 +33,13 @@ SOFTWARE.
 class p2Contact
 {
 public:
+	p2Contact(p2Collider* colliderA, p2Collider* colliderB);
+
 	p2Collider* GetColliderA();
 	p2Collider* GetColliderB();
+private:
+	p2Collider* m_colliderA;
+	p2Collider* m_colliderB;
 };
 
 /**

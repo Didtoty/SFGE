@@ -24,12 +24,16 @@ SOFTWARE.
 
 #include <p2contact.h>
 
+p2Contact::p2Contact(p2Collider * colliderA, p2Collider* colliderB) : m_colliderA(colliderA), m_colliderB(colliderB)
+{
+}
+
 p2Collider * p2Contact::GetColliderA()
 {
-	return nullptr;
+	return m_colliderA;
 }
 
 p2Collider * p2Contact::GetColliderB()
 {
-	return nullptr;
+	return m_colliderB;
 }

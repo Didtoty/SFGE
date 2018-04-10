@@ -24,19 +24,27 @@ SOFTWARE.
 #include <p2world.h>
 
 
-p2World::p2World(p2Vec2 gravity)
+p2World::p2World(p2Vec2 gravity) : 
+	m_gravity(gravity)
 {
 }
 
 void p2World::Step(float dt)
 {
+	for (auto bodyItr = m_bodyList.begin(); bodyItr != m_bodyList.end(); bodyItr++)
+	{
+		(*bodyItr)->Step(dt);
+	}
 }
 
 p2Body * p2World::CreateBody(p2BodyDef* bodyDef)
 {
-	return nullptr;
+	p2Body* body = new p2Body(bodyDef);
+	m_bodyList.push_back(body);
+	return body;
 }
 
 void p2World::SetContactListener(p2ContactListener * contactListener)
 {
+	this->m_contactListener = contactListener;
 }

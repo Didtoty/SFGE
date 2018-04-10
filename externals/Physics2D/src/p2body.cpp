@@ -22,27 +22,50 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #include <p2body.h>
+#include <p2collider.h>
+
+p2Body::p2Body(p2BodyDef* bodyDef) :
+	m_type(bodyDef->type),
+	m_position(bodyDef->position),
+	m_linearVelocity(bodyDef->linearVelocity),
+	m_gravityScale(bodyDef->gravityScale),
+	m_mass(bodyDef->mass)
+{
+
+}
+
+void p2Body::Step(float dt)
+{
+}
 
 p2Vec2 p2Body::GetLinearVelocity()
 {
-	return p2Vec2();
+	return m_linearVelocity;
 }
 
 void p2Body::SetLinearVelocity(p2Vec2 velocity)
 {
-
+	this->m_linearVelocity = velocity;
 }
+
 float p2Body::GetAngularVelocity()
 {
-	return 0.0f;
+	return m_angularVelocity;
+}
+
+float p2Body::GetGravityScale()
+{
+	return m_gravityScale;
 }
 
 p2Vec2 p2Body::GetPosition()
 {
-	return p2Vec2();
+	return m_position;
 }
 
 p2Collider * p2Body::CreateCollider(p2ColliderDef * colliderDef)
 {
-	return nullptr;
+	p2Collider* collider = new p2Collider(colliderDef);
+	m_colliderList.push_back(collider);
+	return collider;
 }
