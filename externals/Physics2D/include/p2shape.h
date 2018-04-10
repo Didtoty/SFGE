@@ -41,10 +41,13 @@ class p2Shape
 class p2CircleShape : public p2Shape
 {
 public:
+	p2CircleShape();
+	p2CircleShape(float radius);
 	/**
 	* \brief Setter for the radius
 	*/
 	void SetRadius(float radius);
+	float GetRadius();
 private:
 	float m_Radius;
 };
@@ -55,7 +58,11 @@ private:
 class p2RectShape : public p2Shape
 {
 public:
+	p2RectShape();
+	p2RectShape(p2Vec2 size);
+
 	void SetSize(p2Vec2 size);
+	p2Vec2 GetSize();
 private:
 	p2Vec2 m_Size;
 };
