@@ -92,10 +92,31 @@ Body2d * Body2d::LoadBody2d(Engine & engine, GameObject * gameObject, json& comp
 			bodyDef.position += pixel2meter(sf::Vector2f(componentJson["offset"]["x"], componentJson["offset"]["y"]));
 		}
 	}
+
+	if (CheckJsonParameter(componentJson, "velocity", json::value_t::array))
+	{
+		p2Vec2 newVelocity;
+		if (IsJsonValueNumeric(componentJson["velocity"][0]))
+		{
+			newVelocity.x = componentJson["velocity"][0];
+		}
+		if (IsJsonValueNumeric(componentJson["velocity"][1]))
+		{
+			newVelocity.y = componentJson["velocity"][1];
+		}
+		bodyDef.linearVelocity = newVelocity;
+	}
+
+	if (CheckJsonNumber(componentJson, "mass"))
+	{
+		bodyDef.mass = componentJson["mass"];
+	}
+
 	if (CheckJsonNumber(componentJson, "gravity_scale"))
 	{
 		bodyDef.gravityScale = componentJson["gravity_scale"];
 	}
+
 
 	p2Body* body = world->CreateBody(&bodyDef);
 	Body2d* bodyComponent = new Body2d(gameObject);

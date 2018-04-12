@@ -38,7 +38,6 @@ void PhysicsManager::Init()
 	m_World = new p2World(gravity);
 	m_ContactListener = new ContactListener();
 	m_World->SetContactListener(m_ContactListener);
-
 }
 
 void PhysicsManager::Update(sf::Time dt)
@@ -53,7 +52,6 @@ p2World * PhysicsManager::GetWorld()
 {
 	return m_World;
 }
-
 
 void PhysicsManager::Destroy()
 {
