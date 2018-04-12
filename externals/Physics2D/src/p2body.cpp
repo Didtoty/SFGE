@@ -24,6 +24,10 @@ SOFTWARE.
 #include <p2body.h>
 #include <p2collider.h>
 
+p2Body::p2Body()
+{
+}
+
 p2Body::p2Body(p2BodyDef* bodyDef) :
 	m_type(bodyDef->type),
 	m_position(bodyDef->position),
@@ -34,8 +38,14 @@ p2Body::p2Body(p2BodyDef* bodyDef) :
 
 }
 
-void p2Body::Step(float dt)
+p2Body::~p2Body()
 {
+	auto itr = m_colliderList.begin();
+	while (itr != m_colliderList.end())
+	{
+		delete(*itr);
+		itr = m_colliderList.erase(itr);
+	}
 }
 
 p2Vec2 p2Body::GetLinearVelocity()
@@ -61,6 +71,16 @@ float p2Body::GetGravityScale()
 p2Vec2 p2Body::GetPosition()
 {
 	return m_position;
+}
+
+void p2Body::SetPosition(p2Vec2 newPos)
+{
+	m_position = newPos;
+}
+
+float p2Body::GetMass()
+{
+	return m_mass;
 }
 
 p2Collider * p2Body::CreateCollider(p2ColliderDef * colliderDef)

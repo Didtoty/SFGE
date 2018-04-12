@@ -43,7 +43,7 @@ std::list<p2Contact> p2QuadTree::Retrieve()
 				{
 					//if ((*objItr)->aabb.Contains((*objSecondItr)->aabb))
 					{
-						contactList.push_back(p2Contact()); // (*objItr), (*objSecondItr)
+//						contactList.push_back(p2Contact()); // (*objItr), (*objSecondItr)
 					}
 
 					objSecondItr++;
@@ -70,7 +70,7 @@ std::list<p2Contact> p2QuadTree::Retrieve()
 				{
 					//if ((*objItr)->aabb.Contains((*objSecondItr)->aabb))
 					{
-						contactList.push_back(p2Contact()); // (*objItr), (*objSecondItr)
+//						contactList.push_back(p2Contact()); // (*objItr), (*objSecondItr)
 					}
 				}
 			}

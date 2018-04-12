@@ -24,16 +24,42 @@ SOFTWARE.
 #include <p2world.h>
 
 
-p2World::p2World(p2Vec2 gravity) : 
+p2World::~p2World()
+{
+	auto itr = m_bodyList.begin();
+	while (itr != m_bodyList.end())
+	{
+		delete(*itr);
+		itr = m_bodyList.erase(itr);
+	}
+}
+
+p2World::p2World(p2Vec2 gravity) :
 	m_gravity(gravity)
 {
 }
 
 void p2World::Step(float dt)
 {
-	for (auto bodyItr = m_bodyList.begin(); bodyItr != m_bodyList.end(); bodyItr++)
+	for (auto body : m_bodyList)
 	{
-		(*bodyItr)->Step(dt);
+		/* ->PlaneteClassTest et balancé dans le body via AddForce.
+		//Force calculus
+		p2Vec2 deltaPos = p2Vec2(400.0f, 400.0f) - body->GetPosition();
+		p2Vec2 forceGravitation = deltaPos.Normalized();
+		//forceGravitation *= SUN_MASS * body->GetMass() / deltaPos.LenghSquared();
+		*/
+		//Acceleration calculus
+		p2Vec2 acceleration = m_gravity;
+		acceleration *= 1.0f / body->GetMass();
+
+		//Kinematic Resolution
+		p2Vec2 deltaV = acceleration * dt;
+
+		p2Vec2 newLinearVel = deltaV + body->GetLinearVelocity();
+		body->SetLinearVelocity(newLinearVel);
+		body->SetPosition(newLinearVel * dt);
+
 	}
 }
 
@@ -42,6 +68,12 @@ p2Body * p2World::CreateBody(p2BodyDef* bodyDef)
 	p2Body* body = new p2Body(bodyDef);
 	m_bodyList.push_back(body);
 	return body;
+}
+
+void p2World::RemoveBody(p2Body * body)
+{
+	m_bodyList.remove(body);
+	
 }
 
 void p2World::SetContactListener(p2ContactListener * contactListener)

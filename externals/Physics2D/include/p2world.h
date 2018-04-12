@@ -36,6 +36,8 @@ SOFTWARE.
 class p2World
 {
 public:
+	~p2World();
+
 	p2World(p2Vec2 gravity);
 	/**
 	* \brief Simulate a new step of the physical world, simplify the resolution with a QuadTree, generate the new contacts
@@ -45,6 +47,8 @@ public:
 	* \brief Factory method to create a new p2Body attached to the p2World
 	*/
 	p2Body* CreateBody(p2BodyDef* bodyDef);
+
+	void RemoveBody(p2Body* body);
 	/**
 	* \brief Set the contact listener
 	*/
