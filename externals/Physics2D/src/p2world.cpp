@@ -28,14 +28,14 @@ p2World::~p2World()
 {
 }
 
-p2World::p2World(p2Vec2 gravity) :
-	m_gravity(gravity)
+p2World::p2World(p2Vec2 gravity) :	m_Gravity(gravity)
 {
+
 }
 
 void p2World::Step(float dt)
 {
-	for (auto body : m_bodyList)
+	for (auto body : m_BodyList)
 	{
 		if (body->GetType() != p2BodyType::STATIC)
 		{
@@ -48,7 +48,7 @@ void p2World::Step(float dt)
 		*/
 
 			//Acceleration calculus
-			p2Vec2 acceleration = m_gravity;
+			p2Vec2 acceleration = m_Gravity;
 			acceleration *= body->GetGravityScale() / body->GetMass();
 
 			//Kinematic Resolution
@@ -64,17 +64,17 @@ void p2World::Step(float dt)
 p2Body * p2World::CreateBody(p2BodyDef* bodyDef)
 {
 	p2Body* body = new p2Body(bodyDef);
-	m_bodyList.push_back(body);
+	m_BodyList.push_back(body);
 	return body;
 }
 
 void p2World::RemoveBody(p2Body * body)
 {
-	m_bodyList.remove(body);
+	m_BodyList.remove(body);
 	
 }
 
 void p2World::SetContactListener(p2ContactListener * contactListener)
 {
-	this->m_contactListener = contactListener;
+	this->m_ContactListener = contactListener;
 }

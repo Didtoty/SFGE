@@ -56,10 +56,10 @@ public:
 	*/
 	void SetContactListener(p2ContactListener* contactListener);
 private:
-	p2Vec2 m_gravity;
-	std::list<p2Body*> m_bodyList;
+	p2Vec2 m_Gravity;
+	std::list<p2Body*> m_BodyList;
 
-	p2ContactListener * m_contactListener;
+	p2ContactListener * m_ContactListener;
 };
 
 #endif

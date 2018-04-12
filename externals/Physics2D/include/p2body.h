@@ -84,15 +84,15 @@ public:
 
 	void AddForce();
 private:
-	p2AABB m_aabb;
-	p2BodyType m_type;
-	p2Vec2 m_position;
-	p2Vec2 m_linearVelocity;
-	float m_angularVelocity;
-	float m_gravityScale;
-	float m_mass;
+	p2AABB m_AABB;
+	p2BodyType m_Type;
+	p2Vec2 m_Position;
+	p2Vec2 m_LinearVelocity;
+	float m_AngularVelocity;
+	float m_GravityScale;
+	float m_Mass;
 
-	std::list<p2Collider*> m_colliderList;
+	std::list<p2Collider*> m_ColliderList;
 };
 
 #endif

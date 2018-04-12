@@ -29,11 +29,11 @@ p2Body::p2Body()
 }
 
 p2Body::p2Body(p2BodyDef* bodyDef) :
-	m_type(bodyDef->type),
-	m_position(bodyDef->position),
-	m_linearVelocity(bodyDef->linearVelocity),
-	m_gravityScale(bodyDef->gravityScale),
-	m_mass(bodyDef->mass)
+	m_Type(bodyDef->type),
+	m_Position(bodyDef->position),
+	m_LinearVelocity(bodyDef->linearVelocity),
+	m_GravityScale(bodyDef->gravityScale),
+	m_Mass(bodyDef->mass)
 {
 
 }
@@ -44,48 +44,48 @@ p2Body::~p2Body()
 
 p2Vec2 p2Body::GetLinearVelocity()
 {
-	return m_linearVelocity;
+	return m_LinearVelocity;
 }
 
 void p2Body::SetLinearVelocity(p2Vec2 velocity)
 {
-	this->m_linearVelocity = velocity;
+	m_LinearVelocity = velocity;
 }
 
 float p2Body::GetAngularVelocity()
 {
-	return m_angularVelocity;
+	return m_AngularVelocity;
 }
 
 float p2Body::GetGravityScale()
 {
-	return m_gravityScale;
+	return m_GravityScale;
 }
 
 p2Vec2 p2Body::GetPosition()
 {
-	return m_position;
+	return m_Position;
 }
 
 void p2Body::SetPosition(p2Vec2 newPos)
 {
-	m_position = newPos;
+	m_Position = newPos;
 }
 
 p2BodyType p2Body::GetType()
 {
-	return m_type;
+	return m_Type;
 }
 
 float p2Body::GetMass()
 {
-	return m_mass;
+	return m_Mass;
 }
 
 p2Collider * p2Body::CreateCollider(p2ColliderDef * colliderDef)
 {
 	p2Collider* collider = new p2Collider(colliderDef);
-	m_colliderList.push_back(collider);
+	m_ColliderList.push_back(collider);
 	return collider;
 }
 
