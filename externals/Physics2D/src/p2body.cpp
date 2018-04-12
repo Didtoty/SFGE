@@ -40,12 +40,6 @@ p2Body::p2Body(p2BodyDef* bodyDef) :
 
 p2Body::~p2Body()
 {
-	auto itr = m_colliderList.begin();
-	while (itr != m_colliderList.end())
-	{
-		delete(*itr);
-		itr = m_colliderList.erase(itr);
-	}
 }
 
 p2Vec2 p2Body::GetLinearVelocity()
@@ -78,6 +72,11 @@ void p2Body::SetPosition(p2Vec2 newPos)
 	m_position = newPos;
 }
 
+p2BodyType p2Body::GetType()
+{
+	return m_type;
+}
+
 float p2Body::GetMass()
 {
 	return m_mass;
@@ -88,4 +87,8 @@ p2Collider * p2Body::CreateCollider(p2ColliderDef * colliderDef)
 	p2Collider* collider = new p2Collider(colliderDef);
 	m_colliderList.push_back(collider);
 	return collider;
+}
+
+void p2Body::AddForce()
+{
 }

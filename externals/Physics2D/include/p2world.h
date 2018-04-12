@@ -47,7 +47,9 @@ public:
 	* \brief Factory method to create a new p2Body attached to the p2World
 	*/
 	p2Body* CreateBody(p2BodyDef* bodyDef);
-
+	/**
+	* \brief Remove a p2Body from the current world
+	*/
 	void RemoveBody(p2Body* body);
 	/**
 	* \brief Set the contact listener

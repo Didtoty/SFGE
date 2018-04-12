@@ -22,16 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #include <p2world.h>
-
+#include <p2body.h>
 
 p2World::~p2World()
 {
-	auto itr = m_bodyList.begin();
-	while (itr != m_bodyList.end())
-	{
-		delete(*itr);
-		itr = m_bodyList.erase(itr);
-	}
 }
 
 p2World::p2World(p2Vec2 gravity) :
@@ -43,23 +37,27 @@ void p2World::Step(float dt)
 {
 	for (auto body : m_bodyList)
 	{
+		if (body->GetType() != p2BodyType::STATIC)
+		{
+
 		/* ->PlaneteClassTest et balancé dans le body via AddForce.
 		//Force calculus
 		p2Vec2 deltaPos = p2Vec2(400.0f, 400.0f) - body->GetPosition();
 		p2Vec2 forceGravitation = deltaPos.Normalized();
 		//forceGravitation *= SUN_MASS * body->GetMass() / deltaPos.LenghSquared();
 		*/
-		//Acceleration calculus
-		p2Vec2 acceleration = m_gravity;
-		acceleration *= 1.0f / body->GetMass();
 
-		//Kinematic Resolution
-		p2Vec2 deltaV = acceleration * dt;
+			//Acceleration calculus
+			p2Vec2 acceleration = m_gravity;
+			acceleration *= body->GetGravityScale() / body->GetMass();
 
-		p2Vec2 newLinearVel = deltaV + body->GetLinearVelocity();
-		body->SetLinearVelocity(newLinearVel);
-		body->SetPosition(newLinearVel * dt);
+			//Kinematic Resolution
+			p2Vec2 deltaV = acceleration * dt;
 
+			p2Vec2 newLinearVel = deltaV + body->GetLinearVelocity();
+			body->SetLinearVelocity(newLinearVel);
+			body->SetPosition(acceleration * 0.5f * dt * dt + newLinearVel * dt + body->GetPosition());
+		}
 	}
 }
 

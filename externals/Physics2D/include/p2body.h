@@ -73,6 +73,7 @@ public:
 	p2Vec2 GetPosition();
 	void SetPosition(p2Vec2 newPos);
 
+	p2BodyType GetType();
 	float GetMass();
 	/**
 	* \brief Factory method creating a p2Collider
