@@ -71,9 +71,11 @@ public:
 	float GetGravityScale();
 
 	p2Vec2 GetPosition();
+
 	void SetPosition(p2Vec2 newPos);
 
 	p2BodyType GetType();
+
 	float GetMass();
 	/**
 	* \brief Factory method creating a p2Collider
@@ -82,7 +84,14 @@ public:
 	*/
 	p2Collider* CreateCollider(p2ColliderDef* colliderDef);
 
-	void AddForce();
+	/**
+	* \brief Add a force to the body, applied in his center
+	* \param force The force to apply to the body
+	*/
+	void ApplyForce(p2Vec2 force);
+	
+	p2Vec2 GetForces();
+	void SetForceToZero();
 private:
 	p2AABB m_AABB;
 	p2BodyType m_Type;
@@ -91,6 +100,7 @@ private:
 	float m_AngularVelocity;
 	float m_GravityScale;
 	float m_Mass;
+	p2Vec2 m_Forces;
 
 	std::list<p2Collider*> m_ColliderList;
 };

@@ -6,18 +6,18 @@ class PlanetesTest(Component):
         self.body = self.game_object.get_component(Component.Body)
 
     def update(self, dt):
+        massSun = 500.0
+        posSun = [300, 300]
         current_pos = self.game_object.transform.get_position()
-        print("current_pos : " + str(current_pos.x) + ";" + str(current_pos.y))
-        r = p2Vec2(300 - current_pos.x, 300 - current_pos.y)
+        current_mass = self.body.get_mass()
+        r = p2Vec2(posSun[0] - current_pos.x, posSun[1] - current_pos.y)
         magnitude = math.sqrt(r.x**2 + r.y**2)
-        #print("magnitude : " + str(magnitude))
-        n = p2Vec2(r.x / magnitude, r.y / magnitude)
-        newVel = p2Vec2(n.x * 500.0, n.y * 500.0) 
-        newVel = p2Vec2(newVel.x / magnitude / magnitude, newVel.y / magnitude / magnitude)
-        print("newVel : " + str(newVel.x) + ";" + str(newVel.y))
-        print("oldVel : " + str(self.body.velocity.x) + ";" + str(self.body.velocity.y))
+        gravitationForce = massSun * current_mass / magnitude / magnitude
+
+        force = p2Vec2(r.x * gravitationForce, r.y * gravitationForce)
+        
         if self.body:
-            self.body.velocity = p2Vec2(self.body.velocity.x + newVel.x, self.body.velocity.y + newVel.y)
+            self.body.apply_force(force)
 
     def on_trigger_enter(self, collider):
         pass

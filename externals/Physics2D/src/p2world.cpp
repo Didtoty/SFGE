@@ -35,6 +35,7 @@ p2World::p2World(p2Vec2 gravity) :	m_Gravity(gravity)
 
 void p2World::Step(float dt)
 {
+	p2Vec2 aGravity = m_Gravity;
 	for (auto body : m_BodyList)
 	{
 		if (body->GetType() != p2BodyType::STATIC)
@@ -48,15 +49,16 @@ void p2World::Step(float dt)
 		*/
 
 			//Acceleration calculus
-			p2Vec2 acceleration = m_Gravity;
-			acceleration *= body->GetGravityScale() / body->GetMass();
+			p2Vec2 a = (aGravity *body->GetGravityScale() + body->GetForces()) / body->GetMass();
 
-			//Kinematic Resolution
-			p2Vec2 deltaV = acceleration * dt;
+			//Resolve new velocity
+			p2Vec2 v = a * dt + body->GetLinearVelocity();
 
-			p2Vec2 newLinearVel = deltaV + body->GetLinearVelocity();
-			body->SetLinearVelocity(newLinearVel);
-			body->SetPosition(acceleration * 0.5f * dt * dt + newLinearVel * dt + body->GetPosition());
+			//Apply new Velocity
+			body->SetLinearVelocity(v);
+			body->SetPosition(a * 0.5f * dt * dt + v * dt + body->GetPosition());
+
+			body->SetForceToZero();
 		}
 	}
 }

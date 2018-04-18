@@ -89,6 +89,17 @@ p2Collider * p2Body::CreateCollider(p2ColliderDef * colliderDef)
 	return collider;
 }
 
-void p2Body::AddForce()
+void p2Body::ApplyForce(p2Vec2 force)
 {
+	m_Forces += force;
+}
+
+p2Vec2 p2Body::GetForces()
+{
+	return m_Forces;
+}
+
+void p2Body::SetForceToZero()
+{
+	m_Forces = p2Vec2(0, 0);
 }

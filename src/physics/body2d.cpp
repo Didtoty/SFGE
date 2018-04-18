@@ -65,6 +65,19 @@ p2Vec2 Body2d::GetVelocity()
 	return p2Vec2();
 }
 
+void Body2d::ApplyForce(p2Vec2 v)
+{
+	if (m_Body != nullptr)
+		m_Body->ApplyForce(v);
+}
+
+float Body2d::GetMass()
+{
+	if (m_Body != nullptr)
+		return m_Body->GetMass();
+	return 0.0f;
+}
+
 
 
 Body2d * Body2d::LoadBody2d(Engine & engine, GameObject * gameObject, json& componentJson)

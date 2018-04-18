@@ -53,8 +53,6 @@ namespace sfge
 
 PYBIND11_EMBEDDED_MODULE(SFGE, m)
 {
-
-
 	py::class_<Engine> engine(m, "Engine");
 
 	py::class_<Module> module(m, "Module");
@@ -123,7 +121,9 @@ PYBIND11_EMBEDDED_MODULE(SFGE, m)
 
 	py::class_<Body2d, Component> body(m, "Body");
 	body
-		.def_property("velocity", &Body2d::GetVelocity, &Body2d::SetVelocity);
+		.def_property("velocity", &Body2d::GetVelocity, &Body2d::SetVelocity)
+		.def("apply_force", &Body2d::ApplyForce)
+		.def("get_mass", &Body2d::GetMass);
 
 	py::class_<Sound, Component> sound(m, "Sound");
 	sound
@@ -175,12 +175,7 @@ PYBIND11_EMBEDDED_MODULE(SFGE, m)
 		.def(py::init<float, float>())
 		.def_readwrite("x", &p2Vec2::x)
 		.def_readwrite("y", &p2Vec2::y);
-		
 }
-
-
-
-
 
 void PythonManager::Init()
 {
