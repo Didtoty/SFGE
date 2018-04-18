@@ -40,14 +40,6 @@ void p2World::Step(float dt)
 	{
 		if (body->GetType() != p2BodyType::STATIC)
 		{
-
-		/* ->PlaneteClassTest et balancé dans le body via AddForce.
-		//Force calculus
-		p2Vec2 deltaPos = p2Vec2(400.0f, 400.0f) - body->GetPosition();
-		p2Vec2 forceGravitation = deltaPos.Normalized();
-		//forceGravitation *= SUN_MASS * body->GetMass() / deltaPos.LenghSquared();
-		*/
-
 			//Acceleration calculus
 			p2Vec2 a = (aGravity *body->GetGravityScale() + body->GetForces()) / body->GetMass();
 
@@ -58,6 +50,7 @@ void p2World::Step(float dt)
 			body->SetLinearVelocity(v);
 			body->SetPosition(a * 0.5f * dt * dt + v * dt + body->GetPosition());
 
+			// Reset all forces
 			body->SetForceToZero();
 		}
 	}
