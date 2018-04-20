@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 #include <p2contact.h>
+#include <list>
 
 p2Contact::p2Contact(p2Collider * colliderA, p2Collider* colliderB) : m_colliderA(colliderA), m_colliderB(colliderB)
 {
@@ -36,4 +37,38 @@ p2Collider * p2Contact::GetColliderA()
 p2Collider * p2Contact::GetColliderB()
 {
 	return m_colliderB;
+}
+
+bool p2Contact::isTouching()
+{
+	return true;
+}
+
+p2ContactManager::p2ContactManager()
+{
+	m_ContactList = std::list<p2Contact*>();
+}
+
+p2ContactManager::~p2ContactManager()
+{
+}
+
+void p2ContactManager::AddContact(p2Contact* contact)
+{
+	this->m_ContactList.push_back(contact);
+}
+
+void p2ContactManager::AddContacts(std::list<p2Contact*> contacts)
+{
+	this->m_ContactList.merge(contacts);
+}
+
+void p2ContactManager::RemoveContact(p2Contact* contact)
+{
+	this->m_ContactList.remove(contact);
+}
+
+void p2ContactManager::ResolveContacts(p2ContactListener* listener)
+{
+
 }

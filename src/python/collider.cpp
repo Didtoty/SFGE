@@ -75,7 +75,7 @@ Collider* Collider::LoadCollider(Engine & engine, GameObject * gameObject, json 
 		p2Shape* shape = nullptr;
 		switch (colliderType)
 		{
-		case ColliderType::CIRCLE:
+			case ColliderType::CIRCLE:
 			{
 				p2CircleShape* circleShape = new p2CircleShape();
 				if (CheckJsonNumber(componentJson, "radius"))
@@ -84,15 +84,15 @@ Collider* Collider::LoadCollider(Engine & engine, GameObject * gameObject, json 
 				}
 				shape = circleShape;
 			}
-		break;
-		case ColliderType::RECTANGLE:
+			break;
+			case ColliderType::RECTANGLE:
 			{
 				p2RectShape* rectShape = new p2RectShape();
 				p2Vec2 boxSize = pixel2meter(GetVectorFromJson(componentJson, "size"));
 				rectShape->SetSize(boxSize);
 				shape = rectShape;
-				break; 
 			}
+			break;
 		}
 		if (CheckJsonNumber(componentJson, "bouncing"))
 		{
@@ -108,10 +108,12 @@ Collider* Collider::LoadCollider(Engine & engine, GameObject * gameObject, json 
 		}
 		
 		collider->m_PhysicsCollider = body2d->GetBody()->CreateCollider(&colliderDef);
-		if (shape != nullptr)
+		// Can I know why you delete the shape we just created? It's a pointer.
+		/*if (shape != nullptr)
 		{
 			delete(shape);
 		}
+		*/
 		return collider;
 	}
 	else

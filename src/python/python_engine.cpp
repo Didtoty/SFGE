@@ -169,8 +169,8 @@ PYBIND11_EMBEDDED_MODULE(SFGE, m)
 		.def_readwrite("x", &sf::Vector2f::x)
 		.def_readwrite("y", &sf::Vector2f::y);
 
-	py::class_<p2Vec2> b2vec2(m, "p2Vec2");
-	b2vec2
+	py::class_<p2Vec2> p2vec2(m, "p2Vec2");
+	p2vec2
 		.def(py::init<>())
 		.def(py::init<float, float>())
 		.def_readwrite("x", &p2Vec2::x)

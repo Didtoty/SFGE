@@ -35,7 +35,7 @@ p2Body::p2Body(p2BodyDef* bodyDef) :
 	m_GravityScale(bodyDef->gravityScale),
 	m_Mass(bodyDef->mass)
 {
-
+	
 }
 
 p2Body::~p2Body()
@@ -82,6 +82,16 @@ float p2Body::GetMass()
 	return m_Mass;
 }
 
+p2AABB p2Body::GetAABB()
+{
+	return m_AABB;
+}
+
+std::list<p2Collider*> p2Body::GetColliderList()
+{
+	return m_ColliderList;
+}
+
 p2Collider * p2Body::CreateCollider(p2ColliderDef * colliderDef)
 {
 	p2Collider* collider = new p2Collider(colliderDef);
@@ -102,4 +112,34 @@ p2Vec2 p2Body::GetForces()
 void p2Body::SetForceToZero()
 {
 	m_Forces = p2Vec2(0, 0);
+}
+
+void p2Body::CalculateAABB()
+{
+	// Reset the current values
+	p2Vec2 newBottomLeft = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+	p2Vec2 newTopRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<int>::min());
+
+	for (auto col : m_ColliderList)
+	{
+		p2Shape* shape = col->GetShape();
+		if (shape == nullptr)
+			continue;
+
+		p2Vec2 colTopRight = shape->GetTopRight();
+		p2Vec2 colBotLeft = shape->GetBottomLeft();
+
+		if (newBottomLeft.x > colBotLeft.x)
+			newBottomLeft.x = colBotLeft.x;
+		if (newBottomLeft.y > colBotLeft.y)
+			newBottomLeft.y = colBotLeft.y;
+
+		if (newTopRight.x < colTopRight.x)
+			newTopRight.x = colTopRight.x;
+		if (newTopRight.y < colTopRight.y)
+			newTopRight.y = colTopRight.y;
+	}
+
+	m_AABB.bottomLeft = m_Position + newBottomLeft;
+	m_AABB.topRight = m_Position + newTopRight;
 }

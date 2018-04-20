@@ -62,11 +62,9 @@ public:
 	/**
 	* Return a list of all the p2Body that might collide
 	*/
-	std::list<p2Contact> Retrieve();
+	std::list<p2Contact *> Retrieve();
 	
 private:
-
-
 	static const int MAX_OBJECTS = 10;
 	static const int MAX_LEVELS = 5;
 	static const int CHILD_TREE_NMB = 4;

@@ -16,6 +16,16 @@ p2Collider::~p2Collider()
 {
 }
 
+p2Shape * p2Collider::GetShape()
+{
+	return m_shape;
+}
+
+void p2Collider::SetShape(p2Shape* shape)
+{
+	m_shape = shape;
+}
+
 bool p2Collider::IsSensor()
 {
 	return m_isSensor;

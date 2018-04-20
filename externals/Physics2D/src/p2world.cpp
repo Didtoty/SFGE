@@ -23,18 +23,49 @@ SOFTWARE.
 */
 #include <p2world.h>
 #include <p2body.h>
+#include <p2quadtree.h>
 
 p2World::~p2World()
 {
 }
 
-p2World::p2World(p2Vec2 gravity) :	m_Gravity(gravity)
+p2World::p2World(p2Vec2 gravity, bool drawDebug) :	m_Gravity(gravity), m_DrawDebug(drawDebug)
 {
-
+	m_LastQuadTree = nullptr;
 }
 
 void p2World::Step(float dt)
 {
+	// Calculate AABB of all bodies
+	for (auto body : m_BodyList)
+		body->CalculateAABB();
+
+	// Resolve Collisions
+	p2AABB worldSpace = p2AABB();
+	worldSpace.bottomLeft = p2Vec2(0.0f, 800.0f);
+	worldSpace.topRight = p2Vec2(1200.0f, 0.0f);
+	p2QuadTree* quadTree = new p2QuadTree(0, worldSpace);
+
+	for (auto body : m_BodyList)
+		quadTree->Insert(body);
+
+	delete(m_LastQuadTree);
+	m_LastQuadTree = quadTree;
+
+	// AddNewContacts
+	for (auto contact : quadTree->Retrieve())
+	{
+		if (contact->isTouching())
+		{
+			m_ContactListener->BeginContact(contact);
+		}
+		else
+		{
+			m_ContactListener->BeginContact(contact);
+		}
+	}
+
+	// Update velocity of all bodies and resolve forces
 	p2Vec2 aGravity = m_Gravity;
 	for (auto body : m_BodyList)
 	{
@@ -46,9 +77,10 @@ void p2World::Step(float dt)
 			//Resolve new velocity
 			p2Vec2 v = a * dt + body->GetLinearVelocity();
 
-			//Apply new Velocity
+			//Apply new Velocity and new Position
 			body->SetLinearVelocity(v);
-			body->SetPosition(a * 0.5f * dt * dt + v * dt + body->GetPosition());
+			body->SetPosition(v * dt + body->GetPosition());
+			//body->SetPosition(a * 0.5f * dt * dt + v * dt + body->GetPosition());
 
 			// Reset all forces
 			body->SetForceToZero();
@@ -72,4 +104,14 @@ void p2World::RemoveBody(p2Body * body)
 void p2World::SetContactListener(p2ContactListener * contactListener)
 {
 	this->m_ContactListener = contactListener;
+}
+
+std::list<p2Body*> p2World::GetBodies()
+{
+	return m_BodyList;
+}
+
+p2QuadTree* p2World::GetLastQuadTree()
+{
+	return m_LastQuadTree;
 }

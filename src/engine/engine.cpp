@@ -201,12 +201,21 @@ PhysicsManager * Engine::GetPhysicsManager()
 	return m_PhysicsManager;
 }
 
+Editor * Engine::GetEditor()
+{
+	return m_Editor;
+}
+
+std::shared_ptr<sf::RenderWindow> Engine::GetWindow()
+{
+	return m_Window;
+}
+
 
 Module::Module(Engine& engine, bool enable=true) :
 		m_Engine(engine)
 {
 	m_Enable = enable;
-
 }
 
 void Module::SetEnable(bool enable)

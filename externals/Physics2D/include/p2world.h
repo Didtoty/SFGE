@@ -28,6 +28,8 @@ SOFTWARE.
 #include <p2vector.h>
 #include <p2body.h>
 #include <p2contact.h>
+#include <p2quadtree.h>
+
 #include <list>
 
 /**
@@ -38,7 +40,7 @@ class p2World
 public:
 	~p2World();
 
-	p2World(p2Vec2 gravity);
+	p2World(p2Vec2 gravity, bool drawDebug = false);
 	/**
 	* \brief Simulate a new step of the physical world, simplify the resolution with a QuadTree, generate the new contacts
 	*/
@@ -55,11 +57,17 @@ public:
 	* \brief Set the contact listener
 	*/
 	void SetContactListener(p2ContactListener* contactListener);
+
+	std::list<p2Body*> GetBodies();
+	p2QuadTree* GetLastQuadTree();
 private:
 	p2Vec2 m_Gravity;
 	std::list<p2Body*> m_BodyList;
 
 	p2ContactListener * m_ContactListener;
+	p2QuadTree* m_LastQuadTree;
+
+	bool m_DrawDebug;
 };
 
 #endif

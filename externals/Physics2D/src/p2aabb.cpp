@@ -23,13 +23,31 @@ SOFTWARE.
 */
 
 #include <p2aabb.h>
+#include <p2body.h>
+#include <p2collider.h>
+#include <p2shape.h>
+
+#include <limits>
+#include <cmath>
 
 p2Vec2 p2AABB::GetCenter()
 {
-	return bottomLeft + topRight * 0.5;
+	return (bottomLeft + topRight) * 0.5;
 }
 
-p2Vec2 p2AABB::GetExtends()
+p2Vec2 p2AABB::GetExtendsPosition()
 {
 	return this->GetCenter() + (topRight - bottomLeft) * 0.5f;
+}
+
+p2Vec2 p2AABB::GetExtendsValue()
+{
+	return (topRight - bottomLeft) * 0.5f;
+}
+
+bool p2AABB::Contains(p2AABB other)
+{
+	bool firstCond = abs(this->GetCenter().x - other.GetCenter().x) <= this->GetExtendsValue().x + other.GetExtendsValue().x;
+	bool secondCond = abs(this->GetCenter().y - other.GetCenter().y) <= this->GetExtendsValue().y + other.GetExtendsValue().y;
+	return firstCond && secondCond;
 }

@@ -27,14 +27,13 @@ SOFTWARE.
 
 #include <p2vector.h>
 
+class p2Body;
+
 /**
 * \brief Struct representing a Axis Aligned Bounding Box
 */
 struct p2AABB
 {
-	p2Vec2 bottomLeft;
-	p2Vec2 topRight;
-
 	/**
 	* \brief Calculate the center and return it
 	*/
@@ -42,6 +41,12 @@ struct p2AABB
 	/**
 	* \brief Calculate the extends and return it
 	*/
-	p2Vec2 GetExtends();
+	p2Vec2 GetExtendsPosition();
+	p2Vec2 GetExtendsValue();
+
+	bool Contains(p2AABB other);
+
+	p2Vec2 bottomLeft;
+	p2Vec2 topRight;
 };
 #endif // !SFGE_P2AABB:H

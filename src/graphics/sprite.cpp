@@ -41,7 +41,7 @@ void Sprite::Draw(sf::RenderWindow& window)
 	sprite.setPosition(m_GameObject->GetTransform()->GetPosition()+m_Offset);
 	sprite.setScale(m_GameObject->GetTransform()->GetScale());
 	sprite.setRotation(m_GameObject->GetTransform()->GetEulerAngle());
-	
+
 	window.draw(sprite);
 }
 void Sprite::SetTexture(sf::Texture* newTexture)
@@ -155,10 +155,6 @@ void SpriteManager::Reset()
 void SpriteManager::Collect()
 {
 }
-
-
-
-
 
 
 

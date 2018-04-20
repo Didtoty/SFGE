@@ -150,7 +150,6 @@ void Rectangle::Update(float time)
 
 Rectangle* Rectangle::LoadRectangle(json& componentJson, GameObject* gameObject)
 {
-
 	sf::Vector2f size;
 	size = GetVectorFromJson(componentJson, "size");
 	{

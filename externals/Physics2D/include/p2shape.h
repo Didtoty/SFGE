@@ -32,7 +32,9 @@ SOFTWARE.
 */
 class p2Shape
 {
-
+public:
+	virtual p2Vec2 GetBottomLeft() = 0;
+	virtual p2Vec2 GetTopRight() = 0;
 };
 
 /**
@@ -48,6 +50,9 @@ public:
 	*/
 	void SetRadius(float radius);
 	float GetRadius();
+
+	p2Vec2 GetBottomLeft();
+	p2Vec2 GetTopRight();
 private:
 	float m_Radius;
 };
@@ -63,6 +68,9 @@ public:
 
 	void SetSize(p2Vec2 size);
 	p2Vec2 GetSize();
+
+	p2Vec2 GetBottomLeft();
+	p2Vec2 GetTopRight();
 private:
 	p2Vec2 m_Size;
 };

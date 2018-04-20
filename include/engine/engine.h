@@ -106,6 +106,8 @@ public:
 	InputManager* GetInputManager();
 	PythonManager* GetPythonManager();
 	PhysicsManager* GetPhysicsManager();
+	Editor* GetEditor();
+	std::shared_ptr<sf::RenderWindow> GetWindow();
 
 	bool running = false;
 protected:

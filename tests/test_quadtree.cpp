@@ -22,119 +22,143 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <p2vector.h>
-#include <p2aabb.h>
-#include <p2body.h>
-#include <p2world.h>
-#include <p2shape.h>
-#include <p2collider.h>
+#define MIN_RANGE_TOP 50
+#define MAX_RANGE_BOTTOM 400
+#define MIN_RANGE_LEFT 50
+#define MAX_RANGE_RIGHT 400
 
-#include <SFML/Graphics.hpp>
+#define MIN_SPEED_X 2
+#define MAX_SPEED_X 15
+#define MIN_SPEED_Y 2
+#define MAX_SPEED_Y 15
+
+#include <engine/engine.h>
+#include <engine/scene.h>
+#include <graphics/graphics.h>
+#include <input/input.h>
+#include <python/python_engine.h>
+#include <engine/config.h>
+#include <audio/audio.h>
+#include <engine/editor.h>
+#include <graphics/sprite.h>
 #include <physics/physics.h>
+#include <engine/log.h>
+
+#include <SFML/System/Time.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics.hpp>
+
 #include <imgui-SFML.h>
 #include <imgui.h>
 
-#include <list>
-#include <cstdio>      /* printf, scanf, puts, NULL */
 #include <cstdlib>     /* srand, rand */
 #include <ctime>       /* time */
 
-
-
-
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 800), "QuadTree test");
-	//QuadTree quad(0, { b2Vec2(0,0), sfge::pixel2meter(sf::Vector2i(800,800)) });
-	p2World world(p2Vec2(0.0f, 9.81f));
+	sfge::Engine engine;
+	engine.Init(false, true);
+
+	engine.GetSceneManager()->SetCurrentScene("data/scenes/test_quadtree.scene");
+	p2World* currentWorld = engine.GetPhysicsManager()->GetWorld();
 
 	srand(time(NULL));
 
-	std::list<p2Body*> bodiesList;
-
-	const int objNmb = 1000;
-	for (int i = 0; i < objNmb; i++)
+	for (auto& body : currentWorld->GetBodies())
 	{
-		p2BodyDef bodyDef;
-		bodyDef.position = sfge::pixel2meter(sf::Vector2f(rand() % 800, rand() % 800));
-		bodyDef.linearVelocity = sfge::pixel2meter(sf::Vector2f(rand() % 10, rand() % 10));
-		p2Body* body = world.CreateBody(&bodyDef);
-
-		p2ColliderDef colliderDef;
-		
-		p2RectShape rectShape;
-		rectShape.SetSize(sfge::pixel2meter(sf::Vector2f((rand() % 100) - 50, (rand() % 100) - 50)));
-		colliderDef.shape = &rectShape;
-
-		body->CreateCollider(&colliderDef);
-
-		bodiesList.push_back(body);
+		body->SetPosition(sfge::pixel2meter(sf::Vector2f(rand() % MAX_RANGE_RIGHT + MIN_RANGE_TOP, rand() % MAX_RANGE_BOTTOM + MIN_RANGE_LEFT)));
+		body->SetLinearVelocity(sfge::pixel2meter(sf::Vector2f(rand() % MAX_SPEED_X + MIN_SPEED_X, rand() % MAX_SPEED_Y + MIN_SPEED_Y)));
 	}
-	ImGui::SFML::Init(window);
+
+	// engine.Start();
+	//ImGui::SFML::Init(*engine.GetWindow());
 	sf::Clock clock;
-	while (window.isOpen())
+	while (engine.running && engine.GetWindow() != nullptr)
 	{
 		sf::Time dt = clock.restart();
-		// check all the window's events that were triggered since the last iteration of the loop
 		sf::Event event;
-		while (window.pollEvent(event))
+		while (engine.GetWindow() != nullptr && engine.GetWindow()->pollEvent(event))
 		{
-			ImGui::SFML::ProcessEvent(event);
-			// "close requested" event: we close the window
+			//ImGui::SFML::ProcessEvent(event);
+			engine.GetEditor()->ProcessEvent(event);
 			if (event.type == sf::Event::Closed)
-				window.close();
+			{
+				engine.running = false;
+				engine.GetWindow()->close();
+			}
+
 		}
-		ImGui::SFML::Update(window, dt);
+		//ImGui::SFML::Update(*engine.GetWindow(), dt);
 
-		
-
-		world.Step(dt.asSeconds());
-		for (auto& body : bodiesList)
+		if (!engine.running)
 		{
-			//obj.Update(dt.asSeconds());
-			sf::Vector2f pos = sfge::meter2pixel(body->GetPosition());
-			p2Vec2 v = body->GetLinearVelocity();
-			if (pos.x < 0.0f && v.x<0.0f)
-			{
-				body->SetLinearVelocity(p2Vec2(-v.x, v.y));
-			}
-			else if (pos.x > 800.0f && v.x > 0.0f)
-			{
-				body->SetLinearVelocity(p2Vec2(-v.x, v.y));
-			}
-			if (pos.y < 0.0f && v.y<0.0f)
-			{
-				body->SetLinearVelocity(p2Vec2(v.x, -v.y));
-			}
-			else if (pos.y > 800.0f && v.y > 0.0f)
-			{
-				body->SetLinearVelocity(p2Vec2(v.x, -v.y));
-			}
+			continue;
 		}
-		auto contacts = quad.Retrieve();
+
+		int numContacts = 0;
+		if (currentWorld->GetLastQuadTree() != nullptr) 
+		{
+			numContacts = currentWorld->GetLastQuadTree()->Retrieve().size();
+		}
+		
+		/*
 		ImGui::Begin("Stats");
 		{
 			std::ostringstream oss;
-			oss << "FPS: " << 1.0f / dt.asSeconds()<<"\n"<<"Contact numbers: "<<contacts.size();
+			oss << "FPS: " << 1.0f / dt.asSeconds() << "\n" << "Contact numbers: " << numContacts;
 
 			ImGui::Text(oss.str().c_str());
 		}
 
 		ImGui::End();
-		window.clear(sf::Color::Black);
-
-		for (auto& obj : bodiesList)
+		*/
+		
+		// If the bodies goes too far, we swap their speed to come back into the scene
+		engine.GetPhysicsManager()->Update(dt);
+		for (auto& body : currentWorld->GetBodies())
 		{
-			//obj.Draw(window);
+			sf::Vector2f pos = sfge::meter2pixel(body->GetPosition());
+			p2Vec2 v = body->GetLinearVelocity();
+			if (pos.x < MIN_RANGE_LEFT && v.x<0.0f)
+			{
+				body->SetLinearVelocity(p2Vec2(-v.x, v.y));
+			}
+			else if (pos.x > MAX_RANGE_RIGHT && v.x > 0.0f)
+			{
+				body->SetLinearVelocity(p2Vec2(-v.x, v.y));
+			}
+			if (pos.y < MIN_RANGE_TOP && v.y < 0.0f)
+			{
+				body->SetLinearVelocity(p2Vec2(v.x, -v.y));
+			}
+			else if (pos.y > MAX_RANGE_BOTTOM && v.y > 0.0f)
+			{
+				body->SetLinearVelocity(p2Vec2(v.x, -v.y));
+			}
 		}
 
-		//quad.Update(dt.asSeconds());
-		//quad.Draw(window);
-		ImGui::SFML::Render(window);
+		engine.GetInputManager()->Update(dt);
+		engine.GetPythonManager()->Update(dt);
 
-		window.display();
+		engine.GetSceneManager()->Update(dt);
+
+		//ImGui::SFML::Render(*engine.GetWindow());
+		engine.GetEditor()->Update(dt);
+		if (engine.GetSceneManager()->IsSwitching())
+		{
+			engine.Collect();
+		}
+
+		engine.GetGraphicsManager()->Update(dt);
+		engine.GetEditor()->Draw();
+		engine.GetGraphicsManager()->Display();
 	}
-	ImGui::SFML::Shutdown();
+	//ImGui::SFML::Shutdown();
+	engine.Destroy();
 
+#if WIN32
+	system("pause");
+#endif
 	return EXIT_SUCCESS;
 }

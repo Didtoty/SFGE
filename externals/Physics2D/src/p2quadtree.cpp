@@ -23,13 +23,14 @@ int p2QuadTree::GetIndex(p2Body * rect)
 
 void p2QuadTree::Insert(p2Body * obj)
 {
+	m_Objects.push_back(obj);
 }
 
-std::list<p2Contact> p2QuadTree::Retrieve()
+std::list<p2Contact *> p2QuadTree::Retrieve()
 {
-	std::list<p2Contact> contactList;
-	if (nodes[0] == nullptr)
-	{
+	std::list<p2Contact *> contactList;
+	//if (nodes[0] == nullptr)
+	//{
 		if (m_Objects.size() > 1)
 		{
 			auto objItr = m_Objects.begin();
@@ -41,16 +42,22 @@ std::list<p2Contact> p2QuadTree::Retrieve()
 				objSecondItr++;
 				while (objSecondItr != m_Objects.end())
 				{
-					//if ((*objItr)->aabb.Contains((*objSecondItr)->aabb))
-					{
-//						contactList.push_back(p2Contact()); // (*objItr), (*objSecondItr)
+					if ((*objItr)->GetAABB().Contains((*objSecondItr)->GetAABB()))
+					{			
+						for(auto firstCollider : (*objItr)->GetColliderList())
+						{
+							for (auto secondCollider : (*objSecondItr)->GetColliderList())
+							{
+								contactList.push_back(new p2Contact(firstCollider, secondCollider));
+							}
+						}
 					}
-
 					objSecondItr++;
-				}
+				} // end while
 				objItr++;
-			}
-		}
+			} // end while
+		} // end if
+	/*
 	}
 	else
 	{
@@ -68,13 +75,24 @@ std::list<p2Contact> p2QuadTree::Retrieve()
 			{
 				for (auto childObjItr = nodes[i]->m_Objects.begin(); childObjItr != m_Objects.end(); childObjItr++) 
 				{
-					//if ((*objItr)->aabb.Contains((*objSecondItr)->aabb))
-					{
-//						contactList.push_back(p2Contact()); // (*objItr), (*objSecondItr)
-					}
-				}
-			}
-		}
+					if ((*objItr)->GetAABB().Contains((*childObjItr)->GetAABB()))
+					{			
+						auto contListItr = (*objItr)->GetColliderList().begin();
+						auto contListChildItr = (*childObjItr)->GetColliderList().begin();
+						while(contListItr != (*objItr)->GetColliderList().end())
+						{
+							while (contListChildItr != (*childObjItr)->GetColliderList().end())
+							{
+								contactList.push_back(p2Contact(*contListItr, *contListChildItr));
+								contListChildItr++;
+							}
+							contListItr++;
+						} // end while
+					} // end if
+				} // end for
+			} // end for
+		} // end for
 	}
+	*/
 	return contactList;
 }

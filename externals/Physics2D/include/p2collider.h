@@ -50,6 +50,9 @@ public:
 	p2Collider(p2ColliderDef* colDef);
 	~p2Collider();
 
+	p2Shape* GetShape();
+	void SetShape(p2Shape* shape);
+
 	/**
 	* \brief Check if the p2Collider is a sensor
 	*/

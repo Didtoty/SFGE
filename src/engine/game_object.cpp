@@ -56,6 +56,7 @@ void GameObject::Update(sf::Time dt)
 GameObject* GameObject::LoadGameObject(Engine& engine, json& gameObjectJson)
 {
 	GameObject* gameObject = new GameObject();
+	
 	if (CheckJsonParameter(gameObjectJson, "name", json::value_t::string))
 	{
 		gameObject->m_Name = gameObjectJson["name"].get<std::string>();

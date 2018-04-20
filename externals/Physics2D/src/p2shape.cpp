@@ -42,6 +42,16 @@ float p2CircleShape::GetRadius()
 	return this->m_Radius;
 }
 
+p2Vec2 p2CircleShape::GetBottomLeft()
+{
+	return p2Vec2(-m_Radius, -m_Radius);
+}
+
+p2Vec2 p2CircleShape::GetTopRight()
+{
+	return p2Vec2(m_Radius, m_Radius);
+}
+
 p2RectShape::p2RectShape()
 {
 }
@@ -58,4 +68,14 @@ void p2RectShape::SetSize(p2Vec2 size)
 p2Vec2 p2RectShape::GetSize()
 {
 	return this->m_Size;
+}
+
+p2Vec2 p2RectShape::GetBottomLeft()
+{
+	return p2Vec2(-m_Size.x / 2.0f, -m_Size.y / 2.0f);
+}
+
+p2Vec2 p2RectShape::GetTopRight()
+{
+	return p2Vec2(m_Size.x / 2.0f, m_Size.y / 2.0f);
 }

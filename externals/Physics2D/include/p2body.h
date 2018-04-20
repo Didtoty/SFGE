@@ -77,6 +77,10 @@ public:
 	p2BodyType GetType();
 
 	float GetMass();
+
+	p2AABB GetAABB();
+
+	std::list<p2Collider*> GetColliderList();
 	/**
 	* \brief Factory method creating a p2Collider
 	* \param colliderDef p2ColliderDef definition of the collider
@@ -92,6 +96,8 @@ public:
 	
 	p2Vec2 GetForces();
 	void SetForceToZero();
+
+	void CalculateAABB();
 private:
 	p2AABB m_AABB;
 	p2BodyType m_Type;

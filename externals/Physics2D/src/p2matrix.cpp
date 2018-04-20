@@ -26,6 +26,8 @@ SOFTWARE.
 
 p2Mat22::p2Mat22()
 {
+	this->columns[0] = p2Vec2();
+	this->columns[1] = p2Vec2();
 }
 
 p2Mat22::p2Mat22(p2Vec2 c1, p2Vec2 c2)
@@ -150,6 +152,9 @@ void p2Mat22::printDebug()
 
 p2Mat33::p2Mat33()
 {
+	this->columns[0] = p2Vec3();
+	this->columns[1] = p2Vec3();
+	this->columns[2] = p2Vec3();
 }
 
 p2Mat33::p2Mat33(p2Vec3 c1, p2Vec3 c2, p2Vec3 c3)

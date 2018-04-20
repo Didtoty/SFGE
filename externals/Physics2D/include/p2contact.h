@@ -26,6 +26,7 @@ SOFTWARE.
 #define SFGE_P2CONTACT_H
 
 #include <p2collider.h>
+#include <list>
 
 /**
 * \brief Representation of a contact given as argument in a p2ContactListener
@@ -37,6 +38,8 @@ public:
 
 	p2Collider* GetColliderA();
 	p2Collider* GetColliderB();
+
+	bool isTouching();
 private:
 	p2Collider* m_colliderA;
 	p2Collider* m_colliderB;
@@ -57,6 +60,17 @@ public:
 */
 class p2ContactManager
 {
+public:
+	p2ContactManager();
+	~p2ContactManager();
 
+	void AddContact(p2Contact* contact);
+	void AddContacts(std::list<p2Contact*> contacts);
+	void RemoveContact(p2Contact* contact);
+
+	void ResolveContacts(p2ContactListener* listener);
+
+private:
+	std::list<p2Contact*> m_ContactList;
 };
 #endif
