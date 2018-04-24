@@ -40,6 +40,8 @@ p2Body::p2Body(p2BodyDef* bodyDef) :
 
 p2Body::~p2Body()
 {
+	for (auto collider : m_ColliderList)
+		delete(collider);
 }
 
 p2Vec2 p2Body::GetLinearVelocity()
@@ -94,7 +96,7 @@ std::list<p2Collider*> p2Body::GetColliderList()
 
 p2Collider * p2Body::CreateCollider(p2ColliderDef * colliderDef)
 {
-	p2Collider* collider = new p2Collider(colliderDef);
+	p2Collider* collider = new p2Collider(colliderDef, this);
 	m_ColliderList.push_back(collider);
 	return collider;
 }
@@ -112,6 +114,21 @@ p2Vec2 p2Body::GetForces()
 void p2Body::SetForceToZero()
 {
 	m_Forces = p2Vec2(0, 0);
+}
+
+std::list<p2Contact*> p2Body::GetContactList()
+{
+	return m_ContactList;
+}
+
+void p2Body::AddInContact(p2Contact * contact)
+{
+	m_ContactList.push_back(contact);
+}
+
+void p2Body::RemoveInContact(p2Contact * contact)
+{
+	m_ContactList.remove(contact);
 }
 
 void p2Body::CalculateAABB()

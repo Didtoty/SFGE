@@ -65,6 +65,8 @@ private:
 	std::list<p2Body*> m_BodyList;
 
 	p2ContactListener * m_ContactListener;
+	p2ContactManager* m_ContactManager;
+
 	p2QuadTree* m_LastQuadTree;
 
 	bool m_DrawDebug;

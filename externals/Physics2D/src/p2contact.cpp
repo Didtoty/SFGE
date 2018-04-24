@@ -25,18 +25,31 @@ SOFTWARE.
 #include <p2contact.h>
 #include <list>
 
-p2Contact::p2Contact(p2Collider * colliderA, p2Collider* colliderB) : m_colliderA(colliderA), m_colliderB(colliderB)
+/*******************************************
+*	class p2Contact
+*******************************************/
+p2Contact::p2Contact(p2Collider * colliderA, p2Collider* colliderB) : m_ColliderA(colliderA), m_ColliderB(colliderB)
 {
 }
 
 p2Collider * p2Contact::GetColliderA()
 {
-	return m_colliderA;
+	return m_ColliderA;
 }
 
 p2Collider * p2Contact::GetColliderB()
 {
-	return m_colliderB;
+	return m_ColliderB;
+}
+
+p2Collider * p2Contact::GetOther(p2Collider * collider)
+{
+	if (collider == m_ColliderA)
+		return m_ColliderB;
+	else if (collider == m_ColliderB)
+		return m_ColliderA;
+	else
+		return nullptr;
 }
 
 bool p2Contact::isTouching()
@@ -46,29 +59,69 @@ bool p2Contact::isTouching()
 
 p2ContactManager::p2ContactManager()
 {
+}
+
+/*******************************************
+*	class p2ContactManager
+*******************************************/
+p2ContactManager::p2ContactManager(p2ContactListener* listener) : m_Listener(listener)
+{
 	m_ContactList = std::list<p2Contact*>();
 }
 
 p2ContactManager::~p2ContactManager()
 {
+
 }
 
 void p2ContactManager::AddContact(p2Contact* contact)
 {
+	p2Collider* colA = contact->GetColliderA();
+	p2Collider* colB = contact->GetColliderB();
+
+	p2Body* bodyA = colA->GetBody();
+	p2Body* bodyB = colB->GetBody();
+
+	if (bodyA == bodyB)
+		return;
+
+	std::list<p2Contact*> contactListB = bodyB->GetContactList();
+	for (auto contactB : contactListB) 
+	{
+		//If it collides well with the right body, and the right collider, that means it already exists
+		p2Collider* otherA = contactB->GetOther(colB);
+		if (otherA->GetBody() == bodyA && otherA == colA)
+		{
+			return;
+		}
+	}
+
+	bodyA->AddInContact(contact);
+	bodyB->AddInContact(contact);
+	m_Listener->BeginContact(contact);
 	this->m_ContactList.push_back(contact);
 }
 
 void p2ContactManager::AddContacts(std::list<p2Contact*> contacts)
 {
-	this->m_ContactList.merge(contacts);
+	for(auto contact : contacts)
+		this->AddContact(contact);
 }
 
 void p2ContactManager::RemoveContact(p2Contact* contact)
 {
+	contact->GetColliderA()->GetBody()->RemoveInContact(contact);
+	contact->GetColliderB()->GetBody()->RemoveInContact(contact);
+	m_Listener->EndContact(contact);
 	this->m_ContactList.remove(contact);
 }
 
-void p2ContactManager::ResolveContacts(p2ContactListener* listener)
+void p2ContactManager::ResolveContacts()
 {
 
+}
+
+void p2ContactManager::SetContactListener(p2ContactListener * listener)
+{
+	this->m_Listener = listener;
 }

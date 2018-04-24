@@ -39,10 +39,12 @@ public:
 	p2Collider* GetColliderA();
 	p2Collider* GetColliderB();
 
+	p2Collider* GetOther(p2Collider* collider);
+
 	bool isTouching();
 private:
-	p2Collider* m_colliderA;
-	p2Collider* m_colliderB;
+	p2Collider* m_ColliderA;
+	p2Collider* m_ColliderB;
 };
 
 /**
@@ -62,15 +64,19 @@ class p2ContactManager
 {
 public:
 	p2ContactManager();
+	p2ContactManager(p2ContactListener* listener);
 	~p2ContactManager();
 
 	void AddContact(p2Contact* contact);
 	void AddContacts(std::list<p2Contact*> contacts);
 	void RemoveContact(p2Contact* contact);
 
-	void ResolveContacts(p2ContactListener* listener);
+	void ResolveContacts();
+
+	void SetContactListener(p2ContactListener* listener);
 
 private:
 	std::list<p2Contact*> m_ContactList;
+	p2ContactListener* m_Listener;
 };
 #endif

@@ -108,12 +108,12 @@ Collider* Collider::LoadCollider(Engine & engine, GameObject * gameObject, json 
 		}
 		
 		collider->m_PhysicsCollider = body2d->GetBody()->CreateCollider(&colliderDef);
-		// Can I know why you delete the shape we just created? It's a pointer.
-		/*if (shape != nullptr)
+
+		if (shape != nullptr)
 		{
 			delete(shape);
 		}
-		*/
+
 		return collider;
 	}
 	else

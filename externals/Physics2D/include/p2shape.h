@@ -27,6 +27,12 @@ SOFTWARE.
 
 #include <p2vector.h>
 
+enum p2ShapeType {
+	NONE,
+	RECTANGLE_SHAPE,
+	CIRCLE_SHAPE
+};
+
 /**
 * \brief Abstract representation of a shape
 */
@@ -35,6 +41,9 @@ class p2Shape
 public:
 	virtual p2Vec2 GetBottomLeft() = 0;
 	virtual p2Vec2 GetTopRight() = 0;
+	p2ShapeType GetType();
+protected:
+	p2ShapeType m_Type;
 };
 
 /**

@@ -25,13 +25,21 @@ SOFTWARE.
 #include <p2body.h>
 #include <p2quadtree.h>
 
-p2World::~p2World()
-{
-}
-
-p2World::p2World(p2Vec2 gravity, bool drawDebug) :	m_Gravity(gravity), m_DrawDebug(drawDebug)
+p2World::p2World(p2Vec2 gravity, bool drawDebug) : m_Gravity(gravity), m_DrawDebug(drawDebug)
 {
 	m_LastQuadTree = nullptr;
+	m_ContactManager = new p2ContactManager(m_ContactListener);
+}
+
+p2World::~p2World()
+{
+	if (m_LastQuadTree != nullptr)
+		delete(m_LastQuadTree);
+
+	delete m_ContactManager;
+
+	for (auto body : m_BodyList)
+		delete(body);
 }
 
 void p2World::Step(float dt)
@@ -47,7 +55,9 @@ void p2World::Step(float dt)
 	p2QuadTree* quadTree = new p2QuadTree(0, worldSpace);
 
 	for (auto body : m_BodyList)
+	{
 		quadTree->Insert(body);
+	}
 
 	delete(m_LastQuadTree);
 	m_LastQuadTree = quadTree;
@@ -55,14 +65,7 @@ void p2World::Step(float dt)
 	// AddNewContacts
 	for (auto contact : quadTree->Retrieve())
 	{
-		if (contact->isTouching())
-		{
-			m_ContactListener->BeginContact(contact);
-		}
-		else
-		{
-			m_ContactListener->BeginContact(contact);
-		}
+		m_ContactManager->AddContact(contact);
 	}
 
 	// Update velocity of all bodies and resolve forces
@@ -104,6 +107,7 @@ void p2World::RemoveBody(p2Body * body)
 void p2World::SetContactListener(p2ContactListener * contactListener)
 {
 	this->m_ContactListener = contactListener;
+	this->m_ContactManager->SetContactListener(contactListener);
 }
 
 std::list<p2Body*> p2World::GetBodies()

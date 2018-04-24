@@ -29,6 +29,7 @@ SOFTWARE.
 #include <list>
 
 class p2Collider;
+class p2Contact;
 struct p2ColliderDef;
 
 enum class p2BodyType
@@ -97,6 +98,10 @@ public:
 	p2Vec2 GetForces();
 	void SetForceToZero();
 
+	std::list<p2Contact*> GetContactList();
+	void AddInContact(p2Contact* contact);
+	void RemoveInContact(p2Contact* contact);
+
 	void CalculateAABB();
 private:
 	p2AABB m_AABB;
@@ -109,6 +114,7 @@ private:
 	p2Vec2 m_Forces;
 
 	std::list<p2Collider*> m_ColliderList;
+	std::list<p2Contact*> m_ContactList;
 };
 
 #endif
