@@ -68,6 +68,9 @@ void p2World::Step(float dt)
 		m_ContactManager->AddContact(contact);
 	}
 
+	//Update all the contacts and calculate new velocity if needed
+	m_ContactManager->ResolveContacts();
+
 	// Update velocity of all bodies and resolve forces
 	p2Vec2 aGravity = m_Gravity;
 	for (auto body : m_BodyList)

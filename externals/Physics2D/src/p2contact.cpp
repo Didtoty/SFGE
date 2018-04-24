@@ -54,11 +54,12 @@ p2Collider * p2Contact::GetOther(p2Collider * collider)
 
 bool p2Contact::isTouching()
 {
-	return true;
+	return m_ColliderA->GetBody()->GetAABB().Contains(m_ColliderB->GetBody()->GetAABB());
 }
 
 p2ContactManager::p2ContactManager()
 {
+	m_ContactList = std::list<p2Contact*>();
 }
 
 /*******************************************
@@ -118,7 +119,17 @@ void p2ContactManager::RemoveContact(p2Contact* contact)
 
 void p2ContactManager::ResolveContacts()
 {
-
+	std::list<p2Contact*> contactsToRemove;
+	for (auto contact : m_ContactList)
+	{
+		if (!contact->isTouching())
+			contactsToRemove.push_back(contact);
+	}
+	for (auto rContact : contactsToRemove)
+	{
+		this->RemoveContact(rContact);
+		m_ContactList.remove(rContact);
+	}
 }
 
 void p2ContactManager::SetContactListener(p2ContactListener * listener)
