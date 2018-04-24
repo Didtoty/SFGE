@@ -97,11 +97,12 @@ int main()
 		}
 
 		int numContacts = 0;
+		/*
 		if (currentWorld->GetLastQuadTree() != nullptr) 
 		{
 			numContacts = currentWorld->GetLastQuadTree()->Retrieve().size();
 		}
-		
+		*/
 		/*
 		ImGui::Begin("Stats");
 		{

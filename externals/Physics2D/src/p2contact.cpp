@@ -23,7 +23,10 @@ SOFTWARE.
 */
 
 #include <p2contact.h>
+#include <p2shape.h>
 #include <list>
+#include <cmath>
+#include <algorithm>    // std::max
 
 /*******************************************
 *	class p2Contact
@@ -54,7 +57,57 @@ p2Collider * p2Contact::GetOther(p2Collider * collider)
 
 bool p2Contact::isTouching()
 {
-	return m_ColliderA->GetBody()->GetAABB().Contains(m_ColliderB->GetBody()->GetAABB());
+	//Assomption 2: Resolve with the shape of the collider
+	p2Shape* shapeA = m_ColliderA->GetShape();
+	p2Shape* shapeB = m_ColliderB->GetShape();
+
+	if (shapeA->GetType() == p2ShapeType::CIRCLE_SHAPE && shapeB->GetType() == p2ShapeType::CIRCLE_SHAPE)
+	{
+		p2Vec2 deltaCenter = m_ColliderA->GetBody()->GetPosition() - m_ColliderB->GetBody()->GetPosition();
+		float deltaR = dynamic_cast<p2CircleShape*>(shapeA)->GetRadius() + dynamic_cast<p2CircleShape*>(shapeB)->GetRadius();
+		return deltaCenter.GetMagnitude() <= deltaR;
+	}
+	else if ((shapeA->GetType() == p2ShapeType::RECTANGLE_SHAPE && shapeB->GetType() == p2ShapeType::RECTANGLE_SHAPE))
+	{
+		p2Vec2 deltaCenter = m_ColliderA->GetBody()->GetPosition() - m_ColliderB->GetBody()->GetPosition();
+		p2Vec2 deltaR = dynamic_cast<p2RectShape*>(shapeA)->GetSize() * 0.5f + dynamic_cast<p2RectShape*>(shapeB)->GetSize() * 0.5f;
+		return abs(deltaCenter.x) <= deltaR.x && abs(deltaCenter.y) <= deltaR.y;
+	}
+	else if ((shapeA->GetType() == p2ShapeType::CIRCLE_SHAPE && shapeB->GetType() == p2ShapeType::RECTANGLE_SHAPE) || 
+			(shapeA->GetType() == p2ShapeType::RECTANGLE_SHAPE && shapeB->GetType() == p2ShapeType::CIRCLE_SHAPE))
+	{
+		p2Vec2 positionCircle, positionRect, sizeRect;
+		float radius;
+
+		if (shapeA->GetType() == p2ShapeType::CIRCLE_SHAPE)
+		{
+			positionCircle = m_ColliderA->GetBody()->GetPosition();
+			radius = dynamic_cast<p2CircleShape*>(shapeA)->GetRadius();
+
+			positionRect = m_ColliderB->GetBody()->GetPosition();
+			sizeRect = dynamic_cast<p2RectShape*>(shapeB)->GetSize();
+		}
+		else
+		{
+			positionCircle = m_ColliderB->GetBody()->GetPosition();
+			radius = dynamic_cast<p2CircleShape*>(shapeB)->GetRadius();
+
+			positionRect = m_ColliderA->GetBody()->GetPosition();
+			sizeRect = dynamic_cast<p2RectShape*>(shapeA)->GetSize();
+		}
+
+		float deltaX = positionCircle.x - std::max(positionRect.x - sizeRect.x * 0.5f, std::min(positionCircle.x, positionRect.x + sizeRect.x * 0.5f));
+		float deltaY = positionCircle.y - std::max(positionRect.y - sizeRect.y * 0.5f, std::min(positionCircle.y, positionRect.y + sizeRect.y * 0.5f));
+		return (deltaX * deltaX + deltaY * deltaY) < (radius * radius);
+	}
+	else
+	{
+		return false;
+	}
+
+
+	//Assomption 1 : All AABB collides
+	//return m_ColliderA->GetBody()->GetAABB().Contains(m_ColliderB->GetBody()->GetAABB());
 }
 
 p2ContactManager::p2ContactManager()
@@ -97,10 +150,13 @@ void p2ContactManager::AddContact(p2Contact* contact)
 		}
 	}
 
-	bodyA->AddInContact(contact);
-	bodyB->AddInContact(contact);
-	m_Listener->BeginContact(contact);
-	this->m_ContactList.push_back(contact);
+	if (contact->isTouching())
+	{
+		bodyA->AddInContact(contact);
+		bodyB->AddInContact(contact);
+		m_Listener->BeginContact(contact);
+		this->m_ContactList.push_back(contact);
+	}
 }
 
 void p2ContactManager::AddContacts(std::list<p2Contact*> contacts)

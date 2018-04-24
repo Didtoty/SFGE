@@ -59,15 +59,12 @@ public:
 	void SetContactListener(p2ContactListener* contactListener);
 
 	std::list<p2Body*> GetBodies();
-	p2QuadTree* GetLastQuadTree();
 private:
 	p2Vec2 m_Gravity;
 	std::list<p2Body*> m_BodyList;
 
 	p2ContactListener * m_ContactListener;
 	p2ContactManager* m_ContactManager;
-
-	p2QuadTree* m_LastQuadTree;
 
 	bool m_DrawDebug;
 };

@@ -74,6 +74,39 @@
                   "script_path": "scripts/contact_test.py"
               }
           ]
+      },
+	  {
+          "name": "Sun",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [400, 600],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Circle Shape Component",
+                  "type": 3,
+                  "shape_type": 1,
+				  "radius" : 50.0
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 0
+              },
+              {
+                  "name": "CircleCollider",
+                  "type": 6,
+                  "collider_type": 1,
+				  "radius" : 50.0
+                  "sensor": true
+              },
+              {
+                  "type": 4,
+                  "script_path": "scripts/contact_test.py"
+              }
+          ]
       }
   ]
 }

@@ -87,19 +87,11 @@ std::shared_ptr<Scene> SceneManager::LoadSceneFromJson(json& sceneJson)
 	{
 		for (json gameObjectJson : sceneJson["game_objects"])
 		{
-			float numToGenerate = 1;
-			if (IsJsonValueNumeric(gameObjectJson["how_many"]))
+			GameObject* gameObject = GameObject::LoadGameObject(m_Engine, gameObjectJson);
+			gameObject->SetName(gameObject->GetName());
+			if (gameObject != nullptr)
 			{
-				numToGenerate = gameObjectJson["how_many"].get<std::int16_t>();
-			}
-			for (int i = 1; i <= numToGenerate; i++)
-			{
-				GameObject* gameObject = GameObject::LoadGameObject(m_Engine, gameObjectJson);
-				gameObject->SetName(gameObject->GetName());
-				if (gameObject != nullptr)
-				{
-					scene->m_GameObjects.push_back(gameObject);
-				}
+				scene->m_GameObjects.push_back(gameObject);
 			}
 		}
 	}

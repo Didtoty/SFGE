@@ -3,8 +3,7 @@
   "name": "ContactTestScene",
   "game_objects": [
       {
-          "name": "Body",
-		  "how_many" : 10,
+          "name": "Body1",
           "components": [
               {
                   "type": 1,
@@ -29,6 +28,210 @@
                   "type": 6,
                   "collider_type": 2,
                   "size": [50.0, 50.0],
+                  "sensor": true
+              },
+              {
+                  "type": 4,
+                  "script_path": "scripts/contact_test.py"
+              }
+          ]
+      },
+	   {
+          "name": "Body2",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [300, 300],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Rectangle Shape Component",
+                  "type": 3,
+                  "shape_type": 2,
+                  "size": [50.0, 50.0]
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 2,
+                  "gravity_scale": 0
+              },
+              {
+                  "name": "RectCollider",
+                  "type": 6,
+                  "collider_type": 2,
+                  "size": [50.0, 50.0],
+                  "sensor": true
+              },
+              {
+                  "type": 4,
+                  "script_path": "scripts/contact_test.py"
+              }
+          ]
+      },
+	   {
+          "name": "Body3",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [300, 300],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Circle Shape Component",
+                  "type": 3,
+                  "shape_type": 1,
+                  "radius": 25.0
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 2,
+                  "gravity_scale": 0
+              },
+              {
+                  "name": "CircleCollider",
+                  "type": 6,
+                  "collider_type": 1,
+                  "radius": 25.0,
+                  "sensor": true
+              },
+              {
+                  "type": 4,
+                  "script_path": "scripts/contact_test.py"
+              }
+          ]
+      },
+	   {
+          "name": "Body4",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [300, 300],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Rectangle Shape Component",
+                  "type": 3,
+                  "shape_type": 2,
+                  "size": [50.0, 50.0]
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 2,
+                  "gravity_scale": 0
+              },
+              {
+                  "name": "RectCollider",
+                  "type": 6,
+                  "collider_type": 2,
+                  "size": [50.0, 50.0],
+                  "sensor": true
+              },
+              {
+                  "type": 4,
+                  "script_path": "scripts/contact_test.py"
+              }
+          ]
+      },
+	   {
+          "name": "Body5",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [300, 300],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Circle Shape Component",
+                  "type": 3,
+                  "shape_type": 1,
+                  "radius": 25.0
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 2,
+                  "gravity_scale": 0
+              },
+              {
+                  "name": "CircleCollider",
+                  "type": 6,
+                  "collider_type": 1,
+                  "radius": 25.0,
+                  "sensor": true
+              },
+              {
+                  "type": 4,
+                  "script_path": "scripts/contact_test.py"
+              }
+          ]
+      },
+	   {
+          "name": "Body6",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [300, 300],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Rectangle Shape Component",
+                  "type": 3,
+                  "shape_type": 2,
+                  "size": [50.0, 50.0]
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 2,
+                  "gravity_scale": 0
+              },
+              {
+                  "name": "RectCollider",
+                  "type": 6,
+                  "collider_type": 2,
+                  "size": [50.0, 50.0],
+                  "sensor": true
+              },
+              {
+                  "type": 4,
+                  "script_path": "scripts/contact_test.py"
+              }
+          ]
+      },
+	   {
+          "name": "Body7",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [300, 300],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Circle Shape Component",
+                  "type": 3,
+                  "shape_type": 1,
+                  "radius": 25.0
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 2,
+                  "gravity_scale": 0
+              },
+              {
+                  "name": "CircleCollider",
+                  "type": 6,
+                  "collider_type": 1,
+                  "radius": 25.0,
                   "sensor": true
               },
               {
