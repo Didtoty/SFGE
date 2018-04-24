@@ -119,16 +119,24 @@ void p2ContactManager::RemoveContact(p2Contact* contact)
 
 void p2ContactManager::ResolveContacts()
 {
+	//Check if contacts still touches
 	std::list<p2Contact*> contactsToRemove;
 	for (auto contact : m_ContactList)
 	{
 		if (!contact->isTouching())
 			contactsToRemove.push_back(contact);
 	}
+
 	for (auto rContact : contactsToRemove)
 	{
 		this->RemoveContact(rContact);
 		m_ContactList.remove(rContact);
+	}
+
+	// TODO: Then resolve contacts
+	for (auto contact : m_ContactList)
+	{
+
 	}
 }
 
