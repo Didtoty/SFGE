@@ -35,6 +35,7 @@ class p2Contact
 {
 public:
 	p2Contact(p2Collider* colliderA, p2Collider* colliderB);
+	~p2Contact();
 
 	p2Collider* GetColliderA();
 	p2Collider* GetColliderB();
@@ -74,6 +75,8 @@ public:
 	void ResolveContacts();
 
 	void SetContactListener(p2ContactListener* listener);
+
+	int GetNumContacts();
 
 private:
 	std::list<p2Contact*> m_ContactList;

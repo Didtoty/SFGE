@@ -22,33 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <p2aabb.h>
-#include <p2body.h>
-#include <p2collider.h>
-#include <p2shape.h>
+#ifndef SFGE_GUIZMO_H
+#define SFGE_GUIZMO_H
 
-#include <limits>
-#include <cmath>
+#include <p2vector.h>
+#include <SFML\Graphics.hpp>
+#include <p2guizmo.h>
 
-p2Vec2 p2AABB::GetCenter()
-{
-	return (bottomLeft + topRight) * 0.5;
-}
+#include <memory>
 
-p2Vec2 p2AABB::GetExtendsPosition()
-{
-	return this->GetCenter() + GetExtendsValue();
-}
+class Guizmo : p2Guizmo{
+public:
+	Guizmo(std::shared_ptr<sf::RenderWindow> window);
+	~Guizmo();
 
-p2Vec2 p2AABB::GetExtendsValue()
-{
-	p2Vec2 extends = (topRight - bottomLeft) * 0.5f;
-	return p2Vec2(abs(extends.x), abs(extends.y));
-}
+	void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color);
+	void DrawLine(p2Vec2 from, p2Vec2 to, p2Color color);
+	void DrawCircle(p2Vec2 pos, float r, p2Color color);
 
-bool p2AABB::Contains(p2AABB other)
-{
-	bool firstCond = abs(this->GetCenter().x - other.GetCenter().x) <= this->GetExtendsValue().x + other.GetExtendsValue().x;
-	bool secondCond = abs(this->GetCenter().y - other.GetCenter().y) <= this->GetExtendsValue().y + other.GetExtendsValue().y;
-	return firstCond && secondCond;
-}
+private: 
+	std::shared_ptr<sf::RenderWindow> m_Window = nullptr;
+};
+
+#endif /* SFGE_GUIZMO_H */

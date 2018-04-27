@@ -22,14 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#define MIN_RANGE_TOP 50
+#define MIN_RANGE_TOP 200
 #define MAX_RANGE_BOTTOM 400
-#define MIN_RANGE_LEFT 50
+#define MIN_RANGE_LEFT 200
 #define MAX_RANGE_RIGHT 400
 
-#define MIN_SPEED_X 2
+#define MIN_SPEED_X 4
 #define MAX_SPEED_X 15
-#define MIN_SPEED_Y 2
+#define MIN_SPEED_Y 4
 #define MAX_SPEED_Y 15
 
 #include <engine/engine.h>
@@ -67,12 +67,11 @@ int main()
 
 	for (auto& body : currentWorld->GetBodies())
 	{
-		body->SetPosition(sfge::pixel2meter(sf::Vector2f(rand() % MAX_RANGE_RIGHT + MIN_RANGE_TOP, rand() % MAX_RANGE_BOTTOM + MIN_RANGE_LEFT)));
+		body->SetPosition(sfge::pixel2meter(sf::Vector2f(rand() % (MAX_RANGE_RIGHT - MIN_RANGE_TOP) + MIN_RANGE_TOP, rand() % (MAX_RANGE_BOTTOM - MIN_RANGE_LEFT) + MIN_RANGE_LEFT)));
 		body->SetLinearVelocity(sfge::pixel2meter(sf::Vector2f(rand() % MAX_SPEED_X + MIN_SPEED_X, rand() % MAX_SPEED_Y + MIN_SPEED_Y)));
 	}
 
 	// engine.Start();
-	//ImGui::SFML::Init(*engine.GetWindow());
 	sf::Clock clock;
 	while (engine.running && engine.GetWindow() != nullptr)
 	{
@@ -89,39 +88,19 @@ int main()
 			}
 
 		}
-		//ImGui::SFML::Update(*engine.GetWindow(), dt);
-
+		
 		if (!engine.running)
 		{
 			continue;
 		}
 
-		int numContacts = 0;
-		/*
-		if (currentWorld->GetLastQuadTree() != nullptr) 
-		{
-			numContacts = currentWorld->GetLastQuadTree()->Retrieve().size();
-		}
-		*/
-		/*
-		ImGui::Begin("Stats");
-		{
-			std::ostringstream oss;
-			oss << "FPS: " << 1.0f / dt.asSeconds() << "\n" << "Contact numbers: " << numContacts;
-
-			ImGui::Text(oss.str().c_str());
-		}
-
-		ImGui::End();
-		*/
-		
 		// If the bodies goes too far, we swap their speed to come back into the scene
 		engine.GetPhysicsManager()->Update(dt);
 		for (auto& body : currentWorld->GetBodies())
 		{
 			sf::Vector2f pos = sfge::meter2pixel(body->GetPosition());
 			p2Vec2 v = body->GetLinearVelocity();
-			if (pos.x < MIN_RANGE_LEFT && v.x<0.0f)
+			if (pos.x < MIN_RANGE_LEFT && v.x < 0.0f)
 			{
 				body->SetLinearVelocity(p2Vec2(-v.x, v.y));
 			}
@@ -139,12 +118,12 @@ int main()
 			}
 		}
 
+		//ImGui::EndFrame();
 		engine.GetInputManager()->Update(dt);
 		engine.GetPythonManager()->Update(dt);
 
 		engine.GetSceneManager()->Update(dt);
 
-		//ImGui::SFML::Render(*engine.GetWindow());
 		engine.GetEditor()->Update(dt);
 		if (engine.GetSceneManager()->IsSwitching())
 		{

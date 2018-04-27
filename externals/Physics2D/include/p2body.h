@@ -27,6 +27,7 @@ SOFTWARE.
 
 #include <p2aabb.h>
 #include <list>
+#include <p2guizmo.h>
 
 class p2Collider;
 class p2Contact;
@@ -63,25 +64,6 @@ public:
 	p2Body(p2BodyDef* bodyDef);
 	~p2Body();
 
-	p2Vec2 GetLinearVelocity();
-	
-	void SetLinearVelocity(p2Vec2 velocity);
-
-	float GetAngularVelocity();
-	
-	float GetGravityScale();
-
-	p2Vec2 GetPosition();
-
-	void SetPosition(p2Vec2 newPos);
-
-	p2BodyType GetType();
-
-	float GetMass();
-
-	p2AABB GetAABB();
-
-	std::list<p2Collider*> GetColliderList();
 	/**
 	* \brief Factory method creating a p2Collider
 	* \param colliderDef p2ColliderDef definition of the collider
@@ -94,15 +76,92 @@ public:
 	* \param force The force to apply to the body
 	*/
 	void ApplyForce(p2Vec2 force);
-	
-	p2Vec2 GetForces();
-	void SetForceToZero();
 
-	std::list<p2Contact*> GetContactList();
+	/**
+	* \brief Add a contact to the body.
+	*/
 	void AddInContact(p2Contact* contact);
+
+	/**
+	* \brief Remove a contact to the body.
+	*/
 	void RemoveInContact(p2Contact* contact);
 
+	/**
+	* \brief Calculate the AABB of the body.
+	*/
 	void CalculateAABB();
+
+	/************************
+	* Getters and Setters
+	************************/
+
+	/**
+	* \brief Return the Linear Velocity of the body
+	*/
+	p2Vec2 GetLinearVelocity();
+
+	/**
+	* \brief Set the Linear Velocity of the body
+	*/
+	void SetLinearVelocity(p2Vec2 velocity);
+
+	/**
+	* \brief Return the Angular Velocity of the body
+	*/
+	float GetAngularVelocity();
+
+	/**
+	* \brief Get the Gravity Scale of the body
+	*/
+	float GetGravityScale();
+
+	/**
+	* \brief Get the Position of the body
+	*/
+	p2Vec2 GetPosition();
+
+	/**
+	* \brief Set the Position of the body
+	*/
+	void SetPosition(p2Vec2 newPos);
+
+	/**
+	* \brief Get the Type of the body, based on p2BodyType
+	*/
+	p2BodyType GetType();
+
+	/**
+	* \brief Get the mass of the body
+	*/
+	float GetMass();
+
+	/**
+	* \brief Get the AABB of the body
+	*/
+	p2AABB GetAABB();
+
+	/**
+	* \brief Get the list of colliders attached to the body
+	*/
+	std::list<p2Collider*> GetColliderList();
+
+	/**
+	* \brief Get the forces applies in this frame to the body
+	*/
+	p2Vec2 GetForces();
+
+	/**
+	* \brief Reset all the forces added previously to the body this frame
+	*/
+	void SetForceToZero();
+
+	/**
+	* \brief Get the list of contacts involving this body
+	*/
+	std::list<p2Contact*> GetContactList();
+
+	void DrawDebugBody(p2Guizmo* guizmoDebug);
 private:
 	p2AABB m_AABB;
 	p2BodyType m_Type;

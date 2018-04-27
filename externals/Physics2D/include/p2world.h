@@ -29,6 +29,7 @@ SOFTWARE.
 #include <p2body.h>
 #include <p2contact.h>
 #include <p2quadtree.h>
+#include <p2guizmo.h>
 
 #include <list>
 
@@ -57,8 +58,19 @@ public:
 	* \brief Set the contact listener
 	*/
 	void SetContactListener(p2ContactListener* contactListener);
-
+	/***
+	* \brief Set the guizmo Debug Controller to the current world
+	*/
+	void SetGuizmoDebug(p2Guizmo* guizmoDebug);
+	/**
+	* \brief Get the list of all existing bodies
+	*/
 	std::list<p2Body*> GetBodies();
+
+	/**
+	* \brief Get the ContactManager of the current world
+	*/
+	int GetNumContacts();
 private:
 	p2Vec2 m_Gravity;
 	std::list<p2Body*> m_BodyList;
@@ -66,7 +78,7 @@ private:
 	p2ContactListener * m_ContactListener;
 	p2ContactManager* m_ContactManager;
 
-	bool m_DrawDebug;
+	p2Guizmo* m_GuizmoDebug;
 };
 
 #endif

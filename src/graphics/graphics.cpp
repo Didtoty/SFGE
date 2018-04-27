@@ -73,6 +73,16 @@ void GraphicsManager::Update(sf::Time dt)
 	{
 		m_Window->clear();
 
+		ImGui::Begin("Stats");
+		{
+			std::ostringstream oss;
+			oss << "FPS: " << 1.0f / dt.asSeconds() << "\n";
+
+			ImGui::Text(oss.str().c_str());
+		}
+
+		ImGui::End();
+
 		m_SpriteManager->Update(dt);
 		m_SpriteManager->Draw(*m_Window);
 

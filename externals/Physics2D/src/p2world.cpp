@@ -58,7 +58,9 @@ void p2World::Step(float dt)
 	}
 
 	// Add all the new contacts
-	for (auto contact : quadTree->Retrieve())
+	std::list<p2Contact *> contactList;
+	quadTree->Retrieve(contactList);
+	for (auto contact : contactList)
 		m_ContactManager->AddContact(contact);
 
 	delete(quadTree);
@@ -108,7 +110,17 @@ void p2World::SetContactListener(p2ContactListener * contactListener)
 	this->m_ContactManager->SetContactListener(contactListener);
 }
 
+void p2World::SetGuizmoDebug(p2Guizmo * guizmoDebug)
+{
+	m_GuizmoDebug = guizmoDebug;
+}
+
 std::list<p2Body*> p2World::GetBodies()
 {
 	return m_BodyList;
+}
+
+int p2World::GetNumContacts()
+{
+	return m_ContactManager->GetNumContacts();
 }

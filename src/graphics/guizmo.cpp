@@ -22,33 +22,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <p2aabb.h>
-#include <p2body.h>
-#include <p2collider.h>
-#include <p2shape.h>
+#include <graphics/guizmo.h>
 
-#include <limits>
-#include <cmath>
+#include <physics\physics.h>
 
-p2Vec2 p2AABB::GetCenter()
+#include <memory>
+
+Guizmo::Guizmo(std::shared_ptr<sf::RenderWindow> window) : m_Window(window)
 {
-	return (bottomLeft + topRight) * 0.5;
 }
 
-p2Vec2 p2AABB::GetExtendsPosition()
+Guizmo::~Guizmo()
 {
-	return this->GetCenter() + GetExtendsValue();
 }
 
-p2Vec2 p2AABB::GetExtendsValue()
+void Guizmo::DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color)
 {
-	p2Vec2 extends = (topRight - bottomLeft) * 0.5f;
-	return p2Vec2(abs(extends.x), abs(extends.y));
+	sf::RectangleShape rectangle(sfge::meter2pixel(size));
+	rectangle.setPosition(sfge::meter2pixel(pos));
+	rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+
+	m_Window->draw(rectangle);
 }
 
-bool p2AABB::Contains(p2AABB other)
+void Guizmo::DrawLine(p2Vec2 from, p2Vec2 to, p2Color color)
 {
-	bool firstCond = abs(this->GetCenter().x - other.GetCenter().x) <= this->GetExtendsValue().x + other.GetExtendsValue().x;
-	bool secondCond = abs(this->GetCenter().y - other.GetCenter().y) <= this->GetExtendsValue().y + other.GetExtendsValue().y;
-	return firstCond && secondCond;
+	sf::Vertex vertices[2] =
+	{
+		sf::Vertex(sfge::meter2pixel(from), sf::Color(color.r, color.g, color.b, color.a)),
+		sf::Vertex(sfge::meter2pixel(to), sf::Color(color.r, color.g, color.b, color.a))
+	};
+
+	m_Window->draw(vertices, 2, sf::Lines);
+}
+
+void Guizmo::DrawCircle(p2Vec2 pos, float r, p2Color color)
+{
+	sf::CircleShape circle(r);
+	circle.setPosition(sfge::meter2pixel(pos));
+	circle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+
+	m_Window->draw(circle);
 }

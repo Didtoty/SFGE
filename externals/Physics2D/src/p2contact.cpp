@@ -35,6 +35,10 @@ p2Contact::p2Contact(p2Collider * colliderA, p2Collider* colliderB) : m_Collider
 {
 }
 
+p2Contact::~p2Contact()
+{
+}
+
 p2Collider * p2Contact::GetColliderA()
 {
 	return m_ColliderA;
@@ -125,7 +129,8 @@ p2ContactManager::p2ContactManager(p2ContactListener* listener) : m_Listener(lis
 
 p2ContactManager::~p2ContactManager()
 {
-
+	for (auto contact : m_ContactList)
+		delete(contact);
 }
 
 void p2ContactManager::AddContact(p2Contact* contact)
@@ -199,4 +204,9 @@ void p2ContactManager::ResolveContacts()
 void p2ContactManager::SetContactListener(p2ContactListener * listener)
 {
 	this->m_Listener = listener;
+}
+
+int p2ContactManager::GetNumContacts()
+{
+	return m_ContactList.size();
 }

@@ -121,6 +121,12 @@ std::list<p2Contact*> p2Body::GetContactList()
 	return m_ContactList;
 }
 
+void p2Body::DrawDebugBody(p2Guizmo * guizmoDebug)
+{
+	for (auto col : m_ColliderList)
+		col->drawDebug();
+}
+
 void p2Body::AddInContact(p2Contact * contact)
 {
 	m_ContactList.push_back(contact);
@@ -137,24 +143,32 @@ void p2Body::CalculateAABB()
 	p2Vec2 newBottomLeft = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
 	p2Vec2 newTopRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<int>::min());
 
-	for (auto col : m_ColliderList)
+	if (m_ColliderList.size())
 	{
-		p2Shape* shape = col->GetShape();
-		if (shape == nullptr)
-			continue;
+		for (auto col : m_ColliderList)
+		{
+			p2Shape* shape = col->GetShape();
+			if (shape == nullptr)
+				continue;
 
-		p2Vec2 colTopRight = shape->GetTopRight();
-		p2Vec2 colBotLeft = shape->GetBottomLeft();
+			p2Vec2 colTopRight = shape->GetTopRight();
+			p2Vec2 colBotLeft = shape->GetBottomLeft();
 
-		if (newBottomLeft.x > colBotLeft.x)
-			newBottomLeft.x = colBotLeft.x;
-		if (newBottomLeft.y > colBotLeft.y)
-			newBottomLeft.y = colBotLeft.y;
+			if (newBottomLeft.x > colBotLeft.x)
+				newBottomLeft.x = colBotLeft.x;
+			if (newBottomLeft.y > colBotLeft.y)
+				newBottomLeft.y = colBotLeft.y;
 
-		if (newTopRight.x < colTopRight.x)
-			newTopRight.x = colTopRight.x;
-		if (newTopRight.y < colTopRight.y)
-			newTopRight.y = colTopRight.y;
+			if (newTopRight.x < colTopRight.x)
+				newTopRight.x = colTopRight.x;
+			if (newTopRight.y < colTopRight.y)
+				newTopRight.y = colTopRight.y;
+		}
+	}
+	else
+	{
+		newBottomLeft = p2Vec2(0,0);
+		newTopRight = p2Vec2(0,0);
 	}
 
 	m_AABB.bottomLeft = m_Position + newBottomLeft;

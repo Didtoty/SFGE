@@ -22,33 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <p2aabb.h>
-#include <p2body.h>
-#include <p2collider.h>
-#include <p2shape.h>
+#include <p2Guizmo.h>
 
-#include <limits>
-#include <cmath>
-
-p2Vec2 p2AABB::GetCenter()
+p2Guizmo::p2Guizmo()
 {
-	return (bottomLeft + topRight) * 0.5;
 }
 
-p2Vec2 p2AABB::GetExtendsPosition()
+p2Guizmo::~p2Guizmo()
 {
-	return this->GetCenter() + GetExtendsValue();
-}
-
-p2Vec2 p2AABB::GetExtendsValue()
-{
-	p2Vec2 extends = (topRight - bottomLeft) * 0.5f;
-	return p2Vec2(abs(extends.x), abs(extends.y));
-}
-
-bool p2AABB::Contains(p2AABB other)
-{
-	bool firstCond = abs(this->GetCenter().x - other.GetCenter().x) <= this->GetExtendsValue().x + other.GetExtendsValue().x;
-	bool secondCond = abs(this->GetCenter().y - other.GetCenter().y) <= this->GetExtendsValue().y + other.GetExtendsValue().y;
-	return firstCond && secondCond;
 }
