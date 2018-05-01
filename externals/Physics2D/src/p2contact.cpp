@@ -188,6 +188,7 @@ void p2ContactManager::ResolveContacts()
 			contactsToRemove.push_back(contact);
 	}
 
+	// Remove the contacts that doesn't touch anymore
 	for (auto rContact : contactsToRemove)
 	{
 		this->RemoveContact(rContact);
@@ -197,7 +198,35 @@ void p2ContactManager::ResolveContacts()
 	// TODO: Then resolve contacts
 	for (auto contact : m_ContactList)
 	{
+		p2Body* bodyA = contact->GetColliderA()->GetBody();
+		p2Body* bodyB = contact->GetColliderB()->GetBody();
 
+		// Get to know which body is affected by the collision
+		std::list<p2Body*> bodyMovedList;
+		if (bodyA->GetType() == p2BodyType::DYNAMIC)
+			bodyMovedList.push_back(bodyA);
+		if (bodyB->GetType() == p2BodyType::DYNAMIC)
+			bodyMovedList.push_back(bodyB);
+
+		// Find intersect vector
+		p2Vec2 deltaPos = bodyA->GetPosition() - bodyB->GetPosition();
+		
+		// For each collision...
+		for (auto bodyToMove : bodyMovedList)
+		{
+			// Get smallest axis of the vector FOR CIRCLES
+			p2Vec2 forceN = p2Vec2();
+			if (bodyToMove == bodyA)
+				forceN = deltaPos + bodyB->GetPosition();
+			else // bodyToMove == bodyB
+				forceN = deltaPos + bodyA->GetPosition();
+
+			// Get normal for RECTANGLES
+
+			// Move the body only in the previously found smallest axis
+			bodyToMove->SetLinearVelocity(p2Vec2());
+			bodyToMove->ApplyForce(forceN * 100);
+		}
 	}
 }
 

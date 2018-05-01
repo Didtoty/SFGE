@@ -26,8 +26,7 @@
                   "name": "CircleCollider",
                   "type": 6,
                   "collider_type": 1,
-                  "radius": 50.0,
-                  "bouncing": 0.5
+                  "radius": 50.0
               },
               {
                   "type": 4,
