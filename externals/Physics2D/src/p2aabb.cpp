@@ -52,3 +52,4 @@ bool p2AABB::Contains(p2AABB other)
 	bool secondCond = abs(this->GetCenter().y - other.GetCenter().y) <= this->GetExtendsValue().y + other.GetExtendsValue().y;
 	return firstCond && secondCond;
 }
+

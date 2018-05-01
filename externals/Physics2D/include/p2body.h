@@ -48,8 +48,8 @@ struct p2BodyDef
 	p2BodyType type;
 	p2Vec2 position;
 	p2Vec2 linearVelocity;
-	float gravityScale;
-	float mass;
+	float gravityScale = 1;
+	float mass = 60;
 };
 
 // ADD LIST OF COLLIDERS

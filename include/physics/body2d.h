@@ -56,9 +56,6 @@ public:
 	*/
 	p2Body* GetBody();
 
-	
-
-
 	void SetVelocity(p2Vec2 v);
 	p2Vec2 GetVelocity();
 

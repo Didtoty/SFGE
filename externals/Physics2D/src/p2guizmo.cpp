@@ -24,10 +24,7 @@ SOFTWARE.
 
 #include <p2Guizmo.h>
 
-p2Guizmo::p2Guizmo()
+p2Color::p2Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a)
 {
 }
 
-p2Guizmo::~p2Guizmo()
-{
-}

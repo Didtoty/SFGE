@@ -25,6 +25,7 @@ SOFTWARE.
 #include <physics/physics.h>
 #include <physics/collider.h>
 #include <physics/body2d.h>
+#include <p2guizmo.h>
 
 namespace sfge
 {
@@ -35,7 +36,10 @@ const float PhysicsManager::pixelPerMeter = 100.0f;
 void PhysicsManager::Init()
 {
 	p2Vec2 gravity = m_Engine.GetConfig()->gravity;
-	m_World = new p2World(gravity);
+
+	Guizmo* guizmo = new Guizmo(m_Engine.GetWindow());
+	p2Guizmo* guizmoDebug = (p2Guizmo*) guizmo;
+	m_World = new p2World(gravity, guizmoDebug);
 	m_ContactListener = new ContactListener();
 	m_World->SetContactListener(m_ContactListener);
 }

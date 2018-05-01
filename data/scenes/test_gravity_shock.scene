@@ -1,0 +1,151 @@
+
+{
+  "name": "ContactTestScene",
+  "game_objects": [
+      {
+          "name": "BodyCircleMovable",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [150, 300],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Circle Shape Component",
+                  "type": 3,
+                  "shape_type": 1,
+                  "radius": 50.0
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 2
+              },
+              {
+                  "name": "CircleCollider",
+                  "type": 6,
+                  "collider_type": 1,
+                  "radius": 50.0,
+                  "bouncing": 0.5
+              },
+              {
+                  "type": 4,
+                  "script_path": "scripts/player_character_plateformer.py"
+              }
+          ]
+      },
+      {
+          "name": "Ground",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [800, 600],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Rectangle Shape Component",
+                  "type": 3,
+                  "shape_type": 2,
+                  "size": [1600, 200]
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 0
+              },
+              {
+                  "name": "BoxCollider",
+                  "type": 6,
+                  "collider_type": 2,
+                  "size": [800,200]
+              }
+          ]
+      },
+	  {
+          "name": "BodyCircle",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [300, 300],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Circle Shape Component",
+                  "type": 3,
+                  "shape_type": 1,
+				  "radius" : 50.0
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 2
+              },
+              {
+                  "name": "CircleCollider",
+                  "type": 6,
+                  "collider_type": 1,
+				  "radius" : 50.0
+              }
+          ]
+      },
+	  {
+          "name": "BodyCircl2",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [450, 300],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Circle Shape Component",
+                  "type": 3,
+                  "shape_type": 1,
+				  "radius" : 50.0
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 2
+              },
+              {
+                  "name": "CircleCollider",
+                  "type": 6,
+                  "collider_type": 1,
+				  "radius" : 50.0
+              }
+          ]
+      },
+	  {
+          "name": "Piedestal",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [400, 500],
+                  "scale" : [1.0,1.0],
+                  "angle": 0.0
+              },
+              {
+                  "name": "Rectangle Shape Component",
+                  "type": 3,
+                  "shape_type": 2,
+				  "size" : [50,50]
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 0
+              },
+              {
+                  "name": "RectangleCollider",
+                  "type": 6,
+                  "collider_type": 2,
+				  "size" : [50,50]
+              }
+          ]
+      }
+  ]
+}

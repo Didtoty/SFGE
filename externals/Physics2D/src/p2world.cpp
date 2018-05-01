@@ -25,7 +25,7 @@ SOFTWARE.
 #include <p2body.h>
 #include <p2quadtree.h>
 
-p2World::p2World(p2Vec2 gravity, bool drawDebug) : m_Gravity(gravity), m_DrawDebug(drawDebug)
+p2World::p2World(p2Vec2 gravity, p2Guizmo* guizmoDebug) : m_Gravity(gravity), m_GuizmoDebug(guizmoDebug)
 {
 	m_ContactManager = new p2ContactManager(m_ContactListener);
 }
@@ -42,7 +42,10 @@ void p2World::Step(float dt)
 {
 	// Calculate AABB of all bodies
 	for (auto body : m_BodyList)
+	{
 		body->CalculateAABB();
+		body->DrawDebugBody(m_GuizmoDebug);
+	}
 
 	// -------------------- //
 	//		COLLISIONS		//
@@ -56,6 +59,8 @@ void p2World::Step(float dt)
 	{
 		quadTree->Insert(body);
 	}
+	
+	m_GuizmoDebug->DrawLine(p2Vec2(0,0), p2Vec2(500000, 500000));
 
 	// Add all the new contacts
 	std::list<p2Contact *> contactList;
@@ -75,7 +80,7 @@ void p2World::Step(float dt)
 		if (body->GetType() != p2BodyType::STATIC)
 		{
 			//Acceleration calculus
-			p2Vec2 a = (aGravity *body->GetGravityScale() + body->GetForces()) / body->GetMass();
+			p2Vec2 a = aGravity * body->GetGravityScale() + body->GetForces() / body->GetMass();
 
 			//Resolve new velocity
 			p2Vec2 v = a * dt + body->GetLinearVelocity();

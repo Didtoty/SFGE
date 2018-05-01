@@ -123,8 +123,7 @@ std::list<p2Contact*> p2Body::GetContactList()
 
 void p2Body::DrawDebugBody(p2Guizmo * guizmoDebug)
 {
-	for (auto col : m_ColliderList)
-		col->drawDebug();
+	guizmoDebug->DrawRect(m_Position, m_AABB.GetExtendsValue(), p2Color(255, 0, 0, 255));
 }
 
 void p2Body::AddInContact(p2Contact * contact)

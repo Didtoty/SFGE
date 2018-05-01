@@ -65,8 +65,7 @@ void Engine::Init(bool windowless, bool editor)
 	m_InputManager = new InputManager(*this, true);
 	m_PythonManager = new PythonManager(*this, true);
 	m_Editor = new Editor(*this, editor);
-	m_PhysicsManager = new PhysicsManager(*this, true);
-	
+	m_PhysicsManager = new PhysicsManager(*this, true);	
 	
 	m_GraphicsManager->Init();
 	m_AudioManager->Init();
@@ -74,12 +73,10 @@ void Engine::Init(bool windowless, bool editor)
 	m_InputManager->Init();
 	m_PythonManager->Init();
 	m_Editor->Init();
+	m_Window = m_GraphicsManager->GetWindow();
 	m_PhysicsManager->Init();
 
-	m_Window = m_GraphicsManager->GetWindow();
 	running = true;
-
-
 }
 
 void Engine::Start()

@@ -28,7 +28,7 @@ SOFTWARE.
 
 #include <memory>
 
-Guizmo::Guizmo(std::shared_ptr<sf::RenderWindow> window) : m_Window(window)
+Guizmo::Guizmo(std::shared_ptr<sf::RenderWindow>& window) : m_Window(window)
 {
 }
 
@@ -36,31 +36,40 @@ Guizmo::~Guizmo()
 {
 }
 
-void Guizmo::DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color)
+void Guizmo::DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color = p2Color(255, 255, 255, 255))
 {
-	sf::RectangleShape rectangle(sfge::meter2pixel(size));
-	rectangle.setPosition(sfge::meter2pixel(pos));
-	rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+	if (m_Window == nullptr)
+		return;
 
-	m_Window->draw(rectangle);
+	sf::RectangleShape rectangle = sf::RectangleShape(sfge::meter2pixel(size));
+	rectangle.setPosition(sfge::meter2pixel(pos));
+	rectangle.setFillColor(sf::Color::Magenta);
+
+	(*m_Window).draw(rectangle);
 }
 
-void Guizmo::DrawLine(p2Vec2 from, p2Vec2 to, p2Color color)
+void Guizmo::DrawLine(p2Vec2 from, p2Vec2 to, p2Color color = p2Color(0, 0, 0, 255))
 {
+	if (m_Window == nullptr)
+		return;
+
 	sf::Vertex vertices[2] =
 	{
 		sf::Vertex(sfge::meter2pixel(from), sf::Color(color.r, color.g, color.b, color.a)),
 		sf::Vertex(sfge::meter2pixel(to), sf::Color(color.r, color.g, color.b, color.a))
 	};
 
-	m_Window->draw(vertices, 2, sf::Lines);
+	(*m_Window).draw(vertices, 2, sf::Lines);
 }
 
-void Guizmo::DrawCircle(p2Vec2 pos, float r, p2Color color)
+void Guizmo::DrawCircle(p2Vec2 pos, float r, p2Color color = p2Color(0, 0, 0, 255))
 {
+	if (m_Window == nullptr)
+		return;
+
 	sf::CircleShape circle(r);
 	circle.setPosition(sfge::meter2pixel(pos));
 	circle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
 
-	m_Window->draw(circle);
+	(*m_Window).draw(circle);
 }

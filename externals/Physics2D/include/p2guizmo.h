@@ -25,7 +25,11 @@ SOFTWARE.
 #ifndef SFGE_P2GUIZMO_H
 #define SFGE_P2GUIZMO_H
 
+#include <memory>
+#include <SFML\Graphics.hpp>
+
 struct p2Color {
+	p2Color(float r, float g, float b, float a);
 	float r;
 	float g;
 	float b;
@@ -36,12 +40,9 @@ struct p2Color {
 
 class p2Guizmo {
 public:
-	p2Guizmo();
-	~p2Guizmo();
-
-	virtual void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color) = 0;
-	virtual void DrawLine(p2Vec2 from, p2Vec2 to, p2Color color) = 0;
-	virtual void DrawCircle(p2Vec2 pos, float r, p2Color color) = 0;
+	virtual void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color = p2Color(0, 0, 0, 255)) = 0;
+	virtual void DrawLine(p2Vec2 from, p2Vec2 to, p2Color color = p2Color(0, 0, 0, 255)) = 0;
+	virtual void DrawCircle(p2Vec2 pos, float r, p2Color color = p2Color(0, 0, 0, 255)) = 0;
 };
 
 #endif /* SFGE_P2GUIZMO_H */

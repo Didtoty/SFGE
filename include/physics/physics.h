@@ -27,7 +27,7 @@ SOFTWARE.
 
 #include <p2vector.h>
 #include <p2world.h>
-
+#include <graphics/guizmo.h>
 #include <SFML/System/Time.hpp>
 
 #include <engine/engine.h>
@@ -100,10 +100,8 @@ private:
 	ContactListener* m_ContactListener;
 	std::list<Body2d*> m_Bodies;
 	std::list<Collider*> m_Colliders;
-
+	p2Guizmo* m_GuizmoDebug;
 };
-
-
 
 }
 #endif

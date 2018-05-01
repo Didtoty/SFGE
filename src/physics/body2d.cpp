@@ -53,7 +53,6 @@ void Body2d::SetVelocity(p2Vec2 v)
 	{
 		m_Body->SetLinearVelocity(v);
 	}
-
 }
 
 p2Vec2 Body2d::GetVelocity()

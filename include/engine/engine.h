@@ -34,7 +34,6 @@ SOFTWARE.
 #include <utility/singleton.h>
 
 
-
 namespace sfge
 {
 

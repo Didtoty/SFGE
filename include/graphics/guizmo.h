@@ -33,7 +33,7 @@ SOFTWARE.
 
 class Guizmo : p2Guizmo{
 public:
-	Guizmo(std::shared_ptr<sf::RenderWindow> window);
+	Guizmo(std::shared_ptr<sf::RenderWindow>& window);
 	~Guizmo();
 
 	void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color);
@@ -41,7 +41,7 @@ public:
 	void DrawCircle(p2Vec2 pos, float r, p2Color color);
 
 private: 
-	std::shared_ptr<sf::RenderWindow> m_Window = nullptr;
+	std::shared_ptr<sf::RenderWindow> m_Window;
 };
 
 #endif /* SFGE_GUIZMO_H */
