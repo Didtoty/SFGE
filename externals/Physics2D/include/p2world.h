@@ -71,6 +71,11 @@ public:
 	* \brief Get the ContactManager of the current world
 	*/
 	int GetNumContacts();
+
+	/**
+	* \brief Display the debug outlines of the world
+	*/
+	void DebugDraw();
 private:
 	p2Vec2 m_Gravity;
 	std::list<p2Body*> m_BodyList;

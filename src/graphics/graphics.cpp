@@ -28,6 +28,7 @@ SOFTWARE.
 #include <graphics/shape.h>
 #include <engine/log.h>
 #include <engine/config.h>
+#include <physics/physics.h>
 
 //Dependencies includes
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -86,6 +87,7 @@ void GraphicsManager::Update(sf::Time dt)
 		m_SpriteManager->Update(dt);
 		m_SpriteManager->Draw(*m_Window);
 
+		m_Engine.GetPhysicsManager()->GetWorld()->DebugDraw();
 		m_ShapeManager->Draw(*m_Window);
 	}
 }

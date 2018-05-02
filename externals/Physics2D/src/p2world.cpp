@@ -42,10 +42,7 @@ void p2World::Step(float dt)
 {
 	// Calculate AABB of all bodies
 	for (auto body : m_BodyList)
-	{
 		body->CalculateAABB();
-		body->DrawDebugBody(m_GuizmoDebug);
-	}
 
 	// -------------------- //
 	//		COLLISIONS		//
@@ -59,8 +56,6 @@ void p2World::Step(float dt)
 	{
 		quadTree->Insert(body);
 	}
-	
-	m_GuizmoDebug->DrawLine(p2Vec2(0,0), p2Vec2(500000, 500000));
 
 	// Add all the new contacts
 	std::list<p2Contact *> contactList;
@@ -128,4 +123,10 @@ std::list<p2Body*> p2World::GetBodies()
 int p2World::GetNumContacts()
 {
 	return m_ContactManager->GetNumContacts();
+}
+
+void p2World::DebugDraw()
+{
+	for(auto body : m_BodyList)
+		body->DrawDebugBody(m_GuizmoDebug);
 }

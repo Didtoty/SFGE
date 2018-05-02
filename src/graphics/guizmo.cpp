@@ -28,6 +28,8 @@ SOFTWARE.
 
 #include <memory>
 
+#include <iostream>
+
 Guizmo::Guizmo(std::shared_ptr<sf::RenderWindow>& window) : m_Window(window)
 {
 }
@@ -41,10 +43,9 @@ void Guizmo::DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color = p2Color(255, 255,
 	if (m_Window == nullptr)
 		return;
 
-	sf::RectangleShape rectangle = sf::RectangleShape(sfge::meter2pixel(size));
-	rectangle.setPosition(sfge::meter2pixel(pos));
+	sf::RectangleShape rectangle = sf::RectangleShape(sfge::meter2pixel(size * 2));
+	rectangle.setPosition(sfge::meter2pixel(pos - size));
 	rectangle.setFillColor(sf::Color::Magenta);
-
 	(*m_Window).draw(rectangle);
 }
 
