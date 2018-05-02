@@ -62,7 +62,7 @@ public:
 	/**
 	* \brief Return a list of all the p2Body that might collide
 	*/
-	void Retrieve(std::list<p2Contact *>& contactList);
+	void Retrieve(std::list<p2Contact *>& contactList, std::list<p2Body*> bodyParentList = {});
 	
 	/**
 	* \brief Draw the quadtree on the screen.

@@ -43,16 +43,35 @@ p2World::~p2World()
 
 void p2World::Step(float dt)
 {
-	// Calculate AABB of all bodies
+	p2AABB worldSpace = p2AABB();
+	worldSpace.bottomLeft = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::min());
+	worldSpace.topRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<float>::max());
+	
+	// Calculate AABB of all bodies and the one of the quadtree
 	for (auto body : m_BodyList)
+	{
 		body->CalculateAABB();
+		p2Vec2 bodyBotLeft = body->GetAABB().bottomLeft;
+		p2Vec2 bodyTopRight = body->GetAABB().bottomLeft;
+
+		if (worldSpace.bottomLeft.x > bodyBotLeft.x)
+			worldSpace.bottomLeft.x = bodyBotLeft.x;
+		if (worldSpace.bottomLeft.y < bodyBotLeft.y)
+			worldSpace.bottomLeft.y = bodyBotLeft.y;
+
+		if (worldSpace.topRight.x < bodyTopRight.x)
+			worldSpace.topRight.x = bodyTopRight.x;
+		if (worldSpace.topRight.y > bodyTopRight.y)
+			worldSpace.topRight.y = bodyTopRight.y;
+	}
+
+	// Uping a bit the worldspace, to include every single object inside the area
+	worldSpace.bottomLeft += UP_WORLD_VALUE;
+	worldSpace.topRight -= UP_WORLD_VALUE;
 
 	// -------------------- //
 	//		COLLISIONS		//
 	// -------------------- //
-	p2AABB worldSpace = p2AABB();
-	worldSpace.bottomLeft = p2Vec2(1.0f, 6.0f);
-	worldSpace.topRight = p2Vec2(6.0f, 1.0f);
 
 	if(m_LastQuadtree != nullptr)
 		delete(m_LastQuadtree);

@@ -25,6 +25,8 @@ SOFTWARE.
 #ifndef SFGE_P2WORLD_H
 #define SFGE_P2WORLD_H
 
+#define UP_WORLD_VALUE p2Vec2(-0.1f, 0.1f)
+
 #include <p2vector.h>
 #include <p2body.h>
 #include <p2contact.h>

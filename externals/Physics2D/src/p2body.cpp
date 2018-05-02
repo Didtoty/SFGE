@@ -139,8 +139,8 @@ void p2Body::RemoveInContact(p2Contact * contact)
 void p2Body::CalculateAABB()
 {
 	// Reset the current values
-	p2Vec2 newBottomLeft = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
-	p2Vec2 newTopRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<int>::min());
+	p2Vec2 newBottomLeft = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::min());
+	p2Vec2 newTopRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<int>::max());
 
 	if (m_ColliderList.size())
 	{
@@ -155,12 +155,12 @@ void p2Body::CalculateAABB()
 
 			if (newBottomLeft.x > colBotLeft.x)
 				newBottomLeft.x = colBotLeft.x;
-			if (newBottomLeft.y > colBotLeft.y)
+			if (newBottomLeft.y < colBotLeft.y)
 				newBottomLeft.y = colBotLeft.y;
 
 			if (newTopRight.x < colTopRight.x)
 				newTopRight.x = colTopRight.x;
-			if (newTopRight.y < colTopRight.y)
+			if (newTopRight.y > colTopRight.y)
 				newTopRight.y = colTopRight.y;
 		}
 	}

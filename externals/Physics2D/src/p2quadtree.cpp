@@ -92,14 +92,17 @@ void p2QuadTree::Insert(p2Body * body)
 {
 	m_Bodies.push_back(body);
 
-	if (m_Bodies.size() > MAX_OBJECTS && m_NodeLevel < MAX_LEVELS)
+	if (m_NodeLevel < MAX_LEVELS && m_Bodies.size() > MAX_OBJECTS)
 	{
 		Split();
 	}
 }
 
-void p2QuadTree::Retrieve(std::list<p2Contact *>& contactList)
+void p2QuadTree::Retrieve(std::list<p2Contact *>& contactList, std::list<p2Body*> bodyParentList)
 {
+	for (auto body : bodyParentList)
+		m_Bodies.push_back(body);
+
 	if (m_Nodes[0] == nullptr)
 	{
 		if (m_Bodies.size() > 1)
@@ -133,7 +136,7 @@ void p2QuadTree::Retrieve(std::list<p2Contact *>& contactList)
 	{
 		for(int i = 0; i < CHILD_TREE_NMB; i++)
 		{
-			m_Nodes[i]->Retrieve(contactList);
+			m_Nodes[i]->Retrieve(contactList, m_Bodies);
 		}
 	}
 }
