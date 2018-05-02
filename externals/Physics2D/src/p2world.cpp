@@ -36,6 +36,9 @@ p2World::~p2World()
 
 	for (auto body : m_BodyList)
 		delete(body);
+
+	if (m_LastQuadtree)
+		delete(m_LastQuadtree);
 }
 
 void p2World::Step(float dt)
@@ -48,8 +51,11 @@ void p2World::Step(float dt)
 	//		COLLISIONS		//
 	// -------------------- //
 	p2AABB worldSpace = p2AABB();
-	worldSpace.bottomLeft = p2Vec2(0.0f, 800.0f);
-	worldSpace.topRight = p2Vec2(1200.0f, 0.0f);
+	worldSpace.bottomLeft = p2Vec2(1.0f, 6.0f);
+	worldSpace.topRight = p2Vec2(6.0f, 1.0f);
+
+	if(m_LastQuadtree != nullptr)
+		delete(m_LastQuadtree);
 
 	p2QuadTree* quadTree = new p2QuadTree(0, worldSpace);
 	for (auto body : m_BodyList)
@@ -63,7 +69,7 @@ void p2World::Step(float dt)
 	for (auto contact : contactList)
 		m_ContactManager->AddContact(contact);
 
-	delete(quadTree);
+	m_LastQuadtree = quadTree;
 
 	//Update all the contacts and calculate new velocity if needed
 	m_ContactManager->ResolveContacts();
@@ -127,6 +133,13 @@ int p2World::GetNumContacts()
 
 void p2World::DebugDraw()
 {
-	for(auto body : m_BodyList)
-		body->DrawDebugBody(m_GuizmoDebug);
+	//for (auto body : m_BodyList)
+	{
+	//	body->DrawDebugBody(m_GuizmoDebug);
+	}
+
+	//m_GuizmoDebug->DrawLine(p2Vec2(0,0), p2Vec2(300, 300), p2Color(255, 255, 255, 255));
+
+	if (m_LastQuadtree != nullptr)
+		m_LastQuadtree->DebugDraw(m_GuizmoDebug);
 }

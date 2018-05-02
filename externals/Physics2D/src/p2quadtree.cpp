@@ -137,3 +137,23 @@ void p2QuadTree::Retrieve(std::list<p2Contact *>& contactList)
 		}
 	}
 }
+
+void p2QuadTree::DebugDraw(p2Guizmo * guizmoDebug)
+{
+	//Draw basic rect
+	//    _4_
+	//  1|   |3
+	//   |_2_|
+	guizmoDebug->DrawLine(m_Bounds.bottomLeft, p2Vec2(m_Bounds.bottomLeft.x, m_Bounds.topRight.y), p2Color(0, 255, 255, 255)); // 1
+	guizmoDebug->DrawLine(m_Bounds.bottomLeft, p2Vec2(m_Bounds.topRight.x, m_Bounds.bottomLeft.y), p2Color(0, 255, 255, 255)); // 2
+	guizmoDebug->DrawLine(m_Bounds.topRight, p2Vec2(m_Bounds.topRight.x, m_Bounds.bottomLeft.y), p2Color(0, 255, 255, 255)); // 3
+	guizmoDebug->DrawLine(m_Bounds.topRight, p2Vec2(m_Bounds.bottomLeft.x, m_Bounds.topRight.y), p2Color(0, 255, 255, 255)); // 4
+
+	if (m_Nodes[0] != nullptr)
+	{
+		for (int i = 0; i < CHILD_TREE_NMB; i++)
+		{
+			m_Nodes[i]->DebugDraw(guizmoDebug);
+		}
+	}
+}

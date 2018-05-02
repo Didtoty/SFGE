@@ -83,7 +83,9 @@ private:
 	p2ContactListener * m_ContactListener;
 	p2ContactManager* m_ContactManager;
 
-	p2Guizmo* m_GuizmoDebug;
+	p2Guizmo* m_GuizmoDebug = nullptr;
+
+	p2QuadTree* m_LastQuadtree = nullptr;
 };
 
 #endif

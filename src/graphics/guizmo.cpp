@@ -49,7 +49,7 @@ void Guizmo::DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color = p2Color(255, 255,
 	(*m_Window).draw(rectangle);
 }
 
-void Guizmo::DrawLine(p2Vec2 from, p2Vec2 to, p2Color color = p2Color(0, 0, 0, 255))
+void Guizmo::DrawLine(p2Vec2 from, p2Vec2 to, p2Color color = p2Color(255, 255, 255, 255))
 {
 	if (m_Window == nullptr)
 		return;

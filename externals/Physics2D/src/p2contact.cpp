@@ -195,6 +195,7 @@ void p2ContactManager::ResolveContacts()
 		m_ContactList.remove(rContact);
 	}
 
+	/*
 	// TODO: Then resolve contacts
 	for (auto contact : m_ContactList)
 	{
@@ -228,6 +229,7 @@ void p2ContactManager::ResolveContacts()
 			bodyToMove->ApplyForce(forceN * 100);
 		}
 	}
+	*/
 }
 
 void p2ContactManager::SetContactListener(p2ContactListener * listener)

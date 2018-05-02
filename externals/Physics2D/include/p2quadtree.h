@@ -43,16 +43,16 @@ public:
 	~p2QuadTree();
 
 	/**
-	* Remove all objects leafs and quadtrees children
+	* \brief Remove all objects leafs and quadtrees children
 	*/
 	void Clear();
 	/**
-	* Called when node have too much objects and split the current node into four
+	* \brief Called when node have too much objects and split the current node into four
 	*/
 	void Split();
 
 	/**
-	* Get the index of the child trees of the p2Body
+	* \brief Get the index of the child trees of the p2Body
 	*/
 	int GetIndex(p2Body* body);
 	/**
@@ -60,10 +60,14 @@ public:
 	*/
 	void Insert(p2Body* body);
 	/**
-	* Return a list of all the p2Body that might collide
+	* \brief Return a list of all the p2Body that might collide
 	*/
 	void Retrieve(std::list<p2Contact *>& contactList);
 	
+	/**
+	* \brief Draw the quadtree on the screen.
+	*/
+	void DebugDraw(p2Guizmo * guizmoDebug);
 private:
 	static const int MAX_OBJECTS = 10;
 	static const int MAX_LEVELS = 6;
