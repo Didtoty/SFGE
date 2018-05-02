@@ -35,5 +35,4 @@ SOFTWARE.
 #include <p2vector.h>
 #include <p2world.h>
 
-
-#endif
+#endif /* SFGE_P2PHYSICS_H */

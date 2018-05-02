@@ -25,9 +25,13 @@ SOFTWARE.
 #ifndef SFGE_P2GUIZMO_H
 #define SFGE_P2GUIZMO_H
 
-#include <memory>
 #include <SFML\Graphics.hpp>
 
+#include <p2vector.h>
+
+/**
+* \brief Physics colors, based on RGBA with values going from 0 to 255
+*/
 struct p2Color {
 	p2Color(float r, float g, float b, float a);
 	float r;
@@ -36,8 +40,9 @@ struct p2Color {
 	float a;
 };
 
-#include <p2vector.h>
-
+/**
+* \brief Abstract class that will be redifined in SFGE to allow Physics2D to draw correctly
+*/
 class p2Guizmo {
 public:
 	virtual void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color = p2Color(0, 0, 0, 255)) = 0;

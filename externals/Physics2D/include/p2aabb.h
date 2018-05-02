@@ -38,15 +38,24 @@ struct p2AABB
 	* \brief Calculate the center and return it
 	*/
 	p2Vec2 GetCenter();
+
 	/**
-	* \brief Calculate the extends and return it
+	* \brief Calculate the extends position and return it
 	*/
 	p2Vec2 GetExtendsPosition();
+
+	/**
+	* \brief Calculate the extends values and return it
+	*/
 	p2Vec2 GetExtendsValue();
 
+	/**
+	* \brief Check if the current AABB touches the AABB passed in parameters
+	* \param other AABB to compare with
+	*/
 	bool Contains(p2AABB other);
 
 	p2Vec2 bottomLeft;
 	p2Vec2 topRight;
 };
-#endif // !SFGE_P2AABB:H
+#endif // !SFGE_P2AABB_H

@@ -44,40 +44,53 @@ public:
 	~p2World();
 
 	p2World(p2Vec2 gravity, p2Guizmo* guizmoDebug = nullptr);
+
+	/*-----------------------------------------------------------
+							Public functions
+	-----------------------------------------------------------*/
 	/**
 	* \brief Simulate a new step of the physical world, simplify the resolution with a QuadTree, generate the new contacts
 	*/
 	void Step(float dt);
+
 	/**
 	* \brief Factory method to create a new p2Body attached to the p2World
 	*/
 	p2Body* CreateBody(p2BodyDef* bodyDef);
+
 	/**
 	* \brief Remove a p2Body from the current world
 	*/
 	void RemoveBody(p2Body* body);
-	/**
-	* \brief Set the contact listener
-	*/
-	void SetContactListener(p2ContactListener* contactListener);
-	/***
-	* \brief Set the guizmo Debug Controller to the current world
-	*/
-	void SetGuizmoDebug(p2Guizmo* guizmoDebug);
-	/**
-	* \brief Get the list of all existing bodies
-	*/
-	std::list<p2Body*> GetBodies();
-
-	/**
-	* \brief Get the ContactManager of the current world
-	*/
-	int GetNumContacts();
 
 	/**
 	* \brief Display the debug outlines of the world
 	*/
 	void DebugDraw();
+
+	/*-----------------------------------------------------------
+						Getter and Setters
+	-----------------------------------------------------------*/
+
+	/**
+	* \brief Set the contact listener
+	*/
+	void SetContactListener(p2ContactListener* contactListener);
+
+	/**
+	* \brief Set the guizmo Debug Controller to the current world
+	* \param guizmoDebug Object issued from sfge::Guizmo, that allows Physics2d to draw basic shapes on the screen
+	*/
+	void SetGuizmoDebug(p2Guizmo* guizmoDebug);
+
+	/**
+	* \brief Get the list of all existing bodies
+	*/
+	std::list<p2Body*> GetBodies();
+
+	/*-----------------------------------------------------------
+						Private vars
+	-----------------------------------------------------------*/
 private:
 	p2Vec2 m_Gravity;
 	std::list<p2Body*> m_BodyList;
@@ -90,4 +103,4 @@ private:
 	p2QuadTree* m_LastQuadtree = nullptr;
 };
 
-#endif
+#endif /* SFGE_P2WORLD_H */

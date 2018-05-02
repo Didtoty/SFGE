@@ -41,8 +41,14 @@ p2World::~p2World()
 		delete(m_LastQuadtree);
 }
 
+/*-----------------------------------------------------------
+					Public functions
+-----------------------------------------------------------*/
 void p2World::Step(float dt)
-{
+{	
+	// -------------------- //
+	//		   AABB			//
+	// -------------------- //
 	p2AABB worldSpace = p2AABB();
 	worldSpace.bottomLeft = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::min());
 	worldSpace.topRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<float>::max());
@@ -92,8 +98,10 @@ void p2World::Step(float dt)
 
 	//Update all the contacts and calculate new velocity if needed
 	m_ContactManager->ResolveContacts();
-
-	// Update velocity of all bodies and resolve forces
+	
+	// -------------------- //
+	//		 VELOCITY		//
+	// -------------------- //
 	p2Vec2 aGravity = m_Gravity;
 	for (auto body : m_BodyList)
 	{
@@ -129,6 +137,23 @@ void p2World::RemoveBody(p2Body * body)
 	
 }
 
+void p2World::DebugDraw()
+{
+	//for (auto body : m_BodyList)
+	{
+		//	body->DrawDebugBody(m_GuizmoDebug);
+	}
+
+	//m_GuizmoDebug->DrawLine(p2Vec2(0,0), p2Vec2(300, 300), p2Color(255, 255, 255, 255));
+
+	if (m_LastQuadtree != nullptr)
+		m_LastQuadtree->DebugDraw(m_GuizmoDebug);
+}
+
+/*-----------------------------------------------------------
+					Getter and Setters
+-----------------------------------------------------------*/
+
 void p2World::SetContactListener(p2ContactListener * contactListener)
 {
 	this->m_ContactListener = contactListener;
@@ -143,22 +168,4 @@ void p2World::SetGuizmoDebug(p2Guizmo * guizmoDebug)
 std::list<p2Body*> p2World::GetBodies()
 {
 	return m_BodyList;
-}
-
-int p2World::GetNumContacts()
-{
-	return m_ContactManager->GetNumContacts();
-}
-
-void p2World::DebugDraw()
-{
-	//for (auto body : m_BodyList)
-	{
-	//	body->DrawDebugBody(m_GuizmoDebug);
-	}
-
-	//m_GuizmoDebug->DrawLine(p2Vec2(0,0), p2Vec2(300, 300), p2Color(255, 255, 255, 255));
-
-	if (m_LastQuadtree != nullptr)
-		m_LastQuadtree->DebugDraw(m_GuizmoDebug);
 }

@@ -41,11 +41,15 @@ class p2QuadTree
 public:
 	p2QuadTree(int nodeLevel, p2AABB bounds);
 	~p2QuadTree();
-
+	
+	/*-----------------------------------------------------------
+							Public functions
+	-----------------------------------------------------------*/
 	/**
 	* \brief Remove all objects leafs and quadtrees children
 	*/
 	void Clear();
+
 	/**
 	* \brief Called when node have too much objects and split the current node into four
 	*/
@@ -55,27 +59,34 @@ public:
 	* \brief Get the index of the child trees of the p2Body
 	*/
 	int GetIndex(p2Body* body);
+
 	/**
-	* Insert a new p2Body in the tree
+	* \brief Insert a new p2Body in the tree
 	*/
 	void Insert(p2Body* body);
+
 	/**
 	* \brief Return a list of all the p2Body that might collide
 	*/
 	void Retrieve(std::list<p2Contact *>& contactList, std::list<p2Body*> bodyParentList = {});
 	
 	/**
-	* \brief Draw the quadtree on the screen.
+	* \brief Draw the quadtree on the screen
 	*/
 	void DebugDraw(p2Guizmo * guizmoDebug);
+	
+	/*-----------------------------------------------------------
+							Private vars
+	-----------------------------------------------------------*/
 private:
 	static const int MAX_OBJECTS = 10;
 	static const int MAX_LEVELS = 6;
 	static const int CHILD_TREE_NMB = 4;
 	int m_NodeLevel = 0;
+
 	p2QuadTree* m_Nodes[CHILD_TREE_NMB] = { nullptr };
 	std::list<p2Body*> m_Bodies;
 	p2AABB m_Bounds;
 };
 
-#endif
+#endif /* SFGE_P2QUADTREE_H */

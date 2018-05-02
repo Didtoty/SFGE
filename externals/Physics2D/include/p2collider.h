@@ -43,14 +43,23 @@ struct p2ColliderDef
 /**
 * \brief Representation of a Collider attached to a p2Body
 */
-
 class p2Collider
 {
 public:
 	p2Collider(p2ColliderDef* colDef, p2Body* body);
 	~p2Collider();
 
+	/*-----------------------------------------------------------
+						Getter and Setters
+	-----------------------------------------------------------*/
+	/**
+	* \brief Return a pointer of the current shape
+	*/
 	p2Shape* GetShape();
+
+	/**
+	* \brief Set the current shape
+	*/
 	void SetShape(p2Shape* shape);
 
 	/**
@@ -62,7 +71,14 @@ public:
 	*/
 	void* GetUserData();
 
+	/**
+	* \brief Return the body that the shape is attached to
+	*/
 	p2Body* GetBody();
+
+	/*-----------------------------------------------------------
+							Private vars
+	-----------------------------------------------------------*/
 private:
 	void* m_userData;
 	p2Shape* m_shape;
@@ -71,6 +87,4 @@ private:
 
 	p2Body* m_AttachedBody;
 };
-
-
-#endif
+#endif /* SFGE_P2COLLIDER_H */

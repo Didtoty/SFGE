@@ -38,7 +38,9 @@ p2Contact::p2Contact(p2Collider * colliderA, p2Collider* colliderB) : m_Collider
 p2Contact::~p2Contact()
 {
 }
-
+/*-----------------------------------------------------------
+					Getter and Setters
+-----------------------------------------------------------*/
 p2Collider * p2Contact::GetColliderA()
 {
 	return m_ColliderA;
@@ -114,14 +116,16 @@ bool p2Contact::isTouching()
 	//return m_ColliderA->GetBody()->GetAABB().Contains(m_ColliderB->GetBody()->GetAABB());
 }
 
+
+
+/*******************************************
+*	class p2ContactManager
+*******************************************/
 p2ContactManager::p2ContactManager()
 {
 	m_ContactList = std::list<p2Contact*>();
 }
 
-/*******************************************
-*	class p2ContactManager
-*******************************************/
 p2ContactManager::p2ContactManager(p2ContactListener* listener) : m_Listener(listener)
 {
 	m_ContactList = std::list<p2Contact*>();
@@ -133,6 +137,9 @@ p2ContactManager::~p2ContactManager()
 		delete(contact);
 }
 
+/*-----------------------------------------------------------
+					Public functions
+-----------------------------------------------------------*/
 void p2ContactManager::AddContact(p2Contact* contact)
 {
 	p2Collider* colA = contact->GetColliderA();
@@ -232,12 +239,10 @@ void p2ContactManager::ResolveContacts()
 	*/
 }
 
+/*-----------------------------------------------------------
+					Getter and Setters
+-----------------------------------------------------------*/
 void p2ContactManager::SetContactListener(p2ContactListener * listener)
 {
 	this->m_Listener = listener;
-}
-
-int p2ContactManager::GetNumContacts()
-{
-	return m_ContactList.size();
 }

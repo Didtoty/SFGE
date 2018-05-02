@@ -27,6 +27,9 @@ SOFTWARE.
 
 #include <p2vector.h>
 
+/**
+* \brief Type of shapes avaliable
+*/
 enum p2ShapeType {
 	NONE,
 	RECTANGLE_SHAPE,
@@ -41,26 +44,43 @@ class p2Shape
 public:
 	virtual p2Vec2 GetBottomLeft() = 0;
 	virtual p2Vec2 GetTopRight() = 0;
+	
+	/**
+	* \brief Return the type of shape, based on p2SapeType
+	*/
 	p2ShapeType GetType();
+
 protected:
 	p2ShapeType m_Type;
 };
 
 /**
-* \brief Representation of a physics circle
+* \brief Representation of a circle
 */
 class p2CircleShape : public p2Shape
 {
 public:
 	p2CircleShape();
 	p2CircleShape(float radius);
+
 	/**
-	* \brief Setter for the radius
+	* \brief Set the radius of the shape
 	*/
 	void SetRadius(float radius);
+
+	/**
+	* \brief Get the radius of the shape
+	*/
 	float GetRadius();
 
+	/**
+	* \brief Get the bottom left position of the shape
+	*/
 	p2Vec2 GetBottomLeft();
+
+	/**
+	* \brief Get the top rightposition of the shape
+	*/
 	p2Vec2 GetTopRight();
 private:
 	float m_Radius;
@@ -75,13 +95,34 @@ public:
 	p2RectShape();
 	p2RectShape(p2Vec2 size);
 
+	/*-----------------------------------------------------------
+							Getter and Setters
+	-----------------------------------------------------------*/
+	/**
+	* \brief Set the size of the rectangle shape
+	*/
 	void SetSize(p2Vec2 size);
+
+	/**
+	* \brief Get the size of the rectangle shape
+	*/
 	p2Vec2 GetSize();
 
+	/**
+	* \brief Get the bottom left position of the shape
+	*/
 	p2Vec2 GetBottomLeft();
+
+	/**
+	* \brief Get the top rightposition of the shape
+	*/
 	p2Vec2 GetTopRight();
+
+	/*-----------------------------------------------------------
+							Private vars
+	-----------------------------------------------------------*/
 private:
 	p2Vec2 m_Size;
 };
 
-#endif
+#endif /* SFGE_P2SHAPE_H */

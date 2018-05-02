@@ -36,13 +36,30 @@ class p2Contact
 public:
 	p2Contact(p2Collider* colliderA, p2Collider* colliderB);
 	~p2Contact();
-
+	/*-----------------------------------------------------------
+						Getter and Setters
+	-----------------------------------------------------------*/
+	/**
+	* \brief Return the collider A
+	*/
 	p2Collider* GetColliderA();
+
+	/**
+	* \brief Return the collider B
+	*/
 	p2Collider* GetColliderB();
 
+	/**
+	* \brief Return the other collider of the contact. If it doesn't match, returns a nullptr
+	* \param collider Base collider, to know his neightbor
+	*/
 	p2Collider* GetOther(p2Collider* collider);
 
+	/**
+	* \brief Return true if the two colliders are touching
+	*/
 	bool isTouching();
+
 private:
 	p2Collider* m_ColliderA;
 	p2Collider* m_ColliderB;
@@ -67,19 +84,43 @@ public:
 	p2ContactManager();
 	p2ContactManager(p2ContactListener* listener);
 	~p2ContactManager();
-
+	
+	/*-----------------------------------------------------------
+						Public functions
+	-----------------------------------------------------------*/
+	/**
+	* \brief Add a contact to the contact manager. If it already exists, it will be ignored
+	*/
 	void AddContact(p2Contact* contact);
+
+	/**
+	* \brief Add a list of contacts to the contact manager
+	*/
 	void AddContacts(std::list<p2Contact*> contacts);
+
+	/**
+	* \brief Remove a contact from the contact manager
+	*/
 	void RemoveContact(p2Contact* contact);
 
+	/**
+	* \brief Calculate the resolution of colliding contacts and apply them
+	*/
 	void ResolveContacts();
-
+		
+	/*-----------------------------------------------------------
+						Getter and Setters
+	-----------------------------------------------------------*/
+	/**
+	* \brief Set the contact Listener
+	*/
 	void SetContactListener(p2ContactListener* listener);
 
-	int GetNumContacts();
-
+	/*-----------------------------------------------------------
+						Private vars
+	-----------------------------------------------------------*/
 private:
 	std::list<p2Contact*> m_ContactList;
 	p2ContactListener* m_Listener;
 };
-#endif
+#endif /* SFGE_P2CONTACT_H */

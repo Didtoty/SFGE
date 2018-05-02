@@ -30,7 +30,7 @@ SOFTWARE.
 struct p2Vec3;
 
 /**
-* \brief Vector class
+* \brief Vector 2 struct for the physic world
 */
 struct p2Vec2
 {
@@ -47,50 +47,60 @@ struct p2Vec2
 	p2Vec2 operator/(float f);
 	p2Vec2 operator/=(float f);
 	bool operator==(p2Vec2 v);
+
 	/**
 	* \brief Dot product of two vectors
 	*/
 	static float Dot(p2Vec2 v1, p2Vec2 v2);
+
 	/**
 	* \brief Cross product of two vectors
 	*/
 	static p2Vec3 Cross(p2Vec2 v1, p2Vec2 v2);
+
 	/**
 	* \brief Lerp of two vectors
 	*/
 	static p2Vec2 Lerp(p2Vec2 v1, p2Vec2 v2, float t);
+
 	/**
 	* \brief Cross product of two vectors
 	*/
 	static p2Vec2 Proj(p2Vec2 v1, p2Vec2 v2);
+
 	/**
 	* \brief  of two vectors
 	*/
 	static p2Vec2 Refl(p2Vec2 v1, p2Vec2 n);
+
 	/**
 	* \brief Angle between two vectors
 	* \return Angle in degree
 	*/
 	static float AngleBetween(p2Vec2 v1, p2Vec2 v2);
+
 	/**
 	* \brief Apply rotation to the vector
 	*/
 	p2Vec2 ApplyRotation(float angle);
+
 	/**
 	* \brief Calculate the magnitude of the p2Vec2
 	*/
 	float GetMagnitude();
+
 	/**
 	* \brief Calculate a normalized version of the p2Vec2
 	*/
 	p2Vec2 Normalized();
+
 	/**
 	* \brief Normalize the p2Vec2
 	*/
 	void Normalize();
 
 	/**
-	* \brief 
+	* \brief Transform a p2Vec2 into a p2Vec3
 	*/
 	p2Vec3 to3();
 
@@ -99,6 +109,9 @@ struct p2Vec2
 
 };
 
+/**
+* \brief Vector 3 struct for the physic world
+*/
 struct p2Vec3
 {
 	p2Vec3();
@@ -118,36 +131,44 @@ struct p2Vec3
 	* \brief Dot product of two vectors
 	*/
 	static float Dot(p2Vec3 v1, p2Vec3 v2);
+
 	/**
 	* \brief Cross product of two vectors
 	*/
 	static p2Vec3 Cross(p2Vec3 v1, p2Vec3 v2);
+
 	/**
 	* \brief Lerp of two vectors
 	*/
 	static p2Vec3 Lerp(p2Vec3 v1, p2Vec3 v2, float t);
+
 	/**
 	* \brief Projection of two vectors
 	*/
 	static p2Vec3 Proj(p2Vec3 v1, p2Vec3 v2);
+
 	/**
 	* \brief Reflexion of two vectors
 	*/
 	static p2Vec3 Refl(p2Vec3 v1, p2Vec3 n);
+
 	/**
 	* \brief Angle between two vectors
 	* \return Angle in radian
 	*/
 	static float AngleBetween(p2Vec3 v1, p2Vec3 v2);
+
 	/**
 	* \brief Calculate the magnitude of the p2Vec3
 	*/
 	float GetMagnitude();
+
 	/**
 	* \brief Calculate a normalized version of the p2Vec3
 	* \return The normalized version
 	*/
 	p2Vec3 Normalized();
+
 	/**
 	* \brief Normalize the p2Vec3
 	*/
@@ -158,4 +179,4 @@ struct p2Vec3
 	float z = 0.0f;
 };
 
-#endif
+#endif /* SFGE_P2VECTOR_H */

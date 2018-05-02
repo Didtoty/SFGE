@@ -29,6 +29,9 @@ SOFTWARE.
 
 #include <p2vector.h>
 
+/**
+* \brief Matrix 22 struct for the physic world
+*/
 struct p2Mat22
 {
 	p2Mat22();
@@ -51,16 +54,19 @@ struct p2Mat22
 	* \brief Calculate the invert of the 2x2 matrix
 	*/
 	p2Mat22 Invert();
+
 	/**
 	* \brief Calculate the determinant of the matrix and return it
 	*/
 	float GetDeterminant();
+
 	/**
 	* \brief Rotate the given p2Vec2 parameter and return it
 	* \param v Vector2 to rotate
 	* \param angle Angle to apply to the Vector2 in radian
 	*/
 	static p2Vec2 RotateVector2(p2Vec2 v, float angle);
+
 	/**
 	* \brief Print in the console the Matrix
 	*/
@@ -69,6 +75,9 @@ struct p2Mat22
 	p2Vec2 columns[2] = {};
 };
 
+/**
+* \brief Matrix 33 struct for the physic world
+*/
 struct p2Mat33
 {
 	p2Mat33();
@@ -91,14 +100,17 @@ struct p2Mat33
 	* \brief Calculate the invert of the 3x3 matrix
 	*/
 	p2Mat33 Invert();
+
 	/**
 	* \brief Transpose the 3x3 matrix
 	*/
 	p2Mat33 Transpose();
+
 	/**
 	* \brief Calculate the determinant
 	*/
 	float GetDeterminant();
+
 	/**
 	* \brief Print the Matrix in the console 
 	*/
@@ -106,5 +118,4 @@ struct p2Mat33
 
 	p2Vec3 columns[3] = {};
 };
-
-#endif
+#endif /* SFGE_P2MATRIX_H */

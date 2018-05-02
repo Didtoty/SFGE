@@ -23,6 +23,9 @@ p2Collider::~p2Collider()
 		delete(m_shape);
 }
 
+/*-----------------------------------------------------------
+					Getter and Setters
+-----------------------------------------------------------*/
 p2Shape * p2Collider::GetShape()
 {
 	return m_shape;

@@ -33,6 +33,9 @@ class p2Collider;
 class p2Contact;
 struct p2ColliderDef;
 
+/**
+* \brief Type of bodies avaliable
+*/
 enum class p2BodyType
 {
 	STATIC,
@@ -52,8 +55,6 @@ struct p2BodyDef
 	float mass = 60;
 };
 
-// ADD LIST OF COLLIDERS
-
 /**
 * \brief Rigidbody representation
 */
@@ -64,6 +65,9 @@ public:
 	p2Body(p2BodyDef* bodyDef);
 	~p2Body();
 
+	/*-----------------------------------------------------------
+						Public functions
+	-----------------------------------------------------------*/
 	/**
 	* \brief Factory method creating a p2Collider
 	* \param colliderDef p2ColliderDef definition of the collider
@@ -92,10 +96,14 @@ public:
 	*/
 	void CalculateAABB();
 
-	/************************
-	* Getters and Setters
-	************************/
+	/**
+	* \brief Draw a debug of the body on the screen
+	*/
+	void DrawDebugBody(p2Guizmo* guizmoDebug);
 
+	/*-----------------------------------------------------------
+						Getter and Setters
+	-----------------------------------------------------------*/
 	/**
 	* \brief Return the Linear Velocity of the body
 	*/
@@ -161,7 +169,9 @@ public:
 	*/
 	std::list<p2Contact*> GetContactList();
 
-	void DrawDebugBody(p2Guizmo* guizmoDebug);
+	/*-----------------------------------------------------------
+						Private vars
+	-----------------------------------------------------------*/
 private:
 	p2AABB m_AABB;
 	p2BodyType m_Type;
@@ -176,4 +186,4 @@ private:
 	std::list<p2Contact*> m_ContactList;
 };
 
-#endif
+#endif /* SFGE_P2BODY_H */
