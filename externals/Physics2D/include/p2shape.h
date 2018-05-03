@@ -26,6 +26,7 @@ SOFTWARE.
 #define SFGE_P2SHAPE_H
 
 #include <p2vector.h>
+#include <list>
 
 /**
 * \brief Type of shapes avaliable
@@ -46,12 +47,23 @@ public:
 	virtual p2Vec2 GetTopRight() = 0;
 	
 	/**
-	* \brief Return the type of shape, based on p2SapeType
+	* \brief Return the type of shape, based on p2ShapeType
 	*/
 	p2ShapeType GetType();
 
+	/**
+	* \brief Get the angle of the shape
+	*/
+	float GetAngle();
+
+	/**
+	* \brief Set the angle of the shape
+	*/
+	void SetAngle(float angle);
+
 protected:
 	p2ShapeType m_Type;
+	float m_Angle;
 };
 
 /**
@@ -61,7 +73,7 @@ class p2CircleShape : public p2Shape
 {
 public:
 	p2CircleShape();
-	p2CircleShape(float radius);
+	p2CircleShape(float radius, float angle = 0);
 
 	/**
 	* \brief Set the radius of the shape
@@ -93,7 +105,7 @@ class p2RectShape : public p2Shape
 {
 public:
 	p2RectShape();
-	p2RectShape(p2Vec2 size);
+	p2RectShape(p2Vec2 size, float angle = 0);
 
 	/*-----------------------------------------------------------
 							Getter and Setters

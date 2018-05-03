@@ -29,14 +29,25 @@ p2ShapeType p2Shape::GetType()
 	return m_Type;
 }
 
+float p2Shape::GetAngle()
+{
+	return m_Angle;
+}
+
+void p2Shape::SetAngle(float angle)
+{
+	m_Angle = angle;
+}
+
 p2CircleShape::p2CircleShape()
 {
 	m_Type = p2ShapeType::CIRCLE_SHAPE;
 }
 
-p2CircleShape::p2CircleShape(float radius) : m_Radius(radius)
+p2CircleShape::p2CircleShape(float radius, float angle) : m_Radius(radius)
 {
 	m_Type = p2ShapeType::CIRCLE_SHAPE;
+	m_Angle = angle;
 }
 
 void p2CircleShape::SetRadius(float radius)
@@ -51,12 +62,12 @@ float p2CircleShape::GetRadius()
 
 p2Vec2 p2CircleShape::GetBottomLeft()
 {
-	return p2Vec2(-m_Radius, -m_Radius);
+	return p2Vec2(m_Radius, -m_Radius);
 }
 
 p2Vec2 p2CircleShape::GetTopRight()
 {
-	return p2Vec2(m_Radius, m_Radius);
+	return p2Vec2(-m_Radius, m_Radius);
 }
 
 p2RectShape::p2RectShape()
@@ -64,9 +75,10 @@ p2RectShape::p2RectShape()
 	m_Type = p2ShapeType::RECTANGLE_SHAPE;
 }
 
-p2RectShape::p2RectShape(p2Vec2 size) : m_Size(size)
+p2RectShape::p2RectShape(p2Vec2 size, float angle) : m_Size(size)
 {
 	m_Type = p2ShapeType::RECTANGLE_SHAPE;
+	m_Angle = angle;
 }
 
 void p2RectShape::SetSize(p2Vec2 size)

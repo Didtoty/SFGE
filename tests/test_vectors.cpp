@@ -200,8 +200,9 @@ int main()
 
 		std::cout << "p2Vec2 : ApplyRotation\n";
 		std::cout << "Angle : " << angle / M_PI * 180.0f << "\n";
+		std::cout << "before :| " << v.x << " | " << v.y << " |\n";
 		v.ApplyRotation(angle);
-		std::cout << "| " << v.x << " | " << v.y << " |\n";
+		std::cout << "after : | " << v.x << " | " << v.y << " |\n";
 		std::cout << "Should be : 1.5980762; 3.232050807\n\n";
 	}
 

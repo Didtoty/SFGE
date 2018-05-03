@@ -25,8 +25,18 @@ SOFTWARE.
 #ifndef SFGE_P2CONTACT_H
 #define SFGE_P2CONTACT_H
 
+#define NORMAL_X p2Vec2(0.0f, 1.0f)
+#define NORMAL_Y p2Vec2(1.0f, 0.0f)
+
+#include <p2vector.h>
 #include <p2collider.h>
 #include <list>
+
+struct p2CollisionDiff
+{
+	p2Vec2 normal;
+	float distance;
+};
 
 /**
 * \brief Representation of a contact given as argument in a p2ContactListener
@@ -60,9 +70,15 @@ public:
 	*/
 	bool isTouching();
 
+	/**
+	* \brief Return the struct storing the result of SAT calculation
+	*/
+	p2CollisionDiff GetCollDiff();
+
 private:
 	p2Collider* m_ColliderA;
 	p2Collider* m_ColliderB;
+	p2CollisionDiff m_CollDiff;
 };
 
 /**

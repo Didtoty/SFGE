@@ -94,9 +94,16 @@ Collider* Collider::LoadCollider(Engine & engine, GameObject * gameObject, json 
 			}
 			break;
 		}
-		if (CheckJsonNumber(componentJson, "bouncing"))
+		if (shape != nullptr)
 		{
-			colliderDef.restitution = componentJson["bouncing"];
+			if (CheckJsonNumber(componentJson, "angle"))
+			{
+				shape->SetAngle(componentJson["angle"]);
+			}
+		}
+		if (CheckJsonNumber(componentJson, "bounciness"))
+		{
+			colliderDef.bounciness = componentJson["bounciness"];
 		}
 		if (shape != nullptr)
 		{
@@ -106,6 +113,7 @@ Collider* Collider::LoadCollider(Engine & engine, GameObject * gameObject, json 
 		{
 			colliderDef.isSensor = componentJson["sensor"];
 		}
+		colliderDef.offset = pixel2meter(GetVectorFromJson(componentJson, "offset"));	
 		
 		collider->m_PhysicsCollider = body2d->GetBody()->CreateCollider(&colliderDef);
 
@@ -121,6 +129,11 @@ Collider* Collider::LoadCollider(Engine & engine, GameObject * gameObject, json 
 		Log::GetInstance()->Error("No body attached on the GameObject");
 	}
 	return nullptr;
+}
+
+p2Collider * Collider::GetCollider()
+{
+	return m_PhysicsCollider;
 }
 
 }

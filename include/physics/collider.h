@@ -70,6 +70,11 @@ public:
 	* brief Factory method to create the Collider component with json arguments given
 	*/
 	static Collider* LoadCollider(Engine& engine, GameObject* gameObject, json& componentJson);
+
+	/**
+	* \brief Return the physical collider
+	*/
+	p2Collider* GetCollider();
 protected:
 	p2Collider * m_PhysicsCollider = nullptr;
 };

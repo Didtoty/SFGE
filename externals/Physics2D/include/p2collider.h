@@ -28,6 +28,9 @@ SOFTWARE.
 
 #include <p2shape.h>
 #include <p2body.h>
+#include <p2vector.h>
+
+#include <list>
 
 /**
 * \brief Struct defining a p2Collider when creating one
@@ -36,8 +39,9 @@ struct p2ColliderDef
 {
 	void* userData;
 	p2Shape* shape;
-	float restitution;
+	float bounciness;
 	bool isSensor;
+	p2Vec2 offset = p2Vec2();
 };
 
 /**
@@ -76,15 +80,36 @@ public:
 	*/
 	p2Body* GetBody();
 
+	/**
+	* \brief Get the local angle of the collider
+	*/
+	float GetLocalAngle();
+
+	/**
+	* \brief Get the global angle of the collider
+	*/
+	float GetGlobalAngle();
+
+	/**
+	* \brief Get the offset of the collider from the body
+	*/
+	p2Vec2 GetOffset();
+
+	/**
+	* \brief Calculate and return a list of the points defining the rectangle
+	*/
+	std::list<p2Vec2> GetPoints();
+
 	/*-----------------------------------------------------------
 							Private vars
 	-----------------------------------------------------------*/
 private:
-	void* m_userData;
-	p2Shape* m_shape;
-	float m_restitution;
-	bool m_isSensor;
+	void* m_UserData;
+	p2Shape* m_Shape;
+	float m_Bounciness;
+	bool m_IsSensor;
 
 	p2Body* m_AttachedBody;
+	p2Vec2 m_Offset;
 };
 #endif /* SFGE_P2COLLIDER_H */

@@ -53,6 +53,7 @@ struct p2BodyDef
 	p2Vec2 linearVelocity;
 	float gravityScale = 1;
 	float mass = 60;
+	float angle = 0;
 };
 
 /**
@@ -169,6 +170,11 @@ public:
 	*/
 	std::list<p2Contact*> GetContactList();
 
+	/**
+	* \brief Get the current angle of the body
+	*/
+	float GetAngle();
+
 	/*-----------------------------------------------------------
 						Private vars
 	-----------------------------------------------------------*/
@@ -181,6 +187,7 @@ private:
 	float m_GravityScale;
 	float m_Mass;
 	p2Vec2 m_Forces;
+	float m_Angle;
 
 	std::list<p2Collider*> m_ColliderList;
 	std::list<p2Contact*> m_ContactList;

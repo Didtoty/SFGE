@@ -82,7 +82,7 @@ struct p2Vec2
 	/**
 	* \brief Apply rotation to the vector
 	*/
-	p2Vec2 ApplyRotation(float angle);
+	p2Vec2 ApplyRotation(float angle, p2Vec2 centerPoint = p2Vec2());
 
 	/**
 	* \brief Calculate the magnitude of the p2Vec2

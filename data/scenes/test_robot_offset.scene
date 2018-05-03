@@ -1,15 +1,20 @@
 
 {
-  "name": "ContactTestScene",
+  "name": "TestRobotScene",
   "game_objects": [
       {
-          "name": "BodyCircleMovable",
+          "name": "Head",
           "components": [
               {
                   "type": 1,
-                  "position": [150, 300],
+                  "position": [300, 150],
                   "scale" : [1.0,1.0],
                   "angle": 0.0
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 0
               },
               {
                   "name": "Circle Shape Component",
@@ -18,28 +23,19 @@
                   "radius": 50.0
               },
               {
-                  "name": "Rigidbody",
-                  "type": 5,
-                  "body_type": 2
-              },
-              {
                   "name": "CircleCollider",
                   "type": 6,
                   "collider_type": 1,
                   "radius": 50.0
-              },
-              {
-                  "type": 4,
-                  "script_path": "scripts/player_character_plateformer.py"
               }
           ]
       },
       {
-          "name": "Ground",
+          "name": "Body",
           "components": [
               {
                   "type": 1,
-                  "position": [800, 600],
+                  "position": [300, 450],
                   "scale" : [1.0,1.0],
                   "angle": 0.0
               },
@@ -47,7 +43,7 @@
                   "name": "Rectangle Shape Component",
                   "type": 3,
                   "shape_type": 2,
-                  "size": [1600, 200]
+                  "size": [50, 300]
               },
               {
                   "name": "Rigidbody",
@@ -58,80 +54,26 @@
                   "name": "BoxCollider",
                   "type": 6,
                   "collider_type": 2,
-                  "size": [1600,200]
+                  "size": [50,300]
               }
           ]
       },
-	  {
-          "name": "BodyCircle",
+      {
+          "name": "LeftArm",
           "components": [
               {
                   "type": 1,
-                  "position": [300, 300],
+                  "position": [280, 400],
                   "scale" : [1.0,1.0],
-                  "angle": 0.0
-              },
-              {
-                  "name": "Circle Shape Component",
-                  "type": 3,
-                  "shape_type": 1,
-				  "radius" : 50.0
-              },
-              {
-                  "name": "Rigidbody",
-                  "type": 5,
-                  "body_type": 2
-              },
-              {
-                  "name": "CircleCollider",
-                  "type": 6,
-                  "collider_type": 1,
-				  "radius" : 50.0
-              }
-          ]
-      },
-	  {
-          "name": "BodyCircl2",
-          "components": [
-              {
-                  "type": 1,
-                  "position": [450, 300],
-                  "scale" : [1.0,1.0],
-                  "angle": 0.0
-              },
-              {
-                  "name": "Circle Shape Component",
-                  "type": 3,
-                  "shape_type": 1,
-				  "radius" : 50.0
-              },
-              {
-                  "name": "Rigidbody",
-                  "type": 5,
-                  "body_type": 2
-              },
-              {
-                  "name": "CircleCollider",
-                  "type": 6,
-                  "collider_type": 1,
-				  "radius" : 50.0
-              }
-          ]
-      },
-	  {
-          "name": "Piedestal",
-          "components": [
-              {
-                  "type": 1,
-                  "position": [400, 500],
-                  "scale" : [1.0,1.0],
-                  "angle": 0.0
+                  "angle": 140.0
               },
               {
                   "name": "Rectangle Shape Component",
                   "type": 3,
                   "shape_type": 2,
-				  "size" : [50,50]
+                  "size": [25, 100],
+				  "offset" : [100, 0],
+				  "angle" : 30
               },
               {
                   "name": "Rigidbody",
@@ -139,10 +81,74 @@
                   "body_type": 0
               },
               {
-                  "name": "RectangleCollider",
+                  "name": "BoxCollider",
                   "type": 6,
                   "collider_type": 2,
-				  "size" : [50,50]
+                  "size": [25,100],
+				  "offset" : [100, 0],
+				  "angle" : 30
+              }
+          ]
+      },
+      {
+          "name": "RightArm",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [320, 400],
+                  "scale" : [1.0,1.0],
+                  "angle": 40.0
+              },
+              {
+                  "name": "Rectangle Shape Component",
+                  "type": 3,
+                  "shape_type": 2,
+                  "size": [25, 100],
+				  "offset" : [100, 0],
+				  "angle" : 30
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 0
+              },
+              {
+                  "name": "BoxCollider",
+                  "type": 6,
+                  "collider_type": 2,
+                  "size": [25,100],
+				  "offset" : [100, 0],
+				  "angle" : 30
+              }
+          ]
+      },
+	  {
+          "name": "LeftArmWithoutAngle",
+          "components": [
+              {
+                  "type": 1,
+                  "position": [280, 400],
+                  "scale" : [1.0,1.0],
+                  "angle": 140.0
+              },
+              {
+                  "name": "Rectangle Shape Component",
+                  "type": 3,
+                  "shape_type": 2,
+                  "size": [25, 100],
+				  "offset" : [100, 0]
+              },
+              {
+                  "name": "Rigidbody",
+                  "type": 5,
+                  "body_type": 0
+              },
+              {
+                  "name": "BoxCollider",
+                  "type": 6,
+                  "collider_type": 2,
+                  "size": [25,100],
+				  "offset" : [100, 0]
               }
           ]
       }

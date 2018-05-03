@@ -1,3 +1,4 @@
+
 /*
 MIT License
 
@@ -27,6 +28,7 @@ SOFTWARE.
 #include <utility/json_utility.h>
 #include <engine/log.h>
 #include <engine/transform.h>
+#include <physics/body2d.h>
 
 namespace sfge
 {
@@ -45,6 +47,7 @@ void Shape::Update(float time)
 	if (m_Shape != nullptr)
 	{
 		m_Shape->setPosition(m_GameObject->GetTransform()->GetPosition() + m_Offset);
+		m_Shape->setRotation(m_GameObject->GetComponent<Body2d>()->GetBody()->GetAngle());
 	}
 }
 
@@ -68,8 +71,7 @@ void Shape::SetFillColor(sf::Color color)
 Shape* Shape::LoadShape(Engine& engine, json& componentJson, GameObject* gameObject)
 {
 	Shape* shape = nullptr;
-	sf::Vector2f offset;
-	
+	sf::Vector2f offset;	
 
 	if(CheckJsonNumber(componentJson, "shape_type"))
 	{
@@ -82,11 +84,9 @@ Shape* Shape::LoadShape(Engine& engine, json& componentJson, GameObject* gameObj
 		case ShapeType::RECTANGLE:
 			shape = Rectangle::LoadRectangle(componentJson, gameObject);
 			break;
-
 		}
 	}
-	offset = GetVectorFromJson(componentJson, "offset");
-		
+	offset = GetVectorFromJson(componentJson, "offset");	
 	
 	if(shape != nullptr)
 	{
@@ -113,6 +113,7 @@ void Circle::Update(float dt)
 {
 	if (m_Shape != nullptr)
 	{
+		m_Shape->setRotation(m_GameObject->GetTransform()->GetEulerAngle());
 		m_Shape->setPosition(m_GameObject->GetTransform()->GetPosition() + m_Offset);
 	}
 }
@@ -144,6 +145,7 @@ void Rectangle::Update(float time)
 {
 	if (m_Shape != nullptr)
 	{
+		m_Shape->setRotation(m_GameObject->GetTransform()->GetEulerAngle());
 		m_Shape->setPosition(m_GameObject->GetTransform()->GetPosition() + m_Offset);
 	}
 }
@@ -193,6 +195,5 @@ void ShapeManager::AddShape(Shape* shape)
 {
 	m_Shapes.push_back(shape);
 }
-
 
 }

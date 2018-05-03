@@ -1,26 +1,27 @@
 #include "..\include\p2collider.h"
 
 p2Collider::p2Collider(p2ColliderDef* colDef, p2Body* body) :
-	m_userData(colDef->userData),
-	m_restitution(colDef->restitution),
-	m_isSensor(colDef->isSensor),
+	m_UserData(colDef->userData),
+	m_Bounciness(colDef->bounciness),
+	m_IsSensor(colDef->isSensor),
+	m_Offset(colDef->offset),
 	m_AttachedBody(body)
 {
 	switch (colDef->shape->GetType())
 	{
 	case p2ShapeType::CIRCLE_SHAPE:
-		m_shape = new p2CircleShape(dynamic_cast<p2CircleShape*>(colDef->shape)->GetRadius());
+		m_Shape = new p2CircleShape(dynamic_cast<p2CircleShape*>(colDef->shape)->GetRadius());
 		break;
 	case p2ShapeType::RECTANGLE_SHAPE:
-		m_shape = new p2RectShape(dynamic_cast<p2RectShape*>(colDef->shape)->GetSize());
+		m_Shape = new p2RectShape(dynamic_cast<p2RectShape*>(colDef->shape)->GetSize());
 		break;
 	}
 }
 
 p2Collider::~p2Collider()
 {
-	if (m_shape != nullptr)
-		delete(m_shape);
+	if (m_Shape != nullptr)
+		delete(m_Shape);
 }
 
 /*-----------------------------------------------------------
@@ -28,25 +29,63 @@ p2Collider::~p2Collider()
 -----------------------------------------------------------*/
 p2Shape * p2Collider::GetShape()
 {
-	return m_shape;
+	return m_Shape;
 }
 
 void p2Collider::SetShape(p2Shape* shape)
 {
-	m_shape = shape;
+	m_Shape = shape;
 }
 
 bool p2Collider::IsSensor()
 {
-	return m_isSensor;
+	return m_IsSensor;
 }
 
 void* p2Collider::GetUserData()
 {
-	return m_userData;
+	return m_UserData;
 }
 
 p2Body * p2Collider::GetBody()
 {
 	return m_AttachedBody;
+}
+
+float p2Collider::GetLocalAngle()
+{
+	return m_Shape->GetAngle();
+}
+
+float p2Collider::GetGlobalAngle()
+{
+	return m_Shape->GetAngle() + m_AttachedBody->GetAngle();
+}
+
+p2Vec2 p2Collider::GetOffset()
+{
+	return m_Offset;
+}
+
+std::list<p2Vec2> p2Collider::GetPoints()
+{
+	std::list<p2Vec2> listPoints = std::list<p2Vec2>();
+	if (m_Shape->GetType() == p2ShapeType::CIRCLE_SHAPE)
+	{
+		listPoints.push_back((m_AttachedBody->GetPosition() + m_Offset).ApplyRotation(m_AttachedBody->GetAngle()));
+	} 
+	else if (m_Shape->GetType() == p2ShapeType::RECTANGLE_SHAPE)
+	{
+		p2Vec2 size = dynamic_cast<p2RectShape*>(m_Shape)->GetSize();
+		
+		p2Vec2 colPosition = m_AttachedBody->GetPosition() + m_Offset;
+		colPosition.ApplyRotation(m_AttachedBody->GetAngle());
+
+		listPoints.push_back((colPosition - size).ApplyRotation(m_Shape->GetAngle()));
+		listPoints.push_back((colPosition + p2Vec2(-size.x, size.y)).ApplyRotation(m_Shape->GetAngle()));
+		listPoints.push_back((colPosition + size).ApplyRotation(m_Shape->GetAngle()));
+		listPoints.push_back((colPosition + p2Vec2(size.x, -size.y)).ApplyRotation(m_Shape->GetAngle()));
+	}
+
+	return listPoints;
 }

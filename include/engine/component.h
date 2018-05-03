@@ -122,7 +122,6 @@ protected:
 	* \brief The pointer to the GameObject the Component is attached to
 	*/
 	GameObject* m_GameObject;
-
 };
 
 /**

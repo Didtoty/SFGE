@@ -33,7 +33,8 @@ p2Body::p2Body(p2BodyDef* bodyDef) :
 	m_Position(bodyDef->position),
 	m_LinearVelocity(bodyDef->linearVelocity),
 	m_GravityScale(bodyDef->gravityScale),
-	m_Mass(bodyDef->mass)
+	m_Mass(bodyDef->mass),
+	m_Angle(bodyDef->angle)
 {
 	
 }
@@ -72,7 +73,7 @@ void p2Body::CalculateAABB()
 {
 	// Reset the current values
 	p2Vec2 newBottomLeft = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::min());
-	p2Vec2 newTopRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<int>::max());
+	p2Vec2 newTopRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<float>::max());
 
 	if (m_ColliderList.size())
 	{
@@ -84,6 +85,9 @@ void p2Body::CalculateAABB()
 
 			p2Vec2 colTopRight = shape->GetTopRight();
 			p2Vec2 colBotLeft = shape->GetBottomLeft();
+
+			colTopRight + col->GetOffset();
+			colBotLeft + col->GetOffset();
 
 			if (newBottomLeft.x > colBotLeft.x)
 				newBottomLeft.x = colBotLeft.x;
@@ -177,4 +181,9 @@ void p2Body::SetForceToZero()
 std::list<p2Contact*> p2Body::GetContactList()
 {
 	return m_ContactList;
+}
+
+float p2Body::GetAngle()
+{
+	return m_Angle;
 }

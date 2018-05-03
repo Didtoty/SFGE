@@ -39,6 +39,7 @@ void Body2d::Init()
 void Body2d::Update(float dt)
 {
 	m_GameObject->GetTransform()->SetPosition(meter2pixel(m_Body->GetPosition()));
+	m_GameObject->GetTransform()->SetEulerAngle(m_Body->GetAngle());
 }
 
 p2Body * Body2d::GetBody()
@@ -77,8 +78,6 @@ float Body2d::GetMass()
 	return 0.0f;
 }
 
-
-
 Body2d * Body2d::LoadBody2d(Engine & engine, GameObject * gameObject, json& componentJson)
 {
 	auto physicsManager = engine.GetPhysicsManager();
@@ -97,6 +96,7 @@ Body2d * Body2d::LoadBody2d(Engine & engine, GameObject * gameObject, json& comp
 		bodyDef.type = componentJson["body_type"];
 	}
 	bodyDef.position = pixel2meter(gameObject->GetTransform()->GetPosition());
+	bodyDef.angle = gameObject->GetTransform()->GetEulerAngle();
 	if (CheckJsonParameter(componentJson, "offset", json::value_t::array))
 	{
 		if (componentJson["offset"].size() == 2)
@@ -128,7 +128,6 @@ Body2d * Body2d::LoadBody2d(Engine & engine, GameObject * gameObject, json& comp
 	{
 		bodyDef.gravityScale = componentJson["gravity_scale"];
 	}
-
 
 	p2Body* body = world->CreateBody(&bodyDef);
 	Body2d* bodyComponent = new Body2d(gameObject);

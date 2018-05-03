@@ -114,9 +114,14 @@ float p2Vec2::AngleBetween(p2Vec2 v1, p2Vec2 v2)
 	return acos(Dot(v1, v2) / v1.GetMagnitude() / v2.GetMagnitude());
 }
 
-p2Vec2 p2Vec2::ApplyRotation(float angle) 
+p2Vec2 p2Vec2::ApplyRotation(float angle, p2Vec2 centerPoint) 
 {
-	return *this = p2Mat22::RotateVector2(*this, angle);
+	p2Vec2 origin = *this - centerPoint;
+
+	if(angle != 0.0f)
+		origin = p2Mat22::RotateVector2(origin, angle);
+
+	return *this = origin + centerPoint;
 }
 
 float p2Vec2::GetMagnitude()

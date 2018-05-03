@@ -40,6 +40,7 @@ SOFTWARE.
 #include <physics/physics.h>
 
 #include <physics/body2d.h>
+#include <physics/collider.h>
 
 
 namespace sfge
@@ -108,6 +109,7 @@ void Editor::Update(sf::Time dt)
 						float offset[2] = { offsetableComponent->GetOffset().x, offsetableComponent->GetOffset().y };
 						ImGui::InputFloat2("Offset", offset);
 					}
+
 					switch (component->GetComponentType())
 					{
 					case ComponentType::TRANSFORM:
@@ -115,33 +117,58 @@ void Editor::Update(sf::Time dt)
 							Transform * transform = dynamic_cast<Transform*>(component);
 							if (transform != nullptr)
 							{
-
 								float pos[2] = { transform->GetPosition().x, transform->GetPosition().y };
 								ImGui::InputFloat2("Position", pos);
+
+								float scale[2] = { transform->GetScale().x, transform->GetScale().y };
+								ImGui::InputFloat2("Scale", scale);
+
+								float angle = transform->GetEulerAngle();
+								ImGui::InputFloat("Angle", &angle);
 							}
 						}
-
 						break;
 					case ComponentType::SHAPE:
 						break;
 					case ComponentType::SPRITE:
-						
 						break;
 					case ComponentType::PYCOMPONENT:
 						break;
 					case ComponentType::BODY2D:
-						Body2d * body2d = dynamic_cast<Body2d*>(component);
-						if (body2d != nullptr)
 						{
-							p2Body* p2Body = body2d->GetBody();
-							if (p2Body != nullptr)
+							Body2d * body2d = dynamic_cast<Body2d*>(component);
+							if (body2d != nullptr)
 							{
-								sf::Vector2f speed = meter2pixel(p2Body->GetLinearVelocity());
-								float speedArray[2] = { speed.x, speed.y };
-								ImGui::InputFloat2("Speed", speedArray);
+								p2Body* p2Body = body2d->GetBody();
+								if (p2Body != nullptr)
+								{
+									sf::Vector2f speed = meter2pixel(p2Body->GetLinearVelocity());
+									float speedArray[2] = { speed.x, speed.y };
+									ImGui::InputFloat2("Speed", speedArray);
+
+									float numContact = p2Body->GetContactList().size();
+									ImGui::InputFloat("Num Contact", &numContact);
+								}
 							}
 						}
+						break;
+					case ComponentType::COLLIDER:
+						{
+							Collider* collider = dynamic_cast<Collider*>(component);
+							if (collider != nullptr)
+							{
+								p2Collider* p2Collider = collider->GetCollider();
+								if (p2Collider != nullptr)
+								{
+									sf::Vector2f offset = meter2pixel(p2Collider->GetOffset());
+									float offsetArray[2] = { offset.x, offset.y };
+									ImGui::InputFloat2("Offset", offsetArray);
 
+									float localAngle = p2Collider->GetLocalAngle();
+									ImGui::InputFloat("Angle", &localAngle);
+								}
+							}
+						}
 						break;
 					}
 				}
