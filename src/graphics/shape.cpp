@@ -86,21 +86,22 @@ Shape* Shape::LoadShape(Engine& engine, json& componentJson, GameObject* gameObj
 			break;
 		}
 	}
-	offset = GetVectorFromJson(componentJson, "offset");	
-	
+	offset = GetVectorFromJson(componentJson, "offset");
+
 	if(shape != nullptr)
 	{
 		{
 			Log::GetInstance()->Msg("Load shape");
 		}
 		shape->SetOffset(offset);
+
 		auto graphicsManager = engine.GetGraphicsManager();
 		graphicsManager->GetShapeManager()->AddShape(shape);
 	}
 	return shape;
 }
 
-Circle::Circle(GameObject* gameObject,   float radius):
+Circle::Circle(GameObject* gameObject, float radius):
 		Shape(gameObject)
 {
 	m_Radius = radius;
@@ -117,8 +118,6 @@ void Circle::Update(float dt)
 		m_Shape->setPosition(m_GameObject->GetTransform()->GetPosition() + m_Offset);
 	}
 }
-
-
 
 Circle* Circle::LoadCircle(json& componentJson, GameObject* gameObject)
 {

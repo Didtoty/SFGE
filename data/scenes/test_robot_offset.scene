@@ -72,8 +72,7 @@
                   "type": 3,
                   "shape_type": 2,
                   "size": [25, 100],
-				  "offset" : [100, 0],
-				  "angle" : 30
+				  "offset" : [100, 0]
               },
               {
                   "name": "Rigidbody",
@@ -85,8 +84,7 @@
                   "type": 6,
                   "collider_type": 2,
                   "size": [25,100],
-				  "offset" : [100, 0],
-				  "angle" : 30
+				  "offset" : [100, 0]
               }
           ]
       },
@@ -104,8 +102,7 @@
                   "type": 3,
                   "shape_type": 2,
                   "size": [25, 100],
-				  "offset" : [100, 0],
-				  "angle" : 30
+				  "offset" : [100, 0]
               },
               {
                   "name": "Rigidbody",
@@ -117,8 +114,7 @@
                   "type": 6,
                   "collider_type": 2,
                   "size": [25,100],
-				  "offset" : [100, 0],
-				  "angle" : 30
+				  "offset" : [100, 0]
               }
           ]
       },

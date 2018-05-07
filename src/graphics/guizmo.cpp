@@ -38,14 +38,34 @@ Guizmo::~Guizmo()
 {
 }
 
-void Guizmo::DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color = p2Color(255, 255, 255, 255))
+void Guizmo::DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color = p2Color(255, 255, 255, 255), float angle = 0)
 {
 	if (m_Window == nullptr)
 		return;
 
-	sf::RectangleShape rectangle = sf::RectangleShape(sfge::meter2pixel(size * 2));
-	rectangle.setPosition(sfge::meter2pixel(pos - size));
-	rectangle.setFillColor(sf::Color::Magenta);
+	sf::RectangleShape rectangle = sf::RectangleShape(sfge::meter2pixel(size));
+	rectangle.setPosition(sfge::meter2pixel(pos - size * 0.5f));
+	rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+
+	rectangle.setRotation(angle);
+
+	(*m_Window).draw(rectangle);
+}
+
+void Guizmo::DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color, float outlineThickness, p2Color outlineColor, float angle)
+{
+	if (m_Window == nullptr)
+		return;
+
+	sf::RectangleShape rectangle = sf::RectangleShape(sfge::meter2pixel(size));
+	rectangle.setPosition(sfge::meter2pixel(pos - size * 0.5f));
+	rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+
+	rectangle.setOutlineThickness(outlineThickness);
+	rectangle.setOutlineColor(sf::Color(outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a));
+
+	rectangle.setRotation(angle);
+
 	(*m_Window).draw(rectangle);
 }
 
@@ -63,7 +83,7 @@ void Guizmo::DrawLine(p2Vec2 from, p2Vec2 to, p2Color color = p2Color(255, 255, 
 	(*m_Window).draw(vertices, 2, sf::Lines);
 }
 
-void Guizmo::DrawCircle(p2Vec2 pos, float r, p2Color color = p2Color(0, 0, 0, 255))
+void Guizmo::DrawCircle(p2Vec2 pos, float r, p2Color color = p2Color(0, 0, 0, 255), float angle = 0)
 {
 	if (m_Window == nullptr)
 		return;
@@ -71,6 +91,25 @@ void Guizmo::DrawCircle(p2Vec2 pos, float r, p2Color color = p2Color(0, 0, 0, 25
 	sf::CircleShape circle(r);
 	circle.setPosition(sfge::meter2pixel(pos));
 	circle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+
+	circle.setRotation(angle);
+
+	(*m_Window).draw(circle);
+}
+
+void Guizmo::DrawCircle(p2Vec2 pos, float r, p2Color color, float outlineThickness, p2Color outlineColor, float angle)
+{
+	if (m_Window == nullptr)
+		return;
+
+	sf::CircleShape circle(r);
+	circle.setPosition(sfge::meter2pixel(pos));
+	circle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+
+	circle.setOutlineThickness(outlineThickness);
+	circle.setOutlineColor(sf::Color(outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a));
+
+	circle.setRotation(angle);
 
 	(*m_Window).draw(circle);
 }

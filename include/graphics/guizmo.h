@@ -36,9 +36,11 @@ public:
 	Guizmo(std::shared_ptr<sf::RenderWindow>& window);
 	~Guizmo();
 
-	void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color);
+	void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color, float angle);
+	void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color, float outlineThickness, p2Color outlineColor, float angle);
 	void DrawLine(p2Vec2 from, p2Vec2 to, p2Color color);
-	void DrawCircle(p2Vec2 pos, float r, p2Color color);
+	void DrawCircle(p2Vec2 pos, float r, p2Color color, float angle);
+	void DrawCircle(p2Vec2 pos, float r, p2Color color, float outlineThickness, p2Color outlineColor, float angle);
 
 private: 
 	std::shared_ptr<sf::RenderWindow> m_Window;

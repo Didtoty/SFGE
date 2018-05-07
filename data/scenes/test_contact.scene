@@ -1,4 +1,3 @@
-
 {
   "name": "ContactTestScene",
   "game_objects": [
@@ -80,7 +79,7 @@
           "components": [
               {
                   "type": 1,
-                  "position": [400, 600],
+                  "position": [1000, 200],
                   "scale" : [1.0,1.0],
                   "angle": 0.0
               },
@@ -99,7 +98,7 @@
                   "name": "CircleCollider",
                   "type": 6,
                   "collider_type": 1,
-				  "radius" : 50.0
+				  "radius" : 50.0,
                   "sensor": true
               },
               {

@@ -72,8 +72,8 @@ void p2Body::RemoveInContact(p2Contact * contact)
 void p2Body::CalculateAABB()
 {
 	// Reset the current values
-	p2Vec2 newBottomLeft = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::min());
-	p2Vec2 newTopRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<float>::max());
+	p2Vec2 newBottomLeft = p2Vec2(std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
+	p2Vec2 newTopRight = p2Vec2(-std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
 
 	if (m_ColliderList.size())
 	{
@@ -112,7 +112,9 @@ void p2Body::CalculateAABB()
 
 void p2Body::DrawDebugBody(p2Guizmo * guizmoDebug)
 {
-	guizmoDebug->DrawRect(m_Position, m_AABB.GetExtendsValue(), p2Color(255, 0, 0, 255));
+	guizmoDebug->DrawRect(m_Position, m_AABB.GetExtendsValue() * 2.0f, p2Color(125, 125, 0, 200));
+	for (auto col : m_ColliderList)
+		col->DrawDebug(guizmoDebug);
 }
 
 /*-----------------------------------------------------------

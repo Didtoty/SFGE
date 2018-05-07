@@ -45,9 +45,11 @@ struct p2Color {
 */
 class p2Guizmo {
 public:
-	virtual void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color = p2Color(0, 0, 0, 255)) = 0;
+	virtual void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color = p2Color(0, 0, 0, 255), float angle = 0) = 0;
+	virtual void DrawRect(p2Vec2 pos, p2Vec2 size, p2Color color, float outlineThickness, p2Color outlineColor, float angle = 0) = 0;
 	virtual void DrawLine(p2Vec2 from, p2Vec2 to, p2Color color = p2Color(0, 0, 0, 255)) = 0;
-	virtual void DrawCircle(p2Vec2 pos, float r, p2Color color = p2Color(0, 0, 0, 255)) = 0;
+	virtual void DrawCircle(p2Vec2 pos, float r, p2Color color = p2Color(0, 0, 0, 255), float angle = 0) = 0;
+	virtual void DrawCircle(p2Vec2 pos, float r, p2Color color, float outlineThickness, p2Color outlineColor, float angle = 0) = 0;
 };
 
 #endif /* SFGE_P2GUIZMO_H */

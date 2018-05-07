@@ -62,7 +62,6 @@ void Editor::Update(sf::Time dt)
 {
 	if (m_Enable)
 	{
-
 		ImGui::SFML::Update(*m_GraphicsManager->GetWindow(), dt);
 		static GameObject* selectedGameObject = nullptr;
 		//GameObject window
@@ -85,7 +84,6 @@ void Editor::Update(sf::Time dt)
 				}
 				n++;
 			}
-			
 		}
 		else
 		{
@@ -163,9 +161,6 @@ void Editor::Update(sf::Time dt)
 									sf::Vector2f offset = meter2pixel(p2Collider->GetOffset());
 									float offsetArray[2] = { offset.x, offset.y };
 									ImGui::InputFloat2("Offset", offsetArray);
-
-									float localAngle = p2Collider->GetLocalAngle();
-									ImGui::InputFloat("Angle", &localAngle);
 								}
 							}
 						}

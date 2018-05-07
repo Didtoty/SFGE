@@ -81,16 +81,6 @@ public:
 	p2Body* GetBody();
 
 	/**
-	* \brief Get the local angle of the collider
-	*/
-	float GetLocalAngle();
-
-	/**
-	* \brief Get the global angle of the collider
-	*/
-	float GetGlobalAngle();
-
-	/**
 	* \brief Get the offset of the collider from the body
 	*/
 	p2Vec2 GetOffset();
@@ -99,6 +89,11 @@ public:
 	* \brief Calculate and return a list of the points defining the rectangle
 	*/
 	std::list<p2Vec2> GetPoints();
+
+	/**
+	* \brief Draw the limits of the collider
+	*/
+	void DrawDebug(p2Guizmo * guizmoDebug);
 
 	/*-----------------------------------------------------------
 							Private vars

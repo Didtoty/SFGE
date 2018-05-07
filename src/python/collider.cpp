@@ -94,13 +94,6 @@ Collider* Collider::LoadCollider(Engine & engine, GameObject * gameObject, json 
 			}
 			break;
 		}
-		if (shape != nullptr)
-		{
-			if (CheckJsonNumber(componentJson, "angle"))
-			{
-				shape->SetAngle(componentJson["angle"]);
-			}
-		}
 		if (CheckJsonNumber(componentJson, "bounciness"))
 		{
 			colliderDef.bounciness = componentJson["bounciness"];

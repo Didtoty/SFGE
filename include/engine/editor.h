@@ -67,9 +67,6 @@ public:
 protected:
 	GraphicsManager* m_GraphicsManager;
 	SceneManager* m_SceneManager;
-	
-
-
 };
 }
 

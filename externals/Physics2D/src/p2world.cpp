@@ -50,15 +50,15 @@ void p2World::Step(float dt)
 	//		   AABB			//
 	// -------------------- //
 	p2AABB worldSpace = p2AABB();
-	worldSpace.bottomLeft = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::min());
-	worldSpace.topRight = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<float>::max());
+	worldSpace.bottomLeft = p2Vec2(std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
+	worldSpace.topRight = p2Vec2(-std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
 	
 	// Calculate AABB of all bodies and the one of the quadtree
 	for (auto body : m_BodyList)
 	{
 		body->CalculateAABB();
 		p2Vec2 bodyBotLeft = body->GetAABB().bottomLeft;
-		p2Vec2 bodyTopRight = body->GetAABB().bottomLeft;
+		p2Vec2 bodyTopRight = body->GetAABB().topRight;
 
 		if (worldSpace.bottomLeft.x > bodyBotLeft.x)
 			worldSpace.bottomLeft.x = bodyBotLeft.x;
@@ -139,9 +139,9 @@ void p2World::RemoveBody(p2Body * body)
 
 void p2World::DebugDraw()
 {
-	//for (auto body : m_BodyList)
+	for (auto body : m_BodyList)
 	{
-		//	body->DrawDebugBody(m_GuizmoDebug);
+		body->DrawDebugBody(m_GuizmoDebug);
 	}
 
 	//m_GuizmoDebug->DrawLine(p2Vec2(0,0), p2Vec2(300, 300), p2Color(255, 255, 255, 255));

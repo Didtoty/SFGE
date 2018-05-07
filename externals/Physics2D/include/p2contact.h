@@ -76,6 +76,9 @@ public:
 	p2CollisionDiff GetCollDiff();
 
 private:
+	float CalculateDistSAT(p2Vec2 normal);
+	p2CollisionDiff CalcTouchingSAT(p2Vec2 normalX, p2Vec2 normalY);
+
 	p2Collider* m_ColliderA;
 	p2Collider* m_ColliderB;
 	p2CollisionDiff m_CollDiff;

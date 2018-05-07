@@ -32,18 +32,12 @@ SOFTWARE.
 
 p2Vec2 p2AABB::GetCenter()
 {
-	return (bottomLeft + topRight) * 0.5;
-}
-
-p2Vec2 p2AABB::GetExtendsPosition()
-{
-	return this->GetCenter() + GetExtendsValue();
+	return (bottomLeft + topRight) * 0.5f;
 }
 
 p2Vec2 p2AABB::GetExtendsValue()
 {
-	p2Vec2 extends = (topRight - bottomLeft) * 0.5f;
-	return p2Vec2(abs(extends.x), abs(extends.y));
+	return p2Vec2(abs(GetCenter().x - topRight.x), abs(GetCenter().y - topRight.y));
 }
 
 bool p2AABB::Contains(p2AABB other)

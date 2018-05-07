@@ -52,16 +52,6 @@ p2Body * p2Collider::GetBody()
 	return m_AttachedBody;
 }
 
-float p2Collider::GetLocalAngle()
-{
-	return m_Shape->GetAngle();
-}
-
-float p2Collider::GetGlobalAngle()
-{
-	return m_Shape->GetAngle() + m_AttachedBody->GetAngle();
-}
-
 p2Vec2 p2Collider::GetOffset()
 {
 	return m_Offset;
@@ -81,11 +71,23 @@ std::list<p2Vec2> p2Collider::GetPoints()
 		p2Vec2 colPosition = m_AttachedBody->GetPosition() + m_Offset;
 		colPosition.ApplyRotation(m_AttachedBody->GetAngle());
 
-		listPoints.push_back((colPosition - size).ApplyRotation(m_Shape->GetAngle()));
-		listPoints.push_back((colPosition + p2Vec2(-size.x, size.y)).ApplyRotation(m_Shape->GetAngle()));
-		listPoints.push_back((colPosition + size).ApplyRotation(m_Shape->GetAngle()));
-		listPoints.push_back((colPosition + p2Vec2(size.x, -size.y)).ApplyRotation(m_Shape->GetAngle()));
+		listPoints.push_back(colPosition - size);
+		listPoints.push_back(colPosition + p2Vec2(-size.x, size.y));
+		listPoints.push_back(colPosition + size);
+		listPoints.push_back(colPosition + p2Vec2(size.x, -size.y));
 	}
 
 	return listPoints;
+}
+
+void p2Collider::DrawDebug(p2Guizmo * guizmoDebug)
+{
+	if (m_Shape->GetType() == p2ShapeType::CIRCLE_SHAPE)
+	{
+		guizmoDebug->DrawCircle(m_AttachedBody->GetPosition() + m_Offset, dynamic_cast<p2CircleShape*>(m_Shape)->GetRadius(), p2Color(0,0,0,0), 1.0f, p2Color(0, 125, 0, 125));
+	}
+	if (m_Shape->GetType() == p2ShapeType::RECTANGLE_SHAPE)
+	{
+		guizmoDebug->DrawRect(m_AttachedBody->GetPosition() + m_Offset, dynamic_cast<p2RectShape*>(m_Shape)->GetSize(), p2Color(0, 0, 0, 0), 1.0f, p2Color(125, 0, 125, 125));
+	}
 }

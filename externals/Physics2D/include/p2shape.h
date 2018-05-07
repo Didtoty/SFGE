@@ -51,19 +51,8 @@ public:
 	*/
 	p2ShapeType GetType();
 
-	/**
-	* \brief Get the angle of the shape
-	*/
-	float GetAngle();
-
-	/**
-	* \brief Set the angle of the shape
-	*/
-	void SetAngle(float angle);
-
 protected:
 	p2ShapeType m_Type;
-	float m_Angle;
 };
 
 /**
