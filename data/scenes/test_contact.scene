@@ -14,7 +14,7 @@
                   "name": "Circle Shape Component",
                   "type": 3,
                   "shape_type": 1,
-                  "radius": 50.0
+                  "radius": 50
               },
               {
                   "name": "Rigidbody",
@@ -26,7 +26,7 @@
                   "name": "CircleCollider",
                   "type": 6,
                   "collider_type": 1,
-                  "radius": 50.0,
+                  "radius": 50,
                   "bouncing": 0.5,
                   "sensor": true
               },
@@ -46,7 +46,7 @@
           "components": [
               {
                   "type": 1,
-                  "position": [400, 600],
+                  "position": [600, 600],
                   "scale" : [1.0,1.0],
                   "angle": 0.0
               },
@@ -54,7 +54,7 @@
                   "name": "Rectangle Shape Component",
                   "type": 3,
                   "shape_type": 2,
-                  "size": [800, 200]
+                  "size": [400, 200]
               },
               {
                   "name": "Rigidbody",
@@ -65,7 +65,7 @@
                   "name": "BoxCollider",
                   "type": 6,
                   "collider_type": 2,
-                  "size": [800,200],
+                  "size": [400,200],
                   "sensor": true
               },
               {

@@ -85,13 +85,13 @@ bool p2Contact::isTouching()
 	}
 	else if ((shapeA->GetType() == p2ShapeType::RECTANGLE_SHAPE && shapeB->GetType() == p2ShapeType::RECTANGLE_SHAPE))
 	{
-		/*if (m_ColliderA->GetBody()->GetAngle() == 0 && m_ColliderB->GetBody()->GetAngle() == 0)
+		if (m_ColliderA->GetBody()->GetAngle() == 0 && m_ColliderB->GetBody()->GetAngle() == 0)
 		{
 			p2Vec2 deltaCenter = m_ColliderA->GetBody()->GetPosition() - m_ColliderB->GetBody()->GetPosition();
 			p2Vec2 deltaR = dynamic_cast<p2RectShape*>(shapeA)->GetSize() * 0.5f + dynamic_cast<p2RectShape*>(shapeB)->GetSize() * 0.5f;
 			return abs(deltaCenter.x) <= deltaR.x && abs(deltaCenter.y) <= deltaR.y;
 		}
-		else*/
+		else
 		{
 			
 			m_CollDiff = CalcTouchingSAT(NORMAL_X.ApplyRotation(m_ColliderA->GetBody()->GetAngle()),
@@ -119,8 +119,30 @@ bool p2Contact::isTouching()
 			shapeB = m_ColliderB->GetShape();
 		}
 
+		p2Vec2 normal;
+
+		p2Vec2 posRect = m_ColliderA->GetBody()->GetPosition();
+		p2Vec2 rectSize = dynamic_cast<p2RectShape*>(shapeA)->GetSize();
+		p2Vec2 posCircle = m_ColliderB->GetBody()->GetPosition();
+		
+		bool rectNormal = true;
+		if (posRect.x + rectSize.x * 0.5f > posCircle.x && posCircle.x > posRect.x - rectSize.x * 0.5f)
+			normal = NORMAL_X;
+		else if (posRect.y + rectSize.y * 0.5f > posCircle.y && posCircle.y > posRect.y - rectSize.y * 0.5f)
+			normal = NORMAL_Y;
+		else
+		{
+			normal = (m_ColliderB->GetBody()->GetPosition() - m_ColliderA->GetBody()->GetPosition()).Normalized();
+			rectNormal = false;
+		}
+
+		if (rectNormal && posRect.x > posCircle.x)
+			normal.x = -normal.x;
+		if (rectNormal && posRect.y > posCircle.y)
+			normal.y = -normal.y;
+
 		// Normal from circle to rectangle
-		m_CollDiff = CalcTouchingSAT((m_ColliderB->GetBody()->GetPosition() - m_ColliderA->GetBody()->GetPosition()).Normalized());
+		m_CollDiff = CalcTouchingSAT(normal);
 
 		// Assomption 2 : Basics collisions without rotation
 		/* 
@@ -139,6 +161,9 @@ bool p2Contact::isTouching()
 		return false;
 	}
 
+
+	//std::cout << "distance : " << m_CollDiff.distance << "\n";
+	//std::cout << "normal : " << m_CollDiff.normal.x << ", " << m_CollDiff.normal.y << "\n";
 	return m_CollDiff.distance > 0.0f;
 
 	//Assomption 1 : All AABB collides
