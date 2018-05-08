@@ -40,11 +40,6 @@ struct p2AABB
 	p2Vec2 GetCenter();
 
 	/**
-	* \brief Calculate the extends position and return it
-	*/
-	p2Vec2 GetExtendsPosition();
-
-	/**
 	* \brief Calculate the extends values and return it
 	*/
 	p2Vec2 GetExtendsValue();

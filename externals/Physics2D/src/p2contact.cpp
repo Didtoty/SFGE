@@ -85,20 +85,24 @@ bool p2Contact::isTouching()
 	}
 	else if ((shapeA->GetType() == p2ShapeType::RECTANGLE_SHAPE && shapeB->GetType() == p2ShapeType::RECTANGLE_SHAPE))
 	{
-		if (m_ColliderA->GetBody()->GetAngle() == 0 && m_ColliderB->GetBody()->GetAngle() == 0)
+		/*if (m_ColliderA->GetBody()->GetAngle() == 0 && m_ColliderB->GetBody()->GetAngle() == 0)
 		{
 			p2Vec2 deltaCenter = m_ColliderA->GetBody()->GetPosition() - m_ColliderB->GetBody()->GetPosition();
 			p2Vec2 deltaR = dynamic_cast<p2RectShape*>(shapeA)->GetSize() * 0.5f + dynamic_cast<p2RectShape*>(shapeB)->GetSize() * 0.5f;
 			return abs(deltaCenter.x) <= deltaR.x && abs(deltaCenter.y) <= deltaR.y;
 		}
-		else
+		else*/
 		{
-			CalcTouchingSAT(NORMAL_X.ApplyRotation(m_ColliderA->GetBody()->GetAngle()), 
+			
+			m_CollDiff = CalcTouchingSAT(NORMAL_X.ApplyRotation(m_ColliderA->GetBody()->GetAngle()),
 							NORMAL_Y.ApplyRotation(m_ColliderA->GetBody()->GetAngle()));
 
-			CalcTouchingSAT(NORMAL_X.ApplyRotation(m_ColliderB->GetBody()->GetAngle()),
+			p2CollisionDiff newColDiff;
+			newColDiff = CalcTouchingSAT(NORMAL_X.ApplyRotation(m_ColliderB->GetBody()->GetAngle()),
 							NORMAL_Y.ApplyRotation(m_ColliderB->GetBody()->GetAngle()));
-			// TODO : Gérer la valeur par défaut de la distance ici, et l'appliquer dans m_CollDiff dans la fonction CalcTouching SAT sous condition adéquates
+
+			if (m_CollDiff.distance > newColDiff.distance || m_CollDiff.distance == UNSETTED)
+				m_CollDiff = newColDiff;
 		}
 	}
 	else if ((shapeA->GetType() == p2ShapeType::CIRCLE_SHAPE && shapeB->GetType() == p2ShapeType::RECTANGLE_SHAPE) || 
@@ -115,7 +119,8 @@ bool p2Contact::isTouching()
 			shapeB = m_ColliderB->GetShape();
 		}
 
-		m_CollDiff = CalcTouchingSAT(NORMAL_X.ApplyRotation(m_ColliderA->GetBody()->GetAngle()), NORMAL_Y.ApplyRotation(m_ColliderA->GetBody()->GetAngle()));
+		// Normal from circle to rectangle
+		m_CollDiff = CalcTouchingSAT((m_ColliderB->GetBody()->GetPosition() - m_ColliderA->GetBody()->GetPosition()).Normalized());
 
 		// Assomption 2 : Basics collisions without rotation
 		/* 
@@ -149,53 +154,70 @@ float p2Contact::CalculateDistSAT(p2Vec2 normal)
 {
 	// For all points of Shape A
 	std::list<p2Vec2> listPoints = m_ColliderA->GetPoints();
-	p2Vec2 minPointA = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
-	p2Vec2 maxPointA = p2Vec2(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
+	float minPointA = std::numeric_limits<float>::max();
+	float maxPointA = -std::numeric_limits<float>::max();
 	for (p2Vec2 pRect : listPoints)
 	{
-		p2Vec2 projPoint = p2Vec2::Proj(pRect, normal);
-		if (projPoint.x < minPointA.x || projPoint.y < minPointA.y)
+		float projPoint = p2Vec2::Dot(pRect, normal);
+		if (minPointA > projPoint)
 			minPointA = projPoint;
-		if (projPoint.x > maxPointA.x || projPoint.y > maxPointA.y)
+		if (maxPointA < projPoint)
 			maxPointA = projPoint;
 	}
 
 	// For all points of Shape B
-	p2Vec2 minPointB = p2Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
-	p2Vec2 maxPointB = p2Vec2(std::numeric_limits<float>::min(), std::numeric_limits<float>::min());
+	float minPointB = std::numeric_limits<float>::max();
+	float maxPointB = -std::numeric_limits<float>::max();
 	if (m_ColliderB->GetShape()->GetType() == p2ShapeType::RECTANGLE_SHAPE)
 	{
 		listPoints = m_ColliderB->GetPoints();
 		for (p2Vec2 pRect : listPoints)
 		{
-			p2Vec2 projPoint = p2Vec2::Proj(pRect, normal);
-			if (projPoint.x < minPointB.x || projPoint.y < minPointB.y)
+			float projPoint = p2Vec2::Dot(pRect, normal);
+			if (minPointB > projPoint)
 				minPointB = projPoint;
-			if (projPoint.x > maxPointB.x || projPoint.y > maxPointB.y)
+			if (maxPointB < projPoint)
 				maxPointB = projPoint;
 		}
 	}
 	else // p2ShapeType::CIRCLE_SHAPE
 	{
-		p2Vec2 center = m_ColliderB->GetBody()->GetPosition();
+		// Normal inited from circle to rectangle
+		// If pos rect
+		p2Vec2 posCircle = p2Vec2::Proj(m_ColliderB->GetBody()->GetPosition(), normal);
 		float radius = dynamic_cast<p2CircleShape*>(m_ColliderB->GetShape())->GetRadius();
-		minPointB = p2Vec2::Proj(center - p2Vec2(radius, radius), normal);
-		maxPointB = p2Vec2::Proj(center + p2Vec2(radius, radius), normal);
+
+		maxPointB = p2Vec2::Dot(posCircle, normal);
+		minPointB = maxPointB - radius;
 	}
 
 	float distance = UNSETTED;
-	p2Vec2 deltaPoint;
+	float deltaPoint;
 
 	// Calculate min diff
-	if (minPointA.x > minPointB.x || minPointA.y > minPointB.y)
+	if (minPointA >= minPointB)
 		deltaPoint = maxPointB - minPointA;
 	else
 		deltaPoint = maxPointA - minPointB;
 
-	if (deltaPoint.x >= 0.0f && deltaPoint.y >= 0.0f)
-		distance = deltaPoint.GetMagnitude();
+	if (deltaPoint >= 0.0f)
+		distance = deltaPoint;
 
 	return distance;
+}
+
+p2CollisionDiff p2Contact::CalcTouchingSAT(p2Vec2 normal)
+{
+	float dist = CalculateDistSAT(normal);
+
+	p2CollisionDiff result;
+
+	if (dist > 0.0f)
+	{
+		result.distance = dist;
+		result.normal = normal;
+	}
+	return result;
 }
 
 p2CollisionDiff p2Contact::CalcTouchingSAT(p2Vec2 normalX, p2Vec2 normalY)
@@ -205,7 +227,7 @@ p2CollisionDiff p2Contact::CalcTouchingSAT(p2Vec2 normalX, p2Vec2 normalY)
 
 	p2CollisionDiff result;
 
-	if (distX > 0.0f && distY > 0.0f)
+	if (distX >= 0.0f && distY >= 0.0f)
 	{
 		if (distX < distY)
 		{

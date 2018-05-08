@@ -35,7 +35,7 @@ SOFTWARE.
 struct p2CollisionDiff
 {
 	p2Vec2 normal;
-	float distance;
+	float distance = -1;
 };
 
 /**
@@ -77,6 +77,7 @@ public:
 
 private:
 	float CalculateDistSAT(p2Vec2 normal);
+	p2CollisionDiff CalcTouchingSAT(p2Vec2 normal);
 	p2CollisionDiff CalcTouchingSAT(p2Vec2 normalX, p2Vec2 normalY);
 
 	p2Collider* m_ColliderA;

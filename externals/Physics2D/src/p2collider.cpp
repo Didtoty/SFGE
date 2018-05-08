@@ -66,7 +66,7 @@ std::list<p2Vec2> p2Collider::GetPoints()
 	} 
 	else if (m_Shape->GetType() == p2ShapeType::RECTANGLE_SHAPE)
 	{
-		p2Vec2 size = dynamic_cast<p2RectShape*>(m_Shape)->GetSize();
+		p2Vec2 size = dynamic_cast<p2RectShape*>(m_Shape)->GetSize() * 0.5f;
 		
 		p2Vec2 colPosition = m_AttachedBody->GetPosition() + m_Offset;
 		colPosition.ApplyRotation(m_AttachedBody->GetAngle());
