@@ -26,7 +26,8 @@
                   "name": "CircleCollider",
                   "type": 6,
                   "collider_type": 1,
-                  "radius": 50.0
+                  "radius": 50.0,
+                  "bounciness": 1.2
               },
               {
                   "type": 4,
@@ -86,7 +87,8 @@
                   "name": "CircleCollider",
                   "type": 6,
                   "collider_type": 1,
-				  "radius" : 50.0
+				  "radius" : 50.0,
+                  "bounciness": 1.0
               }
           ]
       },
@@ -114,7 +116,8 @@
                   "name": "CircleCollider",
                   "type": 6,
                   "collider_type": 1,
-				  "radius" : 50.0
+				  "radius" : 50.0,
+                  "bounciness": 0.5
               }
           ]
       },
@@ -142,91 +145,8 @@
                   "name": "CircleCollider",
                   "type": 6,
                   "collider_type": 1,
-				  "radius" : 50.0
-              }
-          ]
-      },
-      {
-          "name": "PiedestalRect",
-          "components": [
-              {
-                  "type": 1,
-                  "position": [250, 500],
-                  "scale" : [1.0,1.0],
-                  "angle": 0.0
-              },
-              {
-                  "name": "Rectangle Shape Component",
-                  "type": 3,
-                  "shape_type": 2,
-                  "size": [50, 50]
-              },
-              {
-                  "name": "Rigidbody",
-                  "type": 5,
-                  "body_type": 0
-              },
-              {
-                  "name": "BoxCollider",
-                  "type": 6,
-                  "collider_type": 2,
-                  "size": [50, 50]
-              }
-          ]
-      },
-      {
-          "name": "PiedestalCircle",
-          "components": [
-              {
-                  "type": 1,
-                  "position": [400, 500],
-                  "scale" : [1.0,1.0],
-                  "angle": 0.0
-              },
-              {
-                  "name": "Rectangle Shape Component",
-                  "type": 3,
-                  "shape_type": 1,
-                  "radius": 25
-              },
-              {
-                  "name": "Rigidbody",
-                  "type": 5,
-                  "body_type": 0
-              },
-              {
-                  "name": "BoxCollider",
-                  "type": 6,
-                  "collider_type": 1,
-                  "radius": 25
-              }
-          ]
-      },
-      {
-          "name": "PiedestalRect",
-          "components": [
-              {
-                  "type": 1,
-                  "position": [550, 500],
-                  "scale" : [1.0,1.0],
-                  "angle": 0.0
-              },
-              {
-                  "name": "Rectangle Shape Component",
-                  "type": 3,
-                  "shape_type": 2,
-                  "size": [50, 50]
-              },
-              {
-                  "name": "Rigidbody",
-                  "type": 5,
-                  "body_type": 0
-              },
-              {
-                  "name": "BoxCollider",
-                  "type": 6,
-                  "collider_type": 2,
-                  "size": [50, 50]
+				  "radius" : 50.0,
+                  "bounciness": 0.2
               }
           ]
       }

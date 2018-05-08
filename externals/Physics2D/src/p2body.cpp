@@ -47,7 +47,7 @@ p2Body::~p2Body()
 /*-----------------------------------------------------------
 					Public functions
 -----------------------------------------------------------*/
-p2Collider * p2Body::CreateCollider(p2ColliderDef * colliderDef)
+p2Collider * p2Body::CreateCollider(p2ColliderDef* colliderDef)
 {
 	p2Collider* collider = new p2Collider(colliderDef, this);
 	m_ColliderList.push_back(collider);

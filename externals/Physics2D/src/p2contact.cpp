@@ -356,24 +356,24 @@ void p2ContactManager::ResolveContacts()
 	// TODO: Then resolve contacts
 	for (auto contact : m_ContactList)
 	{
-		p2Body* bodyA = contact->GetColliderA()->GetBody();
-		p2Body* bodyB = contact->GetColliderB()->GetBody();
+		p2Collider* colA = contact->GetColliderA();
+		p2Collider* colB = contact->GetColliderB();
 
 		// Get to know which body is affected by the collision
-		std::list<p2Body*> bodyMovedList;
-		if (bodyA->GetType() == p2BodyType::DYNAMIC)
-			bodyMovedList.push_back(bodyA);
-		if (bodyB->GetType() == p2BodyType::DYNAMIC)
-			bodyMovedList.push_back(bodyB);
+		std::list<p2Collider*> colMoveList;
+		if (colA->GetBody()->GetType() == p2BodyType::DYNAMIC)
+			colMoveList.push_back(colA);
+		if (colB->GetBody()->GetType() == p2BodyType::DYNAMIC)
+			colMoveList.push_back(colB);
 				
 		// For each collision...
-		for (auto bodyToMove : bodyMovedList)
+		for (auto colToMove : colMoveList)
 		{
+			p2Body* bodyToMove = colToMove->GetBody();
 			p2Vec2 oldVel = bodyToMove->GetLinearVelocity();
 			p2Vec2 normal = contact->GetCollDiff().normal;
 			p2Vec2 newVel;
-
-			// VERSION QUI MARCHE BIEN ENCORE
+			
 			if (normal.x != 0.0f && normal.y != 0.0f)
 			{
 				newVel.x = oldVel.GetMagnitude() * normal.x;
@@ -391,6 +391,8 @@ void p2ContactManager::ResolveContacts()
 				else
 					newVel.y = oldVel.y;
 			}
+
+			newVel *= colToMove->GetBounciness();
 			
 			bodyToMove->SetLinearVelocity(newVel);
 

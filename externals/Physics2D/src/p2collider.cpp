@@ -57,6 +57,11 @@ p2Vec2 p2Collider::GetOffset()
 	return m_Offset;
 }
 
+float p2Collider::GetBounciness()
+{
+	return m_Bounciness;
+}
+
 std::list<p2Vec2> p2Collider::GetPoints()
 {
 	std::list<p2Vec2> listPoints = std::list<p2Vec2>();

@@ -39,8 +39,8 @@ struct p2ColliderDef
 {
 	void* userData;
 	p2Shape* shape;
-	float bounciness;
 	bool isSensor;
+	float bounciness = 1.0f;
 	p2Vec2 offset = p2Vec2();
 };
 
@@ -84,6 +84,11 @@ public:
 	* \brief Get the offset of the collider from the body
 	*/
 	p2Vec2 GetOffset();
+
+	/**
+	* \brief Get the bounciness value
+	*/
+	float GetBounciness();
 
 	/**
 	* \brief Calculate and return a list of the points defining the rectangle
