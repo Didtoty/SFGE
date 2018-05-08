@@ -76,11 +76,12 @@ bool p2Contact::isTouching()
 	if (shapeA->GetType() == p2ShapeType::CIRCLE_SHAPE && shapeB->GetType() == p2ShapeType::CIRCLE_SHAPE)
 	{
 		p2Vec2 deltaCenter = m_ColliderA->GetBody()->GetPosition() - m_ColliderB->GetBody()->GetPosition();
-		float deltaR = dynamic_cast<p2CircleShape*>(shapeA)->GetRadius() + dynamic_cast<p2CircleShape*>(shapeB)->GetRadius();
-		if (deltaCenter.GetMagnitude() <= deltaR)
+		float rA = dynamic_cast<p2CircleShape*>(shapeA)->GetRadius();
+		float rB = dynamic_cast<p2CircleShape*>(shapeB)->GetRadius();
+		if (deltaCenter.GetMagnitude() <= rA + rB)
 		{
 			m_CollDiff.normal = deltaCenter.Normalized();
-			m_CollDiff.distance = deltaR;
+			m_CollDiff.distance = (rA + rB) - deltaCenter.GetMagnitude();
 		}
 	}
 	else if ((shapeA->GetType() == p2ShapeType::RECTANGLE_SHAPE && shapeB->GetType() == p2ShapeType::RECTANGLE_SHAPE))
@@ -95,11 +96,11 @@ bool p2Contact::isTouching()
 		{
 			
 			m_CollDiff = CalcTouchingSAT(NORMAL_X.ApplyRotation(m_ColliderA->GetBody()->GetAngle()),
-							NORMAL_Y.ApplyRotation(m_ColliderA->GetBody()->GetAngle()));
+										NORMAL_Y.ApplyRotation(m_ColliderA->GetBody()->GetAngle()));
 
 			p2CollisionDiff newColDiff;
 			newColDiff = CalcTouchingSAT(NORMAL_X.ApplyRotation(m_ColliderB->GetBody()->GetAngle()),
-							NORMAL_Y.ApplyRotation(m_ColliderB->GetBody()->GetAngle()));
+										NORMAL_Y.ApplyRotation(m_ColliderB->GetBody()->GetAngle()));
 
 			if (m_CollDiff.distance > newColDiff.distance || m_CollDiff.distance == UNSETTED)
 				m_CollDiff = newColDiff;
@@ -368,7 +369,32 @@ void p2ContactManager::ResolveContacts()
 		// For each collision...
 		for (auto bodyToMove : bodyMovedList)
 		{
+			p2Vec2 oldVel = bodyToMove->GetLinearVelocity();
+			p2Vec2 normal = contact->GetCollDiff().normal;
+			p2Vec2 newVel;
 
+			// VERSION QUI MARCHE BIEN ENCORE
+			if (normal.x != 0.0f && normal.y != 0.0f)
+			{
+				newVel.x = oldVel.GetMagnitude() * normal.x;
+				newVel.y = oldVel.GetMagnitude() * normal.y;
+			}
+			else
+			{
+				if (normal.x != 0)
+					newVel.x = oldVel.x * normal.x;
+				else
+					newVel.x = oldVel.x;
+
+				if (normal.y != 0)
+					newVel.y = oldVel.y * normal.y;
+				else
+					newVel.y = oldVel.y;
+			}
+			
+			bodyToMove->SetLinearVelocity(newVel);
+
+			bodyToMove->SetPosition(bodyToMove->GetPosition() + contact->GetCollDiff().normal * contact->GetCollDiff().distance);
 		}
 	}
 }
