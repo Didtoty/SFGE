@@ -334,6 +334,8 @@ void p2ContactManager::RemoveContact(p2Contact* contact)
 	contact->GetColliderB()->GetBody()->RemoveInContact(contact);
 	m_Listener->EndContact(contact);
 	this->m_ContactList.remove(contact);
+
+	delete(contact);
 }
 
 void p2ContactManager::ResolveContacts()
@@ -358,6 +360,9 @@ void p2ContactManager::ResolveContacts()
 	{
 		p2Collider* colA = contact->GetColliderA();
 		p2Collider* colB = contact->GetColliderB();
+
+		if (colA->IsSensor() || colB->IsSensor())
+			continue;
 
 		// Get to know which body is affected by the collision
 		std::list<p2Collider*> colMoveList;

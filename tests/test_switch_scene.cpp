@@ -38,7 +38,6 @@ int main()
 		auto sceneManager = engine.GetSceneManager();
 		sceneManager->SetCurrentScene(sceneManager->LoadSceneFromName("data/scenes/test_switch.scene"));
 
-
 		engine.Start(); 
 	}
 

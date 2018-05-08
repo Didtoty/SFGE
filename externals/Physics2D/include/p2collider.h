@@ -39,8 +39,8 @@ struct p2ColliderDef
 {
 	void* userData;
 	p2Shape* shape;
-	bool isSensor;
-	float bounciness = 1.0f;
+	bool isSensor = false;
+	float bounciness = 0.3f;
 	p2Vec2 offset = p2Vec2();
 };
 

@@ -31,24 +31,15 @@ SOFTWARE.
 
 int main()
 {
-	sfge::Engine engine;
-	engine.Init(false, true);
+	{
+		sfge::Engine engine;
+		engine.Init(false, true);
 
-	engine.GetSceneManager()->SetCurrentScene("data/scenes/test_planetes.scene");
+		auto sceneManager = engine.GetSceneManager();
+		sceneManager->SetCurrentScene(sceneManager->LoadSceneFromName("data/scenes/test_planetes.scene"));
 
-	engine.Start();	
-
-	// CE QU'IL FAUT FAIRE
-	/*
-	* Créer un soleil et lui donner une masse
-	* Créer des planètes a des positions et vitesse précises/aléatoires
-	* Prédéfinir la vitesse de la planète avec :
-	* p2Vec2 r = p.position - sun.getPosition();
-	* p.linearVelocity = p2Vec2(-r.Normalized().x, r.Normalized.y) * Mass_Sun / r.getMagnitude * r.getMagnitude()
-	* 
-	*
-	*/
-
+		engine.Start();
+	}
 
 #ifdef WIN32
 	system("pause");

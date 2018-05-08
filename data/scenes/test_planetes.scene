@@ -22,7 +22,11 @@
                   "type": 5,
                   "body_type": 2,
                   "gravity_scale": 0
-              }
+              },
+			  {
+				"type": 4,
+				"script_path" : "scripts/switch_to_contact.py"
+			  }
           ]
       },
       {
